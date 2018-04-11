@@ -118,9 +118,9 @@ namespace ngui.ex
 		{
 			UILayout layout = trans.GetComponent<UILayout>();
 			/*  Grid일 경우 Grid에 추가된 순서대로 update한다. */
-			if (layout is UIGridLayout)
+			if (layout is UITableLayout)
 			{
-				UIGridLayout grid = (UIGridLayout)layout;
+				UITableLayout grid = (UITableLayout)layout;
 				foreach (Transform child in grid.components)
 				{
 					if (child == null)

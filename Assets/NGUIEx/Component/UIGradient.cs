@@ -11,7 +11,7 @@ namespace ngui.ex
 	public class UIGradient : MonoBehaviour
 	{
 		private UIBasicSprite sprite;
-		public UIGridLayout.Arrangement orientation = UIGridLayout.Arrangement.Vertical;
+		public UITableLayout.Arrangement orientation = UITableLayout.Arrangement.Vertical;
 		public GradientColor[] colors = new GradientColor[] { new GradientColor() };
 		public string colorId;
 		
@@ -64,15 +64,15 @@ namespace ngui.ex
 			UIBasicSprite.Flip flip = (widget as UIBasicSprite).flip;
 			
 			if (flip == Flip.Both
-				|| (flip == Flip.Horizontally && orientation == UIGridLayout.Arrangement.Horizontal)
-				|| (flip == Flip.Vertically && orientation == UIGridLayout.Arrangement.Vertical))
+				|| (flip == Flip.Horizontally && orientation == UITableLayout.Arrangement.Horizontal)
+				|| (flip == Flip.Vertically && orientation == UITableLayout.Arrangement.Vertical))
 			{
 				Color temp = c1;
 				c1 = c2;
 				c2 = temp;
 			}
 			
-			if (orientation == UIGridLayout.Arrangement.Horizontal) {
+			if (orientation == UITableLayout.Arrangement.Horizontal) {
 				tempColor[0] = c1;
 				tempColor[1] = c1;
 				tempColor[2] = c2;
@@ -87,7 +87,7 @@ namespace ngui.ex
             if (verts.Count == 4) {
 				Fill(cols, tempColor[0], tempColor[1], tempColor[2], tempColor[3], 0, 0);
             } else if (verts.Count == 36) {
-				if (orientation == UIGridLayout.Arrangement.Horizontal) {
+				if (orientation == UITableLayout.Arrangement.Horizontal) {
 					for (int y = 0; y < 3; ++y)
 					{
 						//					if (centerType == AdvancedType.Invisible && x == 1 && y == 1) continue;

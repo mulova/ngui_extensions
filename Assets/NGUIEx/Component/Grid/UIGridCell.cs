@@ -20,7 +20,7 @@ namespace ngui.ex {
         [HideInInspector] public int row;
         [HideInInspector] public int column;
 
-        protected UIGridLayout containerGrid;
+        protected UITableLayout containerGrid;
         protected Action<UIGridCell> initFunc { get; set; }
 		protected object val;
 
@@ -55,7 +55,7 @@ namespace ngui.ex {
 		/// <param name="t">T.</param>
 		/// <param name="val">Value.</param>
 		/// <param name="status">Status.</param>
-        public static void SetValue(UIGridLayout grid, Transform t, int row, int column, object val, Action<UIGridCell> initFunc = null) {
+        public static void SetValue(UITableLayout grid, Transform t, int row, int column, object val, Action<UIGridCell> initFunc = null) {
             UIGridCell c = t.GetComponent<UIGridCell>();
 			if (c != null) {
                 c.containerGrid = grid;

@@ -14,7 +14,7 @@ namespace ngui.ex {
 		}
 		
 		protected override void CreateTabs() {
-			AddTab(new UIGridContentsTab(this));
+			AddTab(new UITableContentsTab(this));
 			AddTab(new UIGridPropertyTab(this));
 		}
 	}

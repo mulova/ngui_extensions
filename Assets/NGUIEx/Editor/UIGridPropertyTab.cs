@@ -10,8 +10,8 @@ using comunity;
 
 namespace ngui.ex {
     public class UIGridPropertyTab : EditorTab {
-		private UIGridLayoutInspectorImpl inspector;
-		private UIGridLayout grid;
+		private UITableLayoutInspectorImpl inspector;
+		private UITableLayout grid;
 		
 		public UIGridPropertyTab(TabbedEditorWindow window) : base("Property", window) {
 			TextAsset xls = (TextAsset)Resources.Load("ui/table_width", typeof(TextAsset));
@@ -29,16 +29,16 @@ namespace ngui.ex {
 			}
 		}
 		
-		public void SetLayout(UIGridLayout grid) {
+		public void SetLayout(UITableLayout grid) {
 			this.grid = grid;
-			this.inspector = new UIGridLayoutInspectorImpl(grid);
+			this.inspector = new UITableLayoutInspectorImpl(grid);
 			this.inspector.OnEnable();
 		}
 		
 		public override void OnEnable() {
 			GameObject sel = Selection.activeGameObject;
 			if (sel != null) {
-				UIGridLayout layout = sel.GetComponent<UIGridLayout>();
+				UITableLayout layout = sel.GetComponent<UITableLayout>();
 				if (layout != null) {
 					grid = layout;
 					SetLayout(grid);

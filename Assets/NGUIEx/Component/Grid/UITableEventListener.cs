@@ -1,5 +1,3 @@
-#if FULL
-
 //----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
@@ -7,10 +5,12 @@
 //----------------------------------------------
 
 namespace ngui.ex {
-	public interface UIGridAnimEventListener : UIAnimEventListener
+	/// <summary>
+    /// Called when UITableLayout's row is selected.
+	/// </summary>
+	public interface UITableEventListener
 	{
-		void OnRowAnimBegin(int row);
-		void OnRowAnimEnd(int row);
-	}
+		void OnRowSelected(int row);
+		void OnModelChanged();
+	}	
 }
-#endif

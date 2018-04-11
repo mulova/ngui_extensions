@@ -14,7 +14,7 @@ namespace ngui.ex
     {
         public UIButton trigger;
         public GameObject ui;
-        public UIGridLayout sortGrid;
+        public UITableLayout sortGrid;
         public string preStrKey;
         private DropDownCellData sel;
         private string prefId;

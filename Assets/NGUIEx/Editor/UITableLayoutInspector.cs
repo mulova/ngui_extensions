@@ -7,14 +7,14 @@ using comunity;
 
 
 namespace ngui.ex {
-	[CustomEditor(typeof(UIGridLayout))]
-	public class UIGridLayoutInspector : Editor {
+	[CustomEditor(typeof(UITableLayout))]
+	public class UITableLayoutInspector : Editor {
 		private SerializedInspector varInspector;
-		private UIGridLayoutInspectorImpl inspector;
+		private UITableLayoutInspectorImpl inspector;
 		
 		void OnEnable () {
-			UIGridLayout grid = (UIGridLayout)target;
-			inspector =  new UIGridLayoutInspectorImpl(grid);
+			UITableLayout grid = (UITableLayout)target;
+			inspector =  new UITableLayoutInspectorImpl(grid);
 			inspector.OnEnable();
 			SerializedObject obj = new SerializedObject(grid);
 			varInspector = new SerializedInspector(obj, "gizmoColor");
@@ -37,7 +37,7 @@ namespace ngui.ex {
 			} else {
 				GameObject go = new GameObject("GridLayout");
 				go.layer = Selection.activeGameObject.layer;
-				go.AddComponent<UIGridLayout>();
+				go.AddComponent<UITableLayout>();
 				Transform trans = go.transform;
 				trans.parent = Selection.activeGameObject.transform;
 				trans.localPosition = Vector3.zero;

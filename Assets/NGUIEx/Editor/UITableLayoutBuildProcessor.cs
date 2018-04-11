@@ -6,7 +6,7 @@ using build;
 
 namespace ngui.ex
 {
-    public class UIGridLayoutBuildProcessor : ComponentBuildProcess
+    public class UITableLayoutBuildProcessor : ComponentBuildProcess
     {
         protected override void VerifyComponent(Component comp)
         {
@@ -14,7 +14,7 @@ namespace ngui.ex
         
         protected override void PreprocessComponent(Component comp)
         {
-            UIGridLayout layout = comp as UIGridLayout;
+            UITableLayout layout = comp as UITableLayout;
             Deactivate(layout.rowPrefab);
             Deactivate(layout.columnPrefab);
             Deactivate(layout.defaultPrefab);
@@ -28,7 +28,7 @@ namespace ngui.ex
         {
             get
             {
-                return typeof(UIGridLayout);
+                return typeof(UITableLayout);
             }
         }
         

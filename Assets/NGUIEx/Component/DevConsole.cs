@@ -7,7 +7,7 @@ using System.Text;
 
 public class DevConsole : MonoBehaviour {
 
-	public UIGridLayout layout;
+	public UITableLayout layout;
 	public int maxLine = 100;
 	public bool showStack;
 	public LogType logLevel = LogType.Warning;

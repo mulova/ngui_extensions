@@ -12,7 +12,7 @@ using UnityEngine;
 using DaikonForge.Tween;
 
 namespace ngui.ex {
-	public class UIGridAnim : MonoBehaviour, UIGridEventListener {
+	public class UITableAnim : MonoBehaviour, UITableEventListener {
 		
 		public enum AnimType {
 			ShowRotate, ShowLeft, ShowRight, 
@@ -20,7 +20,7 @@ namespace ngui.ex {
 			MoveRow
 		}
 		
-		public UIGridLayout grid;
+        public UITableLayout grid;
 		public float speed = 2;
 		public float interval = 0.2f; // time interval to begin next row animation
 		public AnimType animType = AnimType.ShowRotate;
@@ -31,11 +31,11 @@ namespace ngui.ex {
 		private delegate void Animator(int row, Transform t, Vector3 scale, Vector3 pos, float interpolation);
 		private Animator animator;
 		
-		private List<UIGridAnimEventListener> listeners = new List<UIGridAnimEventListener>();
+		private List<UITableAnimEventListener> listeners = new List<UITableAnimEventListener>();
 		
 		void OnEnable() {
 			if (grid == null) {
-				grid = GetComponent<UIGridLayout>();
+                grid = GetComponent<UITableLayout>();
 			}
 			if (grid != null) {
 				grid.AddListener(this);
@@ -48,14 +48,14 @@ namespace ngui.ex {
 			}
 		}
 		
-		public void AddListener(UIGridAnimEventListener l) {
+		public void AddListener(UITableAnimEventListener l) {
 #if UNITY_EDITOR
 			Assert.AssertFalse(listeners.Contains(l));
 #endif
 			listeners.Add(l);
 		}
 		
-		public void RemoveListener(UIGridAnimEventListener l) {
+		public void RemoveListener(UITableAnimEventListener l) {
 			listeners.Add(l);
 		}
 		
@@ -92,12 +92,12 @@ namespace ngui.ex {
 					}
 				}
 				if (r>=grid.rowHeader && old <= 0 && time > 0) {
-					foreach (UIGridAnimEventListener l in listeners) {
+					foreach (UITableAnimEventListener l in listeners) {
 						l.OnRowAnimBegin(r-grid.rowHeader);
 					}
 				}
 				if (r>=grid.rowHeader && old < 1 && time >= 1) {
-					foreach (UIGridAnimEventListener l in listeners) {
+					foreach (UITableAnimEventListener l in listeners) {
 						l.OnRowAnimEnd(r-grid.rowHeader);
 					}
 				}
@@ -110,7 +110,7 @@ namespace ngui.ex {
 					}
 				}
 				invalid = false;
-				foreach (UIGridAnimEventListener l in listeners) {
+				foreach (UITableAnimEventListener l in listeners) {
 					l.OnAnimEnd();
 				}
 			}
@@ -255,19 +255,19 @@ namespace ngui.ex {
 			}
 		}
 		
-		void UIGridEventListener.OnRowSelected (int row) { }
+		void UITableEventListener.OnRowSelected (int row) { }
 		
-		void UIGridEventListener.OnModelChanged ()
+		void UITableEventListener.OnModelChanged ()
 		{
 			BeginAnimation();
 		}
 	}
 	
 	public static class AnimTypeMethod {
-		public static bool IsHide(this UIGridAnim.AnimType a) {
-			return a==UIGridAnim.AnimType.HideRotate 
-				|| a==UIGridAnim.AnimType.HideLeft
-					|| a==UIGridAnim.AnimType.HideRight;
+		public static bool IsHide(this UITableAnim.AnimType a) {
+			return a==UITableAnim.AnimType.HideRotate 
+				|| a==UITableAnim.AnimType.HideLeft
+					|| a==UITableAnim.AnimType.HideRight;
 		}
 	}
 }

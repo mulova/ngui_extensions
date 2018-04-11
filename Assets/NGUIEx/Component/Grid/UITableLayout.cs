@@ -16,8 +16,8 @@ using comunity;
 namespace ngui.ex
 {
     [ExecuteInEditMode]
-    [AddComponentMenu("NGUI/Ex/GridLayout")]
-    public class UIGridLayout : UILayout, IEnumerable<Transform>
+    [AddComponentMenu("NGUI/Ex/TableLayout")]
+    public class UITableLayout : UILayout, IEnumerable<Transform>
     {
         public enum HAlign
         {
@@ -68,8 +68,6 @@ namespace ngui.ex
         public GameObject defaultPrefab;
         public int[] rowHeight = new int[0];
         public int[] columnWidth = new int[0];
-        public Transform[] rowBgPrefab = new Transform[0];
-        public Transform[] rowBg = new Transform[0];
         // rows for background
         public UIWidget background;
         public Vector4 backgroundPadding;
@@ -81,10 +79,9 @@ namespace ngui.ex
         //  if true, Reposition is propagated to the ancestor UILayouts
         public GameObject emptyObj;
 		
-        private List<UIGridEventListener> listeners = new List<UIGridEventListener>();
+        private List<UITableEventListener> listeners = new List<UITableEventListener>();
         private UIGridModel model;
         private Vector2[,] cellPos;
-        private bool ALWAYS_HORIZONTAL_BG = true;
         private Action<UIGridCell> initFunc = null;
 
         void Awake()
@@ -233,17 +230,6 @@ namespace ngui.ex
                 l++;
             }
             return l;
-        }
-
-        public int GetBackgroundRowCount()
-        {
-            if (ALWAYS_HORIZONTAL_BG||IsHorizontal())
-            {
-                return Math.Max(GetRowCount(), rowHeader);
-            } else
-            {
-                return Math.Max(GetColumnCount(), columnHeader);
-            }
         }
 
         public void SetContents(IList data, Action<UIGridCell> initFunc = null)
@@ -546,34 +532,6 @@ namespace ngui.ex
             InvalidateLayout();
         }
 
-        public Transform GetBackground(int i)
-        {
-            int prefabIndex = i;
-            if (ALWAYS_HORIZONTAL_BG||IsHorizontal())
-            {
-                prefabIndex -= rowHeader;
-            } else
-            {
-                prefabIndex -= columnHeader;
-            }
-            if (prefabIndex < 0)
-            {
-                return rowBg[i];
-            }
-            if (rowBgPrefab.IsEmpty())
-            {
-                return null;
-            }
-            Transform prefab = rowBgPrefab[prefabIndex % rowBgPrefab.Length];
-            if (rowBg[i] == null&&prefab != null)
-            {
-                rowBg[i] = NGUIUtil.InstantiateWidget(transform, prefab.gameObject);
-                rowBg[i].gameObject.SetActive(true);
-                rowBg[i].name = "row_bg".AddSuffix(i);
-            }
-            return rowBg[i];
-        }
-
         public bool InitArray()
         {
             int rowCount = IsVertical()? GetMaxPerLine() : GetLineCount();
@@ -585,7 +543,6 @@ namespace ngui.ex
                 changed |= Resize(ref rowPrefab, rowCount);
                 changed |= Resize(ref columnPrefab, colCount);
             }
-            int bgCount = GetBackgroundRowCount();
             if (haligns.Length != colCount)
             {
                 int c = haligns.Length;
@@ -606,16 +563,6 @@ namespace ngui.ex
                     changed = true;
                 }
             }
-            // Remove Unused Background
-            for (int i = bgCount; i < rowBg.Length; i++)
-            {
-                if (rowBg[i] != null)
-                {
-                    rowBg[i].gameObject.DestroyEx();
-                }
-            }
-            changed |= Resize(ref rowBg, bgCount);
-			
             if (cellPos == null||cellPos.GetLength(0) != rowCount||cellPos.GetLength(1) != colCount)
             {
                 cellPos = new Vector2[rowCount, colCount];
@@ -666,7 +613,7 @@ namespace ngui.ex
             InvalidateLayout();
         }
 
-        public void AddListener(UIGridEventListener l)
+        public void AddListener(UITableEventListener l)
         {
 #if UNITY_EDITOR
             Assert.IsFalse(listeners.Contains(l));
@@ -674,7 +621,7 @@ namespace ngui.ex
             this.listeners.Add(l);
         }
 
-        public void RemoveListener(UIGridEventListener l)
+        public void RemoveListener(UITableEventListener l)
         {
             this.listeners.Remove(l);
         }
@@ -702,11 +649,10 @@ namespace ngui.ex
                 int c = GetColumnIndex(i);
                 //			int line = GetLineIndex(i);
                 transforms[r, c] = components[i];
-                if (cellSize.x != 0&&cellSize.y != 0)
+                if (cellSize.x != 0 || cellSize.y != 0)
                 {
                     float cx = r * cellSize.x+cellSize.x * 0.5f+padding.x * Mathf.Max(0, r-1);
                     float cy = c * cellSize.y+cellSize.y * 0.5f+padding.y * Mathf.Max(0, c-1);
-                    ;
                     bounds[r, c] = new Bounds(new Vector3(cx, cy), new Vector3(cellSize.x, cellSize.y, 1));
                 } else
                 {
@@ -953,7 +899,6 @@ namespace ngui.ex
 			
             if (NGUIUtil.IsValid(bound))
             {
-                DoLayoutBackground(ref bound, maxWidths, maxHeights);
 //				UIDraggablePanel drag = NGUITools.FindInParents<UIDraggablePanel>(gameObject);
 //				if (drag != null) drag.UpdateScrollbars(true);
             } else
@@ -963,99 +908,6 @@ namespace ngui.ex
             if (propagateReposition)
             {
                 NGUIUtil.Reposition(transform);
-            }
-        }
-
-        private void DoLayoutBackground(ref Rect bound, float[] widths, float[] heights)
-        {
-            float bgWidth = bound.width;
-            float bgHeight = bound.height;
-            float x = bound.x;
-            float y = bound.y;
-			
-            // exclude header size from row background size 
-            if (IsHorizontal())
-            {
-                for (int i = 0; i < columnHeader; i++)
-                {
-                    float w = widths[i]+padding.x;
-                    x += w;
-                    bgWidth -= w;
-                }
-            } else
-            {
-                for (int i = 0; i < rowHeader; i++)
-                {
-                    float h = heights[i]-padding.y;
-                    y += h;
-                    bgHeight -= h;
-                }
-            }
-			
-            for (int i = 0, imax = GetBackgroundRowCount(); i < imax; i++)
-            {
-                Transform t = GetBackground(i);
-                if (t != null&&t.gameObject.activeInHierarchy)
-                {
-                    Transform tbg = t;
-                    UISprite sprite = t.GetComponentInChildren<UISprite>();
-                    if (sprite != null)
-                    {
-                        tbg = sprite.transform;
-                    }
-                    Vector3 pos = tbg.localPosition;
-                    pos.x = x;
-                    pos.y = y;
-                    // set size
-                    if (ALWAYS_HORIZONTAL_BG||IsHorizontal())
-                    {
-                        tbg.localScale = new Vector3(bgWidth, -heights[i], 1);
-                    } else
-                    {
-                        tbg.localScale = new Vector3(widths[i], -bgHeight, 1);
-                    }
-                    Bounds bound0 = CalculateBounds(t);
-                    Vector3 point = bound0.min;
-                    // align position
-                    pos.x -= point.x;
-                    pos.y -= point.y;
-                    t.localPosition = pos;
-					
-                    // Update Bounds
-                    BoxCollider box = t.GetComponent<BoxCollider>();
-                    if (box != null)
-                    {
-                        NGUIUtil.UpdateCollider(box);
-                        // Set Listener
-                        UIButton msg = t.GetComponent<UIButton>();
-                        if (msg != null)
-                        {
-                            EventDelegate method = new EventDelegate(this, "OnRowSelected");
-                            method.parameters[0].obj = this;
-                            method.parameters[0].field = "";
-                            // i-rowHeader
-                            msg.onClick.Add(method);
-                        }
-                    }
-					
-                }
-                if (ALWAYS_HORIZONTAL_BG||IsHorizontal())
-                {
-                    y += heights[i]-padding.y;
-                } else
-                {
-                    x += widths[i]+padding.x;
-                }
-            }
-			
-            if (background != null)
-            {
-                bound.x -= backgroundPadding.x;
-                bound.y -= backgroundPadding.y;
-                bound.width += backgroundPadding.x+backgroundPadding.z;
-                bound.height += backgroundPadding.y+backgroundPadding.w;
-                Rect bgBound = background.transform.parent.TransformRect(transform, bound);
-                NGUIUtil.SetBoundingBox(background.transform, bgBound);
             }
         }
 
@@ -1129,7 +981,7 @@ namespace ngui.ex
             }
             SelectCell<object>(o => sel.Contains(o));
 			
-            foreach (UIGridEventListener l in listeners)
+            foreach (UITableEventListener l in listeners)
             {
                 l.OnModelChanged();
             }
@@ -1184,7 +1036,7 @@ namespace ngui.ex
         public void OnRowSelected(object row)
         {
             int rowNo = (int)row;
-            foreach (UIGridEventListener l in listeners)
+            foreach (UITableEventListener l in listeners)
             {
                 l.OnRowSelected(rowNo);
             }
@@ -1195,27 +1047,6 @@ namespace ngui.ex
             if (model != null)
             {
                 model.Update(RefreshContents);
-            }
-        }
-
-        /**
-		 * Row중 UILabel인 경우 text color를 바꾸어준다.
-		 * @param row row 값은 title row를 포함한 실제 row번호(zero-based)
-		 */
-        public void SetRowColor(int row, Color color)
-        {
-            string colorStr = NGUIUtil.ConvertColor2Str(color);
-            for (int col = columnHeader; col < GetColumnCount(); col++)
-            {
-                Transform t = GetCell(row+rowHeader, col);
-                if (t != null)
-                {
-                    UILabel label = t.GetComponent<UILabel>();
-                    if (label != null)
-                    {
-                        label.SetText(colorStr+label.text);
-                    }
-                }
             }
         }
 

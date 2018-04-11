@@ -8,27 +8,27 @@ using commons;
 using comunity;
 
 namespace ngui.ex {
-    public class UIGridContentsTab : EditorTab {
-		private UIGridLayoutInspectorImpl inspector;
-		private UIGridLayout grid;
+    public class UITableContentsTab : EditorTab {
+		private UITableLayoutInspectorImpl inspector;
+		private UITableLayout grid;
 		private const float WIDTH = 70;
 		private const float HEIGHT = 16;
 		private GUILayoutOption W_Option = GUILayout.Width(WIDTH);
 		private GUILayoutOption H_Option = GUILayout.Height(HEIGHT);
 		
-		public UIGridContentsTab(TabbedEditorWindow window) : base("Grid", window) {
+		public UITableContentsTab(TabbedEditorWindow window) : base("Grid", window) {
 		}
 		
-		public void SetLayout(UIGridLayout grid) {
+		public void SetLayout(UITableLayout grid) {
 			this.grid = grid;
-			this.inspector = new UIGridLayoutInspectorImpl(grid);
+			this.inspector = new UITableLayoutInspectorImpl(grid);
 			this.inspector.OnEnable();
 		}
 		
 		public override void OnEnable() {
 			GameObject sel = Selection.activeGameObject;
 			if (sel != null) {
-				UIGridLayout layout = sel.GetComponent<UIGridLayout>();
+				UITableLayout layout = sel.GetComponent<UITableLayout>();
 				if (layout != null) {
 					grid = layout;
 					SetLayout(grid);
@@ -93,7 +93,7 @@ namespace ngui.ex {
 			for (int r=0; r<row; r++) {
 				EditorGUILayout.BeginHorizontal();
 				changed |= EditorGUIUtil.ObjectField<GameObject>(ref grid.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
-                changed |= EditorGUIUtil.Popup<UIGridLayout.VAlign>(ref grid.valigns[r], EnumUtil.Values<UIGridLayout.VAlign>(), GUILayout.Width(40), H_Option);
+                changed |= EditorGUIUtil.Popup<UITableLayout.VAlign>(ref grid.valigns[r], EnumUtil.Values<UITableLayout.VAlign>(), GUILayout.Width(40), H_Option);
 				changed |= EditorGUIUtil.IntField(null, ref grid.rowHeight[r], GUILayout.Width(WIDTH-30), H_Option);
 				EditorGUILayout.LabelField((r+1).ToString(), EditorStyles.boldLabel, GUILayout.Width(20), H_Option);
 				EditorGUILayout.EndHorizontal();
@@ -117,7 +117,7 @@ namespace ngui.ex {
 			for (int c=0; c<columnSize; c++) {
 				EditorGUILayout.BeginVertical();
 				changed |= EditorGUIUtil.ObjectField<GameObject>(ref grid.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
-                changed |= EditorGUIUtil.Popup<UIGridLayout.HAlign>(ref grid.haligns[c], EnumUtil.Values<UIGridLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
+                changed |= EditorGUIUtil.Popup<UITableLayout.HAlign>(ref grid.haligns[c], EnumUtil.Values<UITableLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
 				changed |= EditorGUIUtil.IntField(null, ref grid.columnWidth[c], GUILayout.Width(WIDTH-20), H_Option);
 				EditorGUILayout.LabelField(c.ToString(), EditorStyles.boldLabel, W_Option, H_Option);
 				int row = grid.GetRowCount();
@@ -129,7 +129,7 @@ namespace ngui.ex {
 					// Draw Column +/- buttons
 					EditorGUILayout.BeginHorizontal();
 					if (GUILayout.Button(new GUIContent("A", "Add Selected"), GUILayout.ExpandWidth(false), H_Option)) {
-						AddSelected(c, UIGridLayout.Arrangement.Vertical);
+						AddSelected(c, UITableLayout.Arrangement.Vertical);
 						changed = true;
 					}
 					if (GUILayout.Button("+", GUILayout.ExpandWidth(false), H_Option)) {
@@ -168,7 +168,7 @@ namespace ngui.ex {
 			for (int r=0; r<row; r++) {
 				EditorGUILayout.BeginHorizontal();
 				if (GUILayout.Button(new GUIContent("A", "Add Selected"), EditorStyles.miniButton, GUILayout.ExpandWidth(false), GUILayout.Height(HEIGHT-1))) {
-					AddSelected(r, UIGridLayout.Arrangement.Horizontal);
+					AddSelected(r, UITableLayout.Arrangement.Horizontal);
 					changed = true;
 				}
 				if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.ExpandWidth(false), GUILayout.Height(HEIGHT-1))) {
@@ -208,11 +208,11 @@ namespace ngui.ex {
 			return changed;
 		}
 		
-		private void AddSelected(int line, UIGridLayout.Arrangement orientation) {
+		private void AddSelected(int line, UITableLayout.Arrangement orientation) {
 			GameObject[] objs = new GameObject[Selection.gameObjects.Length];
 			Array.Copy(Selection.gameObjects, objs, objs.Length);
 			Array.Sort(objs, new HVComparer(orientation));
-			if (orientation == UIGridLayout.Arrangement.Horizontal) {
+			if (orientation == UITableLayout.Arrangement.Horizontal) {
 				for (int c=0; c<Math.Min(objs.Length, grid.maxPerLine); c++) {
 					SetCell(line+c/grid.maxPerLine, c%grid.maxPerLine, objs[c].transform);
 				}
@@ -236,14 +236,14 @@ namespace ngui.ex {
 		
 		
 		class HVComparer : IComparer<GameObject> {
-			private UIGridLayout.Arrangement arrangement;
-			public HVComparer(UIGridLayout.Arrangement arrangement) {
+			private UITableLayout.Arrangement arrangement;
+			public HVComparer(UITableLayout.Arrangement arrangement) {
 				this.arrangement = arrangement;
 			}
 			
 			public int Compare (UnityEngine.GameObject x, UnityEngine.GameObject y)
 			{
-				if (arrangement == UIGridLayout.Arrangement.Horizontal) {
+				if (arrangement == UITableLayout.Arrangement.Horizontal) {
 					return Sign(x.transform.position.x, y.transform.position.x);
 				} else {
 					return Sign(-x.transform.position.y, -y.transform.position.y);

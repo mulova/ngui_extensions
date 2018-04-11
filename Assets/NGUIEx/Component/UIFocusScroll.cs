@@ -20,7 +20,7 @@ namespace ngui.ex
 		
 		private Action<Transform> focusCallback;
 		private UIScrollView scroll;
-		private UIGridLayout grid;
+		private UITableLayout grid;
 		private float scalingCoverage;
 
 		private void OnEnable()
@@ -42,7 +42,7 @@ namespace ngui.ex
 			scroll.onDragFinished -= FocusTarget;
 		}
 
-		public void InitFocusing(UIScrollView focusScroll, UIGridLayout grid, Action<Transform> focusCallback = null)
+		public void InitFocusing(UIScrollView focusScroll, UITableLayout grid, Action<Transform> focusCallback = null)
 		{
 			scalingCoverage = Vector3.Distance(focusCenter.position, coverRadius.position);
 			if (focusScroll == null)
