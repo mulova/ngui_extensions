@@ -12,7 +12,7 @@ using Nullable = commons.Nullable;
 using Object = UnityEngine.Object;
 
 namespace ngui.ex {
-	public class SimpleGridCell : UIGridCell
+	public class SimpleGridCell : UITableCell
 	{
 		protected override void DrawCell(object val) {}
 	}

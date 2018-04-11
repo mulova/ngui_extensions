@@ -9,7 +9,7 @@ using System;
 namespace ngui.ex
 {
 
-    public class TexLoaderCell : UIGridCell
+    public class TexLoaderCell : UITableCell
     {
         public TexLoader texLoader;
 

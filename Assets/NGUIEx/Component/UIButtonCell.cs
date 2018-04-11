@@ -16,7 +16,7 @@ using commons;
 namespace ngui.ex
 {
 	
-	public abstract class UIButtonCell : UIGridCell
+	public abstract class UIButtonCell : UITableCell
 	{
 		public UIButton button;
 		public UILabel buttonLabel;

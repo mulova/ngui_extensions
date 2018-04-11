@@ -14,7 +14,7 @@ namespace ngui.ex
             string colorStr = NGUIUtil.ConvertColor2Str(color);
             for (int col = table.columnHeader; col < table.GetColumnCount(); col++)
             {
-                Transform t = table.GetCell(row+table.rowHeader, col);
+                Transform t = table.GetCellTransform(row+table.rowHeader, col);
                 if (t != null)
                 {
                     UILabel label = t.GetComponent<UILabel>();

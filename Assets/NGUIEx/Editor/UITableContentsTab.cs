@@ -200,7 +200,7 @@ namespace ngui.ex {
 		
 		private bool DrawCell(int r, int c) {
 			bool changed = false;
-			Transform t = grid.GetCell(r, c);
+			Transform t = grid.GetCellTransform(r, c);
 			if (EditorGUIUtil.ObjectField<Transform>(ref t, true, W_Option, GUILayout.Height(HEIGHT-1))) {
 				grid.SetCell(r, c, t);
 				changed = true;

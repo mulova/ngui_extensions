@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace ngui.ex {
-	public class UILabelCell : UIGridCell
+	public class UILabelCell : UITableCell
 	{
         public UILabel label;
 

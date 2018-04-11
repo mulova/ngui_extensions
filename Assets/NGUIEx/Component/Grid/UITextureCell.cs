@@ -9,7 +9,7 @@ using comunity;
 
 namespace ngui.ex {
 	[RequireComponent(typeof(UITexture))]
-	public class UITextureCell : UIGridCell
+	public class UITextureCell : UITableCell
 	{
 		protected override void DrawCell (object val)
 		{

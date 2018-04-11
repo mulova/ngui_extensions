@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ngui.ex {
 	[RequireComponent(typeof(UISprite))]
-	public class UISpriteCell : UIGridCell
+	public class UISpriteCell : UITableCell
 	{
 		protected override void DrawCell (object val)
 		{

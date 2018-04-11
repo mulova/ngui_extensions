@@ -13,7 +13,7 @@ using Object = UnityEngine.Object;
 
 
 namespace ngui.ex {
-    public abstract class UIGridCell : comunity.Script
+    public abstract class UITableCell : comunity.Script
 	{
 		[Nullable] public UIWidget bound;
 		[Nullable] public UIToggle toggle;
@@ -21,23 +21,15 @@ namespace ngui.ex {
         [HideInInspector] public int column;
 
         protected UITableLayout containerGrid;
-        protected Action<UIGridCell> initFunc { get; set; }
-		protected object val;
-
-		public object GetCellData() {
-			return val;
-		}
-
-		public T GetCellData<T>() {
-			return (T)val;
-		}
+        protected Action<UITableCell> initFunc { get; set; }
+        public object data { get; protected set; }
 
 		public void Refresh() {
-            SetCell(val, initFunc);
+            SetCell(data, initFunc);
 		}
 		
-        public virtual void SetCell(object val, Action<UIGridCell> initFunc = null) {
-			this.val = val;
+        public virtual void SetCell(object val, Action<UITableCell> initFunc = null) {
+			this.data = val;
             this.initFunc = initFunc;
 			gameObject.SetActive(val != null);
             if (initFunc != null)
@@ -55,8 +47,8 @@ namespace ngui.ex {
 		/// <param name="t">T.</param>
 		/// <param name="val">Value.</param>
 		/// <param name="status">Status.</param>
-        public static void SetValue(UITableLayout grid, Transform t, int row, int column, object val, Action<UIGridCell> initFunc = null) {
-            UIGridCell c = t.GetComponent<UIGridCell>();
+        public static void SetValue(UITableLayout grid, Transform t, int row, int column, object val, Action<UITableCell> initFunc = null) {
+            UITableCell c = t.GetComponent<UITableCell>();
 			if (c != null) {
                 c.containerGrid = grid;
 				c.row = row;

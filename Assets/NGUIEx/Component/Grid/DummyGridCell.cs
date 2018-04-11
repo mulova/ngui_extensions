@@ -8,7 +8,7 @@ using System;
 using UnityEngine;
 
 namespace ngui.ex {
-	public class DummyGridCell : UIGridCell
+	public class DummyGridCell : UITableCell
 	{
 		protected override void DrawCell(object val)
 		{

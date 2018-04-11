@@ -6,12 +6,12 @@ using System;
 using System.Collections.Generic;
 
 namespace ngui.ex {
-	[CustomEditor(typeof(UIGridAnim))]
-	public class UIGridAnimInspector : Editor {
-		private UIGridAnim anim;
+	[CustomEditor(typeof(UITableAnim))]
+	public class UITableAnimInspector : Editor {
+		private UITableAnim anim;
 		
 		void OnEnable () {
-			anim = (UIGridAnim)target;
+			anim = (UITableAnim)target;
 		}
 		
 		override public void OnInspectorGUI() {

@@ -80,9 +80,10 @@ namespace ngui.ex
         public GameObject emptyObj;
 		
         private List<UITableEventListener> listeners = new List<UITableEventListener>();
-        private UIGridModel model;
+        private UITableModel model;
         private Vector2[,] cellPos;
-        private Action<UIGridCell> initFunc = null;
+        private Action<UITableCell> initFunc = null;
+        private Dictionary<Transform, UITableCell> cellCache = new Dictionary<Transform, UITableCell>();
 
         void Awake()
         {
@@ -232,11 +233,11 @@ namespace ngui.ex
             return l;
         }
 
-        public void SetContents(IList data, Action<UIGridCell> initFunc = null)
+        public void SetContents(IList data, Action<UITableCell> initFunc = null)
         {
             if (this.model == null)
             {
-                SetModel(new UIGridModel(data, IsHorizontal(), maxPerLine), initFunc);
+                SetModel(new UITableModel(data, IsHorizontal(), maxPerLine), initFunc);
             } else
             {
                 this.initFunc = initFunc;
@@ -245,11 +246,11 @@ namespace ngui.ex
             }
         }
 
-        public void SetContents(IEnumerable data, Action<UIGridCell> initFunc = null)
+        public void SetContents(IEnumerable data, Action<UITableCell> initFunc = null)
         {
             if (this.model == null)
             {
-                SetModel(new UIGridModel(data, IsHorizontal(), maxPerLine), initFunc);
+                SetModel(new UITableModel(data, IsHorizontal(), maxPerLine), initFunc);
             } else
             {
                 this.model.SetContents(data, IsHorizontal(), maxPerLine);
@@ -258,7 +259,7 @@ namespace ngui.ex
             }
         }
 
-        public void SetModel(UIGridModel model, Action<UIGridCell> initFunc = null)
+        public void SetModel(UITableModel model, Action<UITableCell> initFunc = null)
         {
             this.model = model;
             this.initFunc = initFunc;
@@ -272,7 +273,7 @@ namespace ngui.ex
         public void SetDummyModel(int count)
         {
             int[] content = new int[count];
-            SetModel(new UIGridModel(content, IsHorizontal(), maxPerLine));
+            SetModel(new UITableModel(content, IsHorizontal(), maxPerLine));
         }
 
         public void Clear()
@@ -280,7 +281,7 @@ namespace ngui.ex
             SetDummyModel(0);
         }
 
-        public UIGridModel GetModel()
+        public UITableModel GetModel()
         {
             return this.model;
         }
@@ -471,22 +472,22 @@ namespace ngui.ex
             }
         }
 
-        private void DestroyCell(Transform c)
+        private void DestroyCell(Transform t)
         {
-            if (c == null)
+            if (t == null)
             {
                 return;
             }
             if (Application.isEditor&&!Application.isPlaying)
             {
-                c.gameObject.SetActive(false);
+                t.gameObject.SetActive(false);
             } else if (reuseCell)
             {
-                c.GetComponent<UIGridCell>().Clear();
-                c.gameObject.SetActive(false);
+                GetCell(t).Clear();
+                t.gameObject.SetActive(false);
             } else
             {
-                c.gameObject.DestroyEx();
+                t.gameObject.DestroyEx();
             }
         }
 
@@ -592,7 +593,7 @@ namespace ngui.ex
             return i;
         }
 
-        public Transform GetCell(int row, int col)
+        public Transform GetCellTransform(int row, int col)
         {
             int i = GetIndex(row, col);
             if (i >= components.Length)
@@ -600,6 +601,23 @@ namespace ngui.ex
                 return null;
             }
             return components[i];
+        }
+
+        public UITableCell GetCell(int row, int col)
+        {
+            Transform t = GetCellTransform(row, col);
+            return GetCell(t);
+        }
+
+        public UITableCell GetCell(Transform t)
+        {
+            UITableCell c = null;
+            if (!cellCache.TryGetValue(t, out c))
+            {
+                c = t.GetComponent<UITableCell>();
+                cellCache[t] = c;
+            }
+            return c;
         }
 
         public void SetCell(int row, int col, Transform t)
@@ -668,7 +686,7 @@ namespace ngui.ex
                 bool filled = false;
                 for (int c = 0; c < col&&!filled; c++)
                 {
-                    var cell = GetCell(r, c);
+                    var cell = GetCellTransform(r, c);
                     if (cell != null&&cell.gameObject.activeSelf)
                     {
                         filled = true; 
@@ -701,7 +719,7 @@ namespace ngui.ex
                 bool filled = false;
                 for (int r = 0; r < row&&!filled; r++)
                 {
-                    var cell = GetCell(r, c);
+                    var cell = GetCellTransform(r, c);
                     if (cell != null&&cell.gameObject.activeSelf)
                     {
                         filled = true; 
@@ -740,7 +758,7 @@ namespace ngui.ex
                 bound.width = totalWidth;
             }
 
-            UIGridPrefabs prefabs = GetPrefabs();
+            UITablePrefabs prefabs = GetPrefabs();
             float pixely = 0;
             for (int r = 0; r < row; r++)
             {
@@ -917,7 +935,7 @@ namespace ngui.ex
             {
                 return new Bounds();
             }
-            UIGridCell cell = t.GetComponent<UIGridCell>();
+            UITableCell cell = GetCell(t);
             if (cell != null&&cell.bound != null)
             {
                 return cell.bound.CalculateBounds(cell.transform);
@@ -925,9 +943,9 @@ namespace ngui.ex
             return GetBounds(t);
         }
 
-        private UIGridPrefabs GetPrefabs()
+        private UITablePrefabs GetPrefabs()
         {
-            return new UIGridPrefabs(defaultPrefab, rowPrefab, columnPrefab, rowHeader, columnHeader);
+            return new UITablePrefabs(defaultPrefab, rowPrefab, columnPrefab, rowHeader, columnHeader);
         }
 
         public void RefreshContents()
@@ -940,7 +958,7 @@ namespace ngui.ex
             List<object> sel = GetSelectedDataList<object>();
             emptyObj.SetActiveEx(model.IsEmpty());
             AssertDimension();
-            UIGridPrefabs prefabs = GetPrefabs();
+            UITablePrefabs prefabs = GetPrefabs();
             if (IsHorizontal())
             {
                 for (int r = 0; r < model.GetRowCount(); r++)
@@ -992,9 +1010,9 @@ namespace ngui.ex
 		 * cell 값이 GameObject일 경우 prefab이라고 가정하고 새로 생성한다.
 		 * 이외의 값일 경우 ToString()을 사용하여 Label을 넣는다.
 		 */
-        private void SetCellValue(UIGridPrefabs prefabs, int row, int col, object cellValue, Action<UIGridCell> initFunc)
+        private void SetCellValue(UITablePrefabs prefabs, int row, int col, object cellValue, Action<UITableCell> initFunc)
         {
-            Transform cell = GetCell(row, col);
+            Transform cell = GetCellTransform(row, col);
             if (cellValue == null)
             {
                 if (cell != null)
@@ -1016,7 +1034,7 @@ namespace ngui.ex
             // Set Cell Value
             SetCell(row, col, cell);
 			
-            UIGridCell.SetValue(this, cell, row-rowHeader, col-columnHeader, cellValue, initFunc);
+            UITableCell.SetValue(this, cell, row-rowHeader, col-columnHeader, cellValue, initFunc);
         }
 
         private void AssertDimension()
@@ -1069,13 +1087,13 @@ namespace ngui.ex
             }
         }
 
-        public void ForEach<T>(Predicate<T> func, bool includeInactive = false) where T: Component
+        public void ForEach<C>(Predicate<C> func, bool includeInactive = false) where C: UITableCell
         {
             foreach (Transform t in components)
             {
                 if (t != null&&(includeInactive||t.gameObject.activeSelf))
                 {
-                    T cell = t.GetComponent<T>();
+                    C cell = GetCell(t) as C;
                     if (cell != null&&!func(cell))
                     {
                         return;
@@ -1084,13 +1102,13 @@ namespace ngui.ex
             }
         }
 
-        public void ForEach<T>(Action<T> func, bool includeInactive = false) where T: Component
+        public void ForEach<C>(Action<C> func, bool includeInactive = false) where C:UITableCell
         {
             foreach (Transform t in components)
             {
                 if (t != null&&(includeInactive||t.gameObject.activeSelf))
                 {
-                    T cell = t.GetComponent<T>();
+                    C cell = GetCell(t) as C;
                     if (cell != null)
                     {
                         func(cell);
@@ -1099,14 +1117,14 @@ namespace ngui.ex
             }
         }
 
-        public int GetCount<T>(Predicate<T> predicate) where T: Component
+        public int GetCount<C>(Predicate<C> predicate) where C : UITableCell
         { 
             int count = 0;
             foreach (Transform t in components)
             {
                 if (t != null&&t.gameObject.activeSelf)
                 {
-                    T cell = t.GetComponent<T>();
+                    C cell = GetCell(t) as C;
                     if (cell != null&&predicate(cell))
                     {
                         count++;
@@ -1116,14 +1134,14 @@ namespace ngui.ex
             return count;
         }
 
-        public List<V> ConvertCells<C, V>(Converter<C, V> conv) where C: UIGridCell
+        public List<V> ConvertCells<C, V>(Converter<C, V> conv) where C: UITableCell
         { 
             List<V> list = new List<V>();
             foreach (Transform t in components)
             {
                 if (t != null&&t.gameObject.activeSelf)
                 {
-                    C cell = t.GetComponent<C>();
+                    C cell = GetCell(t) as C;
                     if (cell != null)
                     {
                         V v = conv(cell);
@@ -1137,14 +1155,14 @@ namespace ngui.ex
             return list;
         }
 
-        public List<C> FilterCell<C>(Predicate<C> func) where C:UIGridCell
+        public List<C> FilterCell<C>(Predicate<C> func) where C:UITableCell
         { 
             List<C> list = new List<C>();
             foreach (Transform t in components)
             {
                 if (t != null&&t.gameObject.activeSelf)
                 {
-                    C cell = t.GetComponent<C>();
+                    C cell = GetCell(t) as C;
                     if (cell != null&&func(cell))
                     {
                         list.Add(cell);
@@ -1161,10 +1179,10 @@ namespace ngui.ex
             {
                 if (t != null&&t.gameObject.activeSelf)
                 {
-                    UIGridCell cell = t.GetComponent<UIGridCell>();
+                    UITableCell cell = GetCell(t);
                     if (cell != null)
                     {
-                        D cellData = cell.GetCellData<D>();
+                        D cellData = (D)cell.data;
                         if (cellData != null&&func(cellData))
                         {
                             list.Add(cellData);
@@ -1175,13 +1193,13 @@ namespace ngui.ex
             return list;
         }
 
-        public C GetSelectedCell<C>() where C: UIGridCell
+        public C GetSelectedCell<C>() where C: UITableCell
         { 
             foreach (Transform t in components)
             {
                 if (t != null&&t.gameObject.activeSelf)
                 {
-                    C cell = t.GetComponent<C>();
+                    C cell = GetCell(t) as C;
                     if (cell != null&&cell.gameObject.activeSelf&&cell.toggle != null&&cell.toggle.value)
                     {
                         return cell;
@@ -1191,7 +1209,7 @@ namespace ngui.ex
             return null;
         }
 
-        public List<C> GetSelectedCellList<C>() where C: UIGridCell
+        public List<C> GetSelectedCellList<C>() where C: UITableCell
         { 
             return ConvertCells<C, C>(c =>
             {
@@ -1211,10 +1229,10 @@ namespace ngui.ex
             {
                 for (int c = columnHeader; c < GetColumnCount(); ++c)
                 {
-                    UIGridCell cell = GetCell(r, c).GetComponent<UIGridCell>();
+                    UITableCell cell = GetCell(r, c);
                     if (cell.toggle != null&&cell.toggle.value)
                     {
-                        return (C)cell.GetCellData();
+                        return (C)cell.data;
                     }
                 }
             }
@@ -1223,11 +1241,11 @@ namespace ngui.ex
 
         public List<C> GetSelectedDataList<C>()
         { 
-            return ConvertCells<UIGridCell, C>(c =>
+            return ConvertCells<UITableCell, C>(c =>
             {
                 if (c.toggle != null&&c.toggle.value)
                 {
-                    return (C)c.GetCellData();
+                    return (C)c.data;
                 } else
                 {
                     return default(C);
@@ -1238,14 +1256,14 @@ namespace ngui.ex
         public bool SelectCell<D>(Predicate<D> predicate, bool includeInactive = false)
         { 
             bool selected = false;
-            ForEach<UIGridCell>(c =>
+            ForEach<UITableCell>(c =>
             {
                 if (c.toggle != null)
                 {
                     // Setting grouped toggle on inactive toggle incurs an abnormal behaviour.
                     if (c.toggle.isActiveAndEnabled||c.toggle.group == 0)
                     {
-                        bool s = predicate(c.GetCellData<D>());
+                        bool s = predicate((D)c.data);
                         c.SetSelected(s);
                     }
                 }
@@ -1256,14 +1274,14 @@ namespace ngui.ex
 
         public void SelectCell(object cellData)
         { 
-            ForEach<UIGridCell>(cell =>
+            ForEach<UITableCell>(cell =>
             {
                 if (cell.toggle != null)
                 {
                     // Setting grouped toggle on inactive toggle incurs an abnormal behaviour.
                     if (cell.toggle.isActiveAndEnabled||cell.toggle.group == 0)
                     {
-                        bool select = cell.GetCellData() == cellData;
+                        bool select = cell.data == cellData;
                         cell.SetSelected(select);
                     }
                 }
@@ -1272,7 +1290,7 @@ namespace ngui.ex
 
         public void SelectCell(int row, int col)
         { 
-            UIGridCell cell = GetCell(row, col).GetComponent<UIGridCell>();
+            UITableCell cell = GetCell(row, col);
             if (cell != null&&cell.toggle != null&&cell.gameObject.activeSelf)
             {
                 cell.SetSelected(true);
@@ -1294,10 +1312,10 @@ namespace ngui.ex
                 select = list[0];
             } else
             {
-                UIGridCell c = GetCell(0, 0).GetComponent<UIGridCell>();
+                UITableCell c = GetCell(0, 0);
                 if (c != null)
                 {
-                    select = c.GetCellData<D>();
+                    select = (D)c.data;
                 }
             }
             if (select != null)

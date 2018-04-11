@@ -16,7 +16,7 @@ namespace ngui.ex
 	/**
 	 * Get GridLayout's row/cell prefab information
 	 */
-	public class UIGridPrefabs
+	public class UITablePrefabs
 	{
 		public GameObject[] rowPrefab;
 		public GameObject[] columnPrefab;
@@ -24,18 +24,18 @@ namespace ngui.ex
 		public int rowHeader;
 		public int columnHeader;
 
-		public UIGridPrefabs(GameObject defaultPrefab)
+		public UITablePrefabs(GameObject defaultPrefab)
 		{
 			this.defaultPrefab = defaultPrefab;
 		}
 
-		public UIGridPrefabs(GameObject[] rowPrefabs, GameObject[] columnPrefabs)
+		public UITablePrefabs(GameObject[] rowPrefabs, GameObject[] columnPrefabs)
 		{
 			this.rowPrefab = rowPrefabs;
 			this.columnPrefab = columnPrefabs;
 		}
 
-		public UIGridPrefabs(GameObject defaultPrefab, 
+		public UITablePrefabs(GameObject defaultPrefab, 
 		                     GameObject[] rowPrefabs, GameObject[] columnPrefabs,
 		                     int rowHeader, int colHeader)
 		{

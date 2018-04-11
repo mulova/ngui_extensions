@@ -9,11 +9,11 @@ using commons;
 using comunity;
 
 namespace ngui.ex {
-    public class UIGridPropertyTab : EditorTab {
+    public class UITablePropertyTab : EditorTab {
 		private UITableLayoutInspectorImpl inspector;
 		private UITableLayout grid;
 		
-		public UIGridPropertyTab(TabbedEditorWindow window) : base("Property", window) {
+		public UITablePropertyTab(TabbedEditorWindow window) : base("Property", window) {
 			TextAsset xls = (TextAsset)Resources.Load("ui/table_width", typeof(TextAsset));
 			if (xls != null) {
 				SpreadSheet excel = new SpreadSheet(xls.bytes);
@@ -127,7 +127,7 @@ namespace ngui.ex {
 		
 		private int GetLastColumn() {
 			int c = grid.GetColumnCount()-1;
-			while (c >= 0 && grid.GetCell(grid.rowHeader-1, c) == null) {
+			while (c >= 0 && grid.GetCellTransform(grid.rowHeader-1, c) == null) {
 				c--;
 			}
 			return c+1;
@@ -149,7 +149,7 @@ namespace ngui.ex {
 				if (EditorGUIUtil.IntField("Font Size", ref fontSize, GUILayout.ExpandWidth(false))) {
 					for (int r=0; r<row; r++) {
 						for (int c=0; c<col; c++) {
-                            UILabel label = grid.GetCell(r, c).GetComponent<UILabel>();
+                            UILabel label = grid.GetCellTransform(r, c).GetComponent<UILabel>();
 							if (label != null) {
 								label.transform.localScale = new Vector3(fontSize, fontSize, 1);
 							}
@@ -159,7 +159,7 @@ namespace ngui.ex {
 				if (EditorGUIUtil.ColorField("Font Color", ref fontColor, GUILayout.ExpandWidth(false))) {
 					for (int r=grid.rowHeader; r<row; r++) {
 						for (int c=grid.columnHeader; c<col; c++) {
-                            UILabel label = grid.GetCell(r, c).GetComponent<UILabel>();
+                            UILabel label = grid.GetCellTransform(r, c).GetComponent<UILabel>();
 							if (label != null) {
 								label.color = fontColor;
 								label.MarkAsChanged();
@@ -175,7 +175,7 @@ namespace ngui.ex {
 				if (GUILayout.Button("Fill Data")) {
 					for (int r=grid.rowHeader; r<row; r++) {
 						for (int c=grid.columnHeader; c<col; c++) {
-							Transform t = grid.GetCell(r, c);
+							Transform t = grid.GetCellTransform(r, c);
 							if (t == null) {
 								UILabel label = NGUITools.AddWidget<UILabel>(grid.gameObject);
 								label.bitmapFont = testFont;
@@ -207,7 +207,7 @@ namespace ngui.ex {
 				for (int r=0; r<row; r++) {
 					EditorGUILayout.BeginHorizontal();
 					for (int c=0; c<col; c++) {
-						Transform t = grid.GetCell(r, c);
+						Transform t = grid.GetCellTransform(r, c);
 						UILabel l = t!=null? t.GetComponentInChildren<UILabel>(): null;
 						string s = l!=null? l.text: "";
 						if (EditorGUIUtil.TextField(null, ref s, GUILayout.Width(70)) && l!=null) {

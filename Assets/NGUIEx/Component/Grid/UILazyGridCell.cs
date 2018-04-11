@@ -10,7 +10,7 @@ using comunity;
 
 namespace ngui.ex
 {
-    public abstract class UILazyGridCell : UIGridCell
+    public abstract class UILazyGridCell : UITableCell
     {
         public UIPanel panel;
         public GameObject ui;
@@ -38,11 +38,11 @@ namespace ngui.ex
 
         public bool initialized { get; private set; }
 
-        public override void SetCell(object val, Action<UIGridCell> initFunc = null)
+        public override void SetCell(object val, Action<UITableCell> initFunc = null)
         {
             initialized = false;
             Invalidate();
-            this.val = val;
+            this.data = val;
             this.initFunc = initFunc;
             InitData(val);
             if (IsLazy())

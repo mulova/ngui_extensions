@@ -22,7 +22,7 @@ namespace ngui.ex {
 		
 		override public void OnInspectorGUI() {
 			if (GUILayout.Button("Open Contents Editor")) {
-				EditorWindow window = EditorWindow.GetWindow(typeof(UIGridWindow));
+				EditorWindow window = EditorWindow.GetWindow(typeof(UITableWindow));
 				window.titleContent = new GUIContent("Grid");
 				window.Show(true);
 			}

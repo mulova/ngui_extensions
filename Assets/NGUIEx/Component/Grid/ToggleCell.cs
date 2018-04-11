@@ -8,7 +8,7 @@ using System;
 using UnityEngine;
 
 namespace ngui.ex {
-	public class ToggleCell : UIGridCell
+	public class ToggleCell : UITableCell
 	{
         public GameObject on;
         public GameObject off;

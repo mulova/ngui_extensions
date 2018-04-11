@@ -17,7 +17,7 @@ namespace ngui.ex {
 	 * SetValues() 로 Table Cell 값들을 지정한다.
 	 * PutRowPrefab(), PutColumnPrefab() 으로 Cell이 비었을 경우 생성할 instance의 prefab들을 지정한다.
 	 */
-	public class UIGridModel
+	public class UITableModel
 	{
 		private object[,] cells;
 		private bool changed = true;
@@ -29,22 +29,22 @@ namespace ngui.ex {
 		public const bool COL_SIZE = true; // used for 'horizontal' argument at constructor
 		public const bool ROW_SIZE = false; // used for 'horizontal' argument at constructor
 		
-		public UIGridModel() {
+		public UITableModel() {
 			SetContents(new object[0, 0]);
 		}
 		
-        public UIGridModel(object[,] contents) {
+        public UITableModel(object[,] contents) {
             SetContents(contents);
 		}
 
-        public UIGridModel(IEnumerable contents, bool horizontal, int lineSize) {
+        public UITableModel(IEnumerable contents, bool horizontal, int lineSize) {
             SetContents(contents, horizontal, lineSize);
         }
 
 		/**
 		 * @param horizontal use COL_SIZE or ROW_SIZE
 		 */
-        public UIGridModel(IList contents, bool horizontal, int lineSize) {
+        public UITableModel(IList contents, bool horizontal, int lineSize) {
             SetContents(contents, horizontal, lineSize);
 		}
 
