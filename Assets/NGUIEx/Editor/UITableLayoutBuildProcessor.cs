@@ -32,15 +32,15 @@ namespace ngui.ex
             }
         }
         
-        static void Deactivate(params GameObject[] objs)
+        static void Deactivate(params UITableCell[] objs)
         {
             if (objs != null)
             {
-                foreach (GameObject p in objs)
+                foreach (var o in objs)
                 {
-                    if (p != null)
+                    if (o != null)
                     {
-                        p.SetActive(false);
+                        o.go.SetActive(false);
                     }
                 }
             }

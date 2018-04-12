@@ -47,15 +47,14 @@ namespace ngui.ex {
 		/// <param name="t">T.</param>
 		/// <param name="val">Value.</param>
 		/// <param name="status">Status.</param>
-        public static void SetValue(UITableLayout grid, Transform t, int row, int column, object val, Action<UITableCell> initFunc = null) {
-            UITableCell c = t.GetComponent<UITableCell>();
+        public static void SetValue(UITableLayout grid, UITableCell c, int row, int column, object val, Action<UITableCell> initFunc = null) {
 			if (c != null) {
                 c.containerGrid = grid;
 				c.row = row;
 				c.column = column;
                 c.SetCell(val, initFunc);
 			} else {
-                t.gameObject.SetActive(val != null);
+                c.go.SetActive(val != null);
 			}
 		}
 

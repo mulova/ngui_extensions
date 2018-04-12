@@ -121,15 +121,15 @@ namespace ngui.ex
 			if (layout is UITableLayout)
 			{
 				UITableLayout grid = (UITableLayout)layout;
-				foreach (Transform child in grid.components)
+				foreach (var child in grid.components)
 				{
 					if (child == null)
 					{
 						continue;
 					}
-					if (child.gameObject.activeSelf)
+					if (child.go.activeSelf)
 					{
-						RepositionNow(child);
+                        RepositionNow(child.trans);
 					}
 				}
 			} else

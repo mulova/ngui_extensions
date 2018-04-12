@@ -10,7 +10,7 @@ using comunity;
 
 namespace ngui.ex
 {
-    public abstract class UILazyGridCell : UITableCell
+    public abstract class UILazyTableCell : UITableCell
     {
         public UIPanel panel;
         public GameObject ui;
@@ -28,8 +28,8 @@ namespace ngui.ex
 
         protected abstract void DrawCell();
 
-        public event Action<UILazyGridCell> onVisible;
-        public event Action<UILazyGridCell> onInvisible;
+        public event Action<UILazyTableCell> onVisible;
+        public event Action<UILazyTableCell> onInvisible;
 
         private bool IsLazy()
         {

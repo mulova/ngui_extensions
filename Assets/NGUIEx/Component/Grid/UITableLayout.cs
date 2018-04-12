@@ -17,7 +17,7 @@ namespace ngui.ex
 {
     [ExecuteInEditMode]
     [AddComponentMenu("NGUI/Ex/TableLayout")]
-    public class UITableLayout : UILayout, IEnumerable<Transform>
+    public class UITableLayout : UILayout, IEnumerable<UITableCell>
     {
         public enum HAlign
         {
@@ -41,8 +41,6 @@ namespace ngui.ex
             Vertical,
         }
 
-        public const string ROW_SELECTION_METHOD = "OnRowSelected";
-		
         public Arrangement arrangement = Arrangement.Horizontal;
         public HAlign halign = HAlign.None;
         public VAlign valign = VAlign.None;
@@ -56,16 +54,16 @@ namespace ngui.ex
         // cell minimum size
         public int totalWidth;
         // table size
-        public Transform[] components = new Transform[0];
+        public UITableCell[] components = new UITableCell[0];
         public int rowHeader;
         public int columnHeader;
 
         public Color gizmoColor = new Color(1f, 0f, 0f);
         private Bounds[,] bounds;
 		
-        public GameObject[] rowPrefab = new GameObject[0];
-        public GameObject[] columnPrefab = new GameObject[0];
-        public GameObject defaultPrefab;
+        public UITableCell[] rowPrefab = new UITableCell[0];
+        public UITableCell[] columnPrefab = new UITableCell[0];
+        public UITableCell defaultPrefab;
         public int[] rowHeight = new int[0];
         public int[] columnWidth = new int[0];
         // rows for background
@@ -83,7 +81,6 @@ namespace ngui.ex
         private UITableModel model;
         private Vector2[,] cellPos;
         private Action<UITableCell> initFunc = null;
-        private Dictionary<Transform, UITableCell> cellCache = new Dictionary<Transform, UITableCell>();
 
         void Awake()
         {
@@ -96,13 +93,13 @@ namespace ngui.ex
 		 * @param t
 		 * @return int get the serialized array index
 		 */
-        public int GetIndex(Transform t)
+        public int GetIndex(UITableCell c)
         {
-            if (t != null)
+            if (c != null)
             {
                 for (int i = 0; i < components.Length; i++)
                 {
-                    if (components[i] == t)
+                    if (components[i] == c)
                     {
                         return i;
                     }
@@ -143,7 +140,7 @@ namespace ngui.ex
             }
         }
 
-        public int GetRowIndex(Transform t)
+        public int GetRowIndex(UITableCell t)
         {
             int i = GetIndex(t);
             if (i < 0)
@@ -153,7 +150,7 @@ namespace ngui.ex
             return GetRowIndex(i);
         }
 
-        public int GetColumnIndex(Transform t)
+        public int GetColumnIndex(UITableCell t)
         {
             int i = GetIndex(t);
             if (i < 0)
@@ -302,13 +299,13 @@ namespace ngui.ex
         }
 
         [Obsolete("Change model instead")]
-        public void AddRow(params Transform[] row)
+        public void AddRow(params UITableCell[] row)
         {
             AddRow(GetRowCount(), row);
         }
 
         [Obsolete("Change model instead")]
-        public void AddRow(int rowIndex, params Transform[] row)
+        public void AddRow(int rowIndex, params UITableCell[] row)
         {
             int colSize = GetColumnCount();
             int insertSize = row.Length;
@@ -327,26 +324,26 @@ namespace ngui.ex
                 int unit = insertSize / colSize;
                 for (int i = 0; i < colSize; i++)
                 {
-                    Transform[] ins = new Transform[unit];
+                    UITableCell[] ins = new UITableCell[unit];
                     Array.Copy(row, i * unit, ins, 0, unit);
                     Insert(index, ins);
                     index += unit+GetMaxPerLine();
                 }
                 rowHeight = rowHeight.Insert(rowIndex, 0);
-                rowPrefab = rowPrefab.Insert(rowIndex, new GameObject[1] { null });
+                rowPrefab = rowPrefab.Insert(rowIndex, new UITableCell[1] { null });
                 valigns = valigns.Insert(rowIndex, valign);
                 maxPerLine++;
             }
         }
 
         [Obsolete("Change model instead")]
-        public void AddColumn(params Transform[] row)
+        public void AddColumn(params UITableCell[] row)
         {
             AddColumn(GetColumnCount(), row);
         }
 
         [Obsolete("Change model instead")]
-        public void AddColumn(int colIndex, params Transform[] col)
+        public void AddColumn(int colIndex, params UITableCell[] col)
         {
             int rowSize = GetRowCount();
             int insertSize = col.Length;
@@ -366,13 +363,13 @@ namespace ngui.ex
                 int index = colIndex;
                 for (int i = 0; i < rowSize; i++)
                 {
-                    Transform[] ins = new Transform[unit];
+                    UITableCell[] ins = new UITableCell[unit];
                     Array.Copy(col, i * unit, ins, 0, unit);
                     Insert(index, ins);
                     index += unit+GetMaxPerLine();
                 }
                 columnWidth = columnWidth.Insert(colIndex, 0);
-                columnPrefab = columnPrefab.Insert(colIndex, new GameObject[1] { null });
+                columnPrefab = columnPrefab.Insert(colIndex, new UITableCell[1] { null });
                 haligns = haligns.Insert(colIndex, halign);
                 maxPerLine++;
             }
@@ -401,7 +398,7 @@ namespace ngui.ex
             } else
             {
                 int colSize = GetColumnCount();
-                Transform[] newComponents = new Transform[GetLineCount() * (maxPerLine-1)];
+                UITableCell[] newComponents = new UITableCell[GetLineCount() * (maxPerLine-1)];
                 Array.Copy(components, 0, newComponents, 0, rowIndex);
                 for (int c = 0; c < colSize; c++)
                 {
@@ -452,7 +449,7 @@ namespace ngui.ex
             } else
             {
                 int rowSize = GetRowCount();
-                Transform[] newComponents = new Transform[GetLineCount() * (maxPerLine-1)];
+                UITableCell[] newComponents = new UITableCell[GetLineCount() * (maxPerLine-1)];
                 Array.Copy(components, 0, newComponents, 0, colIndex);
                 for (int r = 0; r < rowSize; r++)
                 {
@@ -472,22 +469,22 @@ namespace ngui.ex
             }
         }
 
-        private void DestroyCell(Transform t)
+        private void DestroyCell(UITableCell c)
         {
-            if (t == null)
+            if (c == null)
             {
                 return;
             }
             if (Application.isEditor&&!Application.isPlaying)
             {
-                t.gameObject.SetActive(false);
+                c.go.SetActive(false);
             } else if (reuseCell)
             {
-                GetCell(t).Clear();
-                t.gameObject.SetActive(false);
+                c.Clear();
+                c.go.SetActive(false);
             } else
             {
-                t.gameObject.DestroyEx();
+                c.go.DestroyEx();
             }
         }
 
@@ -504,13 +501,13 @@ namespace ngui.ex
         }
 
         [Obsolete("Change model instead")]
-        public void Add(params Transform[] t)
+        public void Add(params UITableCell[] t)
         {
             Insert(components.Length, t);
         }
 
         [Obsolete("Change model instead")]
-        public void Insert(int i, params Transform[] t)
+        public void Insert(int i, params UITableCell[] t)
         {
             if (components.Length < i)
             {
@@ -522,7 +519,7 @@ namespace ngui.ex
         }
 
         [Obsolete("Change model instead")]
-        public void Remove(Transform t)
+        public void Remove(UITableCell t)
         {
             int i = GetIndex(t);
             if (i >= 0)
@@ -593,7 +590,7 @@ namespace ngui.ex
             return i;
         }
 
-        public Transform GetCellTransform(int row, int col)
+        public UITableCell GetCell(int row, int col)
         {
             int i = GetIndex(row, col);
             if (i >= components.Length)
@@ -603,31 +600,14 @@ namespace ngui.ex
             return components[i];
         }
 
-        public UITableCell GetCell(int row, int col)
-        {
-            Transform t = GetCellTransform(row, col);
-            return GetCell(t);
-        }
-
-        public UITableCell GetCell(Transform t)
-        {
-            UITableCell c = null;
-            if (!cellCache.TryGetValue(t, out c))
-            {
-                c = t.GetComponent<UITableCell>();
-                cellCache[t] = c;
-            }
-            return c;
-        }
-
-        public void SetCell(int row, int col, Transform t)
+        public void SetCell(int row, int col, UITableCell c)
         {
             int i = GetIndex(row, col);
             if (i >= components.Length)
             {
                 Resize(ref components, i+1);
             }
-            components[i] = t;
+            components[i] = c;
             InvalidateLayout();
         }
 
@@ -647,6 +627,7 @@ namespace ngui.ex
         /// <summary>
         /// Recalculate the position of all elements within the grid, sorting them alphabetically if necessary.
         /// </summary>
+        [ContextMenu("Arrange")]
         override protected void DoLayout()
         {
 //			if (this.model == null) {
@@ -659,14 +640,14 @@ namespace ngui.ex
             int col = GetColumnCount();
 			
             bounds = new Bounds[row, col];
-            Transform[,] transforms = new Transform[row, col];
+            UITableCell[,] table = new UITableCell[row, col];
 
             for (int i = 0, imax = components.Length; i < imax; ++i)
             {
                 int r = GetRowIndex(i);
                 int c = GetColumnIndex(i);
                 //			int line = GetLineIndex(i);
-                transforms[r, c] = components[i];
+                table[r, c] = components[i];
                 if (cellSize.x != 0 || cellSize.y != 0)
                 {
                     float cx = r * cellSize.x+cellSize.x * 0.5f+padding.x * Mathf.Max(0, r-1);
@@ -686,8 +667,8 @@ namespace ngui.ex
                 bool filled = false;
                 for (int c = 0; c < col&&!filled; c++)
                 {
-                    var cell = GetCellTransform(r, c);
-                    if (cell != null&&cell.gameObject.activeSelf)
+                    var cell = GetCell(r, c);
+                    if (cell != null&&cell.go.activeSelf)
                     {
                         filled = true; 
                     }
@@ -719,8 +700,8 @@ namespace ngui.ex
                 bool filled = false;
                 for (int r = 0; r < row&&!filled; r++)
                 {
-                    var cell = GetCellTransform(r, c);
-                    if (cell != null&&cell.gameObject.activeSelf)
+                    var cell = GetCell(r, c);
+                    if (cell != null&&cell.go.activeSelf)
                     {
                         filled = true; 
                     }
@@ -766,7 +747,8 @@ namespace ngui.ex
                 bool activeRow = false; // inactive row is removed from layout computation
                 for (int c = 0; c < col; c++)
                 {
-                    Transform t = transforms[r, c];
+                    UITableCell cell = table[r, c];
+                    Transform t = cell.trans;
                     if (t != null&&t.gameObject.activeInHierarchy)
                     {
                         if (!t.IsChildOf(transform))
@@ -782,7 +764,7 @@ namespace ngui.ex
                         {
                             if (r >= rowHeader&&c >= columnHeader)
                             {
-                                GameObject prefab = prefabs.GetPrefab(r, c);
+                                UITableCell prefab = prefabs.GetPrefab(r, c);
                                 if (prefab != null)
                                 {
                                     if (prefab == defaultPrefab)
@@ -809,7 +791,7 @@ namespace ngui.ex
                         {
                             if (r >= rowHeader&&c >= columnHeader)
                             {
-                                GameObject prefab = prefabs.GetPrefab(r, c);
+                                UITableCell prefab = prefabs.GetPrefab(r, c);
                                 if (prefab != null)
                                 {
                                     if (prefab == defaultPrefab)
@@ -929,16 +911,17 @@ namespace ngui.ex
             }
         }
 
-        private Bounds CalculateBounds(Transform t)
+        private Bounds CalculateBounds(UITableCell c)
         {
-            if (t == null||!t.gameObject.activeInHierarchy)
+            Transform t = c.trans;
+            GameObject o = c.go;
+            if (t == null||!o.activeInHierarchy)
             {
                 return new Bounds();
             }
-            UITableCell cell = GetCell(t);
-            if (cell != null&&cell.bound != null)
+            if (c != null&&c.bound != null)
             {
-                return cell.bound.CalculateBounds(cell.transform);
+                return c.bound.CalculateBounds(c.transform);
             }
             return GetBounds(t);
         }
@@ -1012,7 +995,7 @@ namespace ngui.ex
 		 */
         private void SetCellValue(UITablePrefabs prefabs, int row, int col, object cellValue, Action<UITableCell> initFunc)
         {
-            Transform cell = GetCellTransform(row, col);
+            UITableCell cell = GetCell(row, col);
             if (cellValue == null)
             {
                 if (cell != null)
@@ -1026,9 +1009,9 @@ namespace ngui.ex
             if (cell == null)
             {
                 cell = prefabs.Instantiate(row, col);
-                if (!cell.IsChildOf(transform))
+                if (!cell.trans.IsChildOf(transform))
                 {
-                    cell.SetParent(transform, false);
+                    cell.trans.SetParent(transform, false);
                 }
             }
             // Set Cell Value
@@ -1068,16 +1051,16 @@ namespace ngui.ex
             }
         }
 
-        private void MakePrefabInactive(params GameObject[] prefab)
+        private void MakePrefabInactive(params UITableCell[] prefab)
         {
             if (prefab != null&&Application.isPlaying)
             {
-                foreach (GameObject r in prefab)
+                foreach (var r in prefab)
                 {
                     if (r != null)
                     {
-                        r.SetActive(false);
-                        int index = GetIndex(r.transform);
+                        r.go.SetActive(false);
+                        int index = GetIndex(r);
                         if (index >= 0)
                         {
                             components[index] = null;
@@ -1089,12 +1072,11 @@ namespace ngui.ex
 
         public void ForEach<C>(Predicate<C> func, bool includeInactive = false) where C: UITableCell
         {
-            foreach (Transform t in components)
+            foreach (UITableCell c in components)
             {
-                if (t != null&&(includeInactive||t.gameObject.activeSelf))
+                if (c != null&&(includeInactive||c.gameObject.activeSelf))
                 {
-                    C cell = GetCell(t) as C;
-                    if (cell != null&&!func(cell))
+                    if (!func(c as C))
                     {
                         return;
                     }
@@ -1104,14 +1086,13 @@ namespace ngui.ex
 
         public void ForEach<C>(Action<C> func, bool includeInactive = false) where C:UITableCell
         {
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&(includeInactive||t.gameObject.activeSelf))
+                if (c != null&&(includeInactive||c.go.activeSelf))
                 {
-                    C cell = GetCell(t) as C;
-                    if (cell != null)
+                    if (c != null)
                     {
-                        func(cell);
+                        func(c as C);
                     }
                 }
             }
@@ -1120,12 +1101,11 @@ namespace ngui.ex
         public int GetCount<C>(Predicate<C> predicate) where C : UITableCell
         { 
             int count = 0;
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&t.gameObject.activeSelf)
+                if (c != null&&c.go.activeSelf)
                 {
-                    C cell = GetCell(t) as C;
-                    if (cell != null&&predicate(cell))
+                    if (predicate(c as C))
                     {
                         count++;
                     }
@@ -1137,18 +1117,14 @@ namespace ngui.ex
         public List<V> ConvertCells<C, V>(Converter<C, V> conv) where C: UITableCell
         { 
             List<V> list = new List<V>();
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&t.gameObject.activeSelf)
+                if (c != null&&c.gameObject.activeSelf)
                 {
-                    C cell = GetCell(t) as C;
-                    if (cell != null)
+                    V v = conv(c as C);
+                    if (v != null)
                     {
-                        V v = conv(cell);
-                        if (v != null)
-                        {
-                            list.Add(v);
-                        }
+                        list.Add(v);
                     }
                 }
             }
@@ -1158,12 +1134,12 @@ namespace ngui.ex
         public List<C> FilterCell<C>(Predicate<C> func) where C:UITableCell
         { 
             List<C> list = new List<C>();
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&t.gameObject.activeSelf)
+                if (c != null&&c.gameObject.activeSelf)
                 {
-                    C cell = GetCell(t) as C;
-                    if (cell != null&&func(cell))
+                    var cell = c as C;
+                    if (func(cell))
                     {
                         list.Add(cell);
                     }
@@ -1175,18 +1151,14 @@ namespace ngui.ex
         public List<D> FilterCellData<D>(Predicate<D> func)
         { 
             List<D> list = new List<D>();
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&t.gameObject.activeSelf)
+                if (c != null&&c.gameObject.activeSelf)
                 {
-                    UITableCell cell = GetCell(t);
-                    if (cell != null)
+                    D cellData = (D)c.data;
+                    if (cellData != null&&func(cellData))
                     {
-                        D cellData = (D)cell.data;
-                        if (cellData != null&&func(cellData))
-                        {
-                            list.Add(cellData);
-                        }
+                        list.Add(cellData);
                     }
                 }
             }
@@ -1195,18 +1167,17 @@ namespace ngui.ex
 
         public C GetSelectedCell<C>() where C: UITableCell
         { 
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&t.gameObject.activeSelf)
+                if (c != null&&c.gameObject.activeSelf)
                 {
-                    C cell = GetCell(t) as C;
-                    if (cell != null&&cell.gameObject.activeSelf&&cell.toggle != null&&cell.toggle.value)
+                    if (c.go.activeSelf&&c.toggle != null&&c.toggle.value)
                     {
-                        return cell;
+                        return c as C;
                     }
                 }
             }
-            return null;
+            return  null;
         }
 
         public List<C> GetSelectedCellList<C>() where C: UITableCell
@@ -1291,7 +1262,7 @@ namespace ngui.ex
         public void SelectCell(int row, int col)
         { 
             UITableCell cell = GetCell(row, col);
-            if (cell != null&&cell.toggle != null&&cell.gameObject.activeSelf)
+            if (cell != null&&cell.toggle != null&&cell.go.activeSelf)
             {
                 cell.SetSelected(true);
             }
@@ -1327,13 +1298,13 @@ namespace ngui.ex
 
         #region IEnumerable
 
-        IEnumerator<Transform> IEnumerable<Transform>.GetEnumerator()
+        IEnumerator<UITableCell> IEnumerable<UITableCell>.GetEnumerator()
         {
-            foreach (Transform t in components)
+            foreach (var c in components)
             {
-                if (t != null&&t.gameObject.activeSelf)
+                if (c != null&&c.go.activeSelf)
                 {
-                    yield return t;
+                    yield return c;
                 }
             }
             //		return ((IEnumerable<Transform>)components).GetEnumerator();

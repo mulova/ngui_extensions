@@ -4,7 +4,7 @@ using UnityEditor;
 using ngui.ex;
 using build;
 
-public class UILazyGridCellBuildProcessor : ComponentBuildProcess
+public class UILazyTableCellBuildProcessor : ComponentBuildProcess
 {
 	protected override void VerifyComponent(Component comp)
 	{
@@ -12,7 +12,7 @@ public class UILazyGridCellBuildProcessor : ComponentBuildProcess
 
 	protected override void PreprocessComponent(Component comp)
 	{
-		UILazyGridCell cell = comp as UILazyGridCell;
+		UILazyTableCell cell = comp as UILazyTableCell;
 		if (cell.ui != null)
 		{
 			cell.ui.SetActive(false);
@@ -31,7 +31,7 @@ public class UILazyGridCellBuildProcessor : ComponentBuildProcess
 	{
 		get
 		{
-			return typeof(UILazyGridCell);
+			return typeof(UILazyTableCell);
 		}
 	}
 }

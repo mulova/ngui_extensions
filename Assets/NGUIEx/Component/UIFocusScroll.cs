@@ -96,20 +96,20 @@ namespace ngui.ex
 			{
 				return null;
 			}
-			Transform[] comps = grid.components;
-			Transform target = null;
+            UITableCell[] comps = grid.components;
+            Transform target = null;
 			float shortestDis = float.MaxValue;
 			// Find obj that placed in most nearby
 			for (int idx = 0; idx < comps.Length; ++idx)
 			{
-				float dis = Vector3.Distance(focusCenter.position, comps[idx].position);
+				float dis = Vector3.Distance(focusCenter.position, comps[idx].trans.position);
 				if (shortestDis > dis)
 				{
-					target = comps[idx];
+                    target = comps[idx].trans;
 					shortestDis = dis;
 				}
 			}
-			return target;
+            return target;
 		}
 
 		public void FocusTarget()
@@ -139,14 +139,14 @@ namespace ngui.ex
 			{
 				return;
 			}
-			Transform[] comps = grid.components;
+            UITableCell[] comps = grid.components;
 			for (int idx = 0; idx < comps.Length; ++idx)
 			{
 				if (comps[idx] == null)
 				{
 					continue;
 				}
-				float dis = Vector3.Distance(focusCenter.position, comps[idx].position);
+				float dis = Vector3.Distance(focusCenter.position, comps[idx].trans.position);
 				float scale = outsideObjScale;
 				if (dis < scalingCoverage)
 				{
@@ -154,7 +154,7 @@ namespace ngui.ex
 					float scalePer = (dis == 0? 1 : 1-(dis / scalingCoverage));
 					scale += ((centerObjScale-outsideObjScale) * scalePer);
 				}
-				comps[idx].localScale = new Vector3(scale, scale);
+				comps[idx].trans.localScale = new Vector3(scale, scale);
 			}
 		}
 	}

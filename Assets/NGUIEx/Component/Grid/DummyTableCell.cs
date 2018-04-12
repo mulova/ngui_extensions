@@ -6,14 +6,12 @@
 
 using System;
 using UnityEngine;
-using System.Collections.Generic;
-using commons;
-using Nullable = commons.Nullable;
-using Object = UnityEngine.Object;
 
 namespace ngui.ex {
-	public class SimpleGridCell : UITableCell
+	public class DummyTableCell : UITableCell
 	{
-		protected override void DrawCell(object val) {}
+		protected override void DrawCell(object val)
+		{
+		}
 	}
 }

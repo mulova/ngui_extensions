@@ -100,7 +100,7 @@ namespace ngui.ex
             if (prefId.IsNotEmpty()) {
                 UITableCell c = sortGrid.GetSelectedCell<UITableCell>();
                 if (c != null) {
-                    int index = sortGrid.GetIndex(c.transform);
+                    int index = sortGrid.GetIndex(c);
                     Game.pref.SetInt(prefId, index);
                 }
             }

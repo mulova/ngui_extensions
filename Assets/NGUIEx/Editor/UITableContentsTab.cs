@@ -64,7 +64,7 @@ namespace ngui.ex {
 			EditorGUILayout.EndHorizontal();
 			if (grid.components.Length == 0) {
 				if (GUILayout.Button("Click To Add Line")) {
-					grid.components = new Transform[grid.maxPerLine];
+                    grid.components = new UITableCell[grid.maxPerLine];
 					grid.InitArray();
 				}
 			}
@@ -84,7 +84,7 @@ namespace ngui.ex {
 		private bool DrawRowHeader() {
 			bool changed = false;
 			EditorGUILayout.BeginVertical();
-			changed |= EditorGUIUtil.ObjectField<GameObject>(ref grid.defaultPrefab, true, W_Option, H_Option);
+            changed |= EditorGUIUtil.ObjectField<UITableCell>(ref grid.defaultPrefab, true, W_Option, H_Option);
 			EditorGUILayout.LabelField("Align", EditorStyles.boldLabel, H_Option);
 			EditorGUILayout.LabelField("Size", EditorStyles.boldLabel, H_Option);
 			EditorGUILayout.LabelField("Index", EditorStyles.boldLabel, H_Option);
@@ -92,7 +92,7 @@ namespace ngui.ex {
 			grid.InitArray();
 			for (int r=0; r<row; r++) {
 				EditorGUILayout.BeginHorizontal();
-				changed |= EditorGUIUtil.ObjectField<GameObject>(ref grid.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
+                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref grid.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
                 changed |= EditorGUIUtil.Popup<UITableLayout.VAlign>(ref grid.valigns[r], EnumUtil.Values<UITableLayout.VAlign>(), GUILayout.Width(40), H_Option);
 				changed |= EditorGUIUtil.IntField(null, ref grid.rowHeight[r], GUILayout.Width(WIDTH-30), H_Option);
 				EditorGUILayout.LabelField((r+1).ToString(), EditorStyles.boldLabel, GUILayout.Width(20), H_Option);
@@ -116,7 +116,7 @@ namespace ngui.ex {
 			int contentSize = grid.GetColumnCount();
 			for (int c=0; c<columnSize; c++) {
 				EditorGUILayout.BeginVertical();
-				changed |= EditorGUIUtil.ObjectField<GameObject>(ref grid.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
+                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref grid.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
                 changed |= EditorGUIUtil.Popup<UITableLayout.HAlign>(ref grid.haligns[c], EnumUtil.Values<UITableLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
 				changed |= EditorGUIUtil.IntField(null, ref grid.columnWidth[c], GUILayout.Width(WIDTH-20), H_Option);
 				EditorGUILayout.LabelField(c.ToString(), EditorStyles.boldLabel, W_Option, H_Option);
@@ -134,7 +134,7 @@ namespace ngui.ex {
 					}
 					if (GUILayout.Button("+", GUILayout.ExpandWidth(false), H_Option)) {
                         #pragma warning disable 0618
-                        grid.AddColumn(c+1, new Transform[grid.GetRowCount()]);
+                        grid.AddColumn(c+1, new UITableCell[grid.GetRowCount()]);
                         #pragma warning restore 0618
 						changed = true;
 					}
@@ -173,7 +173,7 @@ namespace ngui.ex {
 				}
 				if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.ExpandWidth(false), GUILayout.Height(HEIGHT-1))) {
                     #pragma warning disable 0618
-                    grid.AddRow(r+1, new Transform[grid.GetColumnCount()]);
+                    grid.AddRow(r+1, new UITableCell[grid.GetColumnCount()]);
                     #pragma warning restore 0618
 					changed = true;
 				}
@@ -200,9 +200,9 @@ namespace ngui.ex {
 		
 		private bool DrawCell(int r, int c) {
 			bool changed = false;
-			Transform t = grid.GetCellTransform(r, c);
-			if (EditorGUIUtil.ObjectField<Transform>(ref t, true, W_Option, GUILayout.Height(HEIGHT-1))) {
-				grid.SetCell(r, c, t);
+            UITableCell cell = grid.GetCell(r, c);
+            if (EditorGUIUtil.ObjectField<UITableCell>(ref cell, true, W_Option, GUILayout.Height(HEIGHT-1))) {
+				grid.SetCell(r, c, cell);
 				changed = true;
 			}
 			return changed;
@@ -214,24 +214,24 @@ namespace ngui.ex {
 			Array.Sort(objs, new HVComparer(orientation));
 			if (orientation == UITableLayout.Arrangement.Horizontal) {
 				for (int c=0; c<Math.Min(objs.Length, grid.maxPerLine); c++) {
-					SetCell(line+c/grid.maxPerLine, c%grid.maxPerLine, objs[c].transform);
+                    SetCell(line+c/grid.maxPerLine, c%grid.maxPerLine, objs[c].GetComponent<UITableCell>());
 				}
 			} else {
 				for (int r=0; r<Math.Min(objs.Length, grid.maxPerLine); r++) {
-					SetCell(r%grid.maxPerLine, line+r/grid.maxPerLine, objs[r].transform);
+                    SetCell(r%grid.maxPerLine, line+r/grid.maxPerLine, objs[r].GetComponent<UITableCell>());
 				}
 			}
 		}
 		
-		private void SetCell(int r, int c, Transform t) {
-			if (t != null) {
-				int oldIndex = grid.GetIndex(t);
+        private void SetCell(int r, int c, UITableCell cell) {
+			if (cell != null) {
+				int oldIndex = grid.GetIndex(cell);
 				if (oldIndex >= 0) {
 					grid.components[oldIndex] = null;
 				}
-				NGUIUtil.DisableAnchor(t);
+                NGUIUtil.DisableAnchor(cell.trans);
 			}
-			grid.SetCell(r, c, t);
+			grid.SetCell(r, c, cell);
 		}
 		
 		

@@ -16,27 +16,27 @@ namespace ngui.ex
 	/**
 	 * Get GridLayout's row/cell prefab information
 	 */
-	public class UITablePrefabs
+    public class UITablePrefabs
 	{
-		public GameObject[] rowPrefab;
-		public GameObject[] columnPrefab;
-		public GameObject defaultPrefab;
+		public UITableCell[] rowPrefab;
+		public UITableCell[] columnPrefab;
+		public UITableCell defaultPrefab;
 		public int rowHeader;
 		public int columnHeader;
 
-		public UITablePrefabs(GameObject defaultPrefab)
+		public UITablePrefabs(UITableCell defaultPrefab)
 		{
 			this.defaultPrefab = defaultPrefab;
 		}
 
-		public UITablePrefabs(GameObject[] rowPrefabs, GameObject[] columnPrefabs)
+		public UITablePrefabs(UITableCell[] rowPrefabs, UITableCell[] columnPrefabs)
 		{
 			this.rowPrefab = rowPrefabs;
 			this.columnPrefab = columnPrefabs;
 		}
 
-		public UITablePrefabs(GameObject defaultPrefab, 
-		                     GameObject[] rowPrefabs, GameObject[] columnPrefabs,
+		public UITablePrefabs(UITableCell defaultPrefab, 
+		                     UITableCell[] rowPrefabs, UITableCell[] columnPrefabs,
 		                     int rowHeader, int colHeader)
 		{
 			this.defaultPrefab = defaultPrefab;
@@ -46,7 +46,7 @@ namespace ngui.ex
 			this.columnHeader = colHeader;
 		}
 
-		public GameObject GetPrefab(int row, int col)
+		public UITableCell GetPrefab(int row, int col)
 		{
 			if (col < columnPrefab.Length&&columnPrefab[col] != null)
 			{
@@ -76,18 +76,17 @@ namespace ngui.ex
 			return defaultPrefab;
 		}
 
-		public Transform Instantiate(int row, int col)
+		public UITableCell Instantiate(int row, int col)
 		{
-			GameObject prefab = GetPrefab(row, col);
-			GameObject instance = prefab.InstantiateEx();
-			instance.transform.SetParent(prefab.transform.parent, false);
-			instance.SetActive(true);
+			UITableCell prefab = GetPrefab(row, col);
+            UITableCell instance = prefab.InstantiateEx(prefab.transform.parent, false);
+			instance.go.SetActive(true);
 			StringBuilder str = new StringBuilder(prefab.name.Length+8);
 			str.Append(prefab.name);
 			str.Append("_").Append(row);
 			str.Append("_").Append(col);
 			instance.name = str.ToString();
-			return instance.transform;
+			return instance;
 		}
 	}
 }
