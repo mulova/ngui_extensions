@@ -9,7 +9,6 @@ using comunity;
 
 namespace ngui.ex {
     public class UIDepthTab : EditorTab {
-		
 		private GameObject root;
 		private UIWidget[] widgets = new UIWidget[0];
 		
@@ -106,6 +105,11 @@ namespace ngui.ex {
 		private UIPanel panelSel;
 		public override void OnInspectorGUI()
 		{
+			// TODOM key handling
+			if (Input.GetKeyUp(KeyCode.UpArrow)) {
+			} else if (Input.GetKeyUp(KeyCode.UpArrow)) {
+			}
+				
 			object current = null;
 
 			Color contentColor = GUI.contentColor;
@@ -124,6 +128,10 @@ namespace ngui.ex {
 				#pragma warning disable 0253
 				bool toggle = false;
 				if (s != null) {
+					if (s.atlas ==null)
+					{
+						continue;
+					}
 					if (s.atlas != current) {
 						current = s.atlas;
 						toggle = true;
