@@ -13,7 +13,7 @@ namespace ngui.ex
 {
 	public abstract class UILayout : MonoBehaviour
 	{
-		private bool invalid = true;
+		protected bool invalid = true;
 
 		public delegate void RepositionListener();
 
