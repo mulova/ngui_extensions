@@ -18,7 +18,11 @@ namespace ngui.ex
 
         protected override void CreateTabs ()
         {
-            AddTab (new UIConvertTab (this), new UISpriteTab (this), new AtlasSwitcherTab(this), new AssetRefTab (this), new UIDepthTab (this), new EventDelegateTab (this), new UITextTab (this), new UISoundTab (this), new UIClassifierTab (this));
+            AddTab (new UIConvertTab (this), new UISpriteTab (this), new AtlasSwitcherTab(this), new AssetRefTab (this), new UIDepthTab (this), new EventDelegateTab (this), new UITextTab (this), new UIClassifierTab (this)
+                #if NGUI_AUDIO
+                , new UISoundTab (this)
+                #endif
+                );
         }
     }
 }

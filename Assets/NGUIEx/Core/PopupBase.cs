@@ -186,10 +186,11 @@ namespace ngui.ex
                 log.Error(ex);
             }
         }
-        
         protected virtual void PlayAudio()
         {
+            #if NGUI_AUDIO
             AudioBridge.Play(GetType().Name);
+            #endif
         }
         
         private void OnShowEnd()

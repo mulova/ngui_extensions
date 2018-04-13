@@ -1,0 +1,20 @@
+{
+    "name": "nguiex-editor",
+    "references": [
+        "commons",
+        "comunity",
+        "convinity",
+        "build",
+        "comunity-editor",
+        "convinity-editor",
+        "ani",
+        "ani-editor",
+        "nguiex",
+        "ngui-editor",
+        "ngui"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "iOS"
+    ]
+}

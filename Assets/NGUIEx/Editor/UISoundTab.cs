@@ -1,3 +1,4 @@
+#if NGUI_AUDIO
 using System.Collections.Generic;
 
 using UnityEditor;
@@ -142,3 +143,4 @@ namespace ngui.ex
         }
     }
 }
+#endif

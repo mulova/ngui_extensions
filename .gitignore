@@ -53,3 +53,5 @@ Assets/Plugins.meta
 ProjectSettings
 UnityPackageManager/manifest.json
 *.csproj
+Examples/
+Examples.meta

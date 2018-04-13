@@ -1,0 +1,13 @@
+{
+    "name": "nguiex",
+    "references": [
+        "commons",
+        "comunity",
+        "convinity",
+        "ani",
+        "effect",
+        "ngui"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

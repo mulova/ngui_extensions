@@ -18,6 +18,19 @@ namespace ngui.ex
         public string preStrKey;
         private DropDownCellData sel;
         private string prefId;
+        private static GamePref _pref;
+
+        public static GamePref pref
+        {
+            get
+            {
+                if (_pref == null)
+                {
+                    _pref = new GamePref("_gpref_dropdown", true);
+                }
+                return _pref;
+            }
+        }
         
         public static readonly Loggerx log = LogManager.GetLogger(typeof(DropDown));
         
@@ -45,7 +58,7 @@ namespace ngui.ex
             
             int index = 0;
             if (prefId.IsNotEmpty()) {
-				index = MathUtil.Clamp(Game.pref.GetInt(prefId, 0), 0, items.Count-1);
+				index = MathUtil.Clamp(pref.GetInt(prefId, 0), 0, items.Count-1);
             }
             Select(items[index]);
         }
@@ -101,7 +114,7 @@ namespace ngui.ex
                 UITableCell c = sortGrid.GetSelectedCell<UITableCell>();
                 if (c != null) {
                     int index = sortGrid.GetIndex(c);
-                    Game.pref.SetInt(prefId, index);
+                    pref.SetInt(prefId, index);
                 }
             }
             

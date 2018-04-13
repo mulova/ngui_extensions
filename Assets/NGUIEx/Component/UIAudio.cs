@@ -1,3 +1,4 @@
+#if NGUI_AUDIO
 //----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
@@ -77,3 +78,4 @@ namespace ngui.ex
 	}
 
 }
+#endif
