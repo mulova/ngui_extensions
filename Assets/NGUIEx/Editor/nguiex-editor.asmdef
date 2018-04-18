@@ -13,8 +13,8 @@
         "ngui-editor",
         "ngui"
     ],
-    "includePlatforms": [],
-    "excludePlatforms": [
-        "iOS"
-    ]
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
 }

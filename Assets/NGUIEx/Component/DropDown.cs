@@ -44,7 +44,7 @@ namespace ngui.ex
         
         public bool IsInitialized()
         {
-            return sortGrid.GetModel() != null;
+            return sortGrid.model != null;
         }
         
         public void Init(IList<DropDownCellData> items, Action<DropDownCellData> callback = null) {

@@ -87,7 +87,7 @@ namespace ngui.ex {
 		private bool DrawAddColumn() {
 			showAddColumn = EditorGUILayout.Foldout(showAddColumn, "Add Column");
 			if (showAddColumn) {
-				if (!grid.IsHorizontal()) {
+				if (!grid.isHorizontal) {
 					EditorGUILayout.HelpBox("Currently only Horizontal grid type is supported", MessageType.Warning);
 					return false;
 				}
@@ -126,7 +126,7 @@ namespace ngui.ex {
 		}
 		
 		private int GetLastColumn() {
-			int c = grid.GetColumnCount()-1;
+			int c = grid.columnCount-1;
 			while (c >= 0 && grid.GetCell(grid.rowHeader-1, c) == null) {
 				c--;
 			}
@@ -144,8 +144,8 @@ namespace ngui.ex {
 			if (showTest) {
 				EditorGUI.indentLevel += 2;
 				EditorGUIUtil.ObjectField<UIFont>("Font", ref testFont, true);
-				int row = grid.GetRowCount();
-				int col = grid.GetColumnCount();
+				int row = grid.rowCount;
+				int col = grid.columnCount;
 				if (EditorGUIUtil.IntField("Font Size", ref fontSize, GUILayout.ExpandWidth(false))) {
 					for (int r=0; r<row; r++) {
 						for (int c=0; c<col; c++) {
@@ -180,7 +180,7 @@ namespace ngui.ex {
 								UILabel label = NGUITools.AddWidget<UILabel>(grid.gameObject);
 								label.bitmapFont = testFont;
 								label.name = "__TEST__";
-								label.SetText(testStrings[grid.IsHorizontal()?c:r]);
+								label.SetText(testStrings[grid.isHorizontal?c:r]);
 								label.transform.localScale = new Vector3(fontSize, fontSize, 1);
 								label.color = fontColor;
 								label.MarkAsChanged();
@@ -201,8 +201,8 @@ namespace ngui.ex {
 		private bool mod;
 		private bool DrawTextMod() {
 			bool changed = false;
-			int row = grid.GetRowCount();
-			int col = grid.GetColumnCount();
+			int row = grid.rowCount;
+			int col = grid.columnCount;
 			mod = EditorGUILayout.Foldout(mod, "Text Mod");
 			if (mod) {
 				EditorGUI.indentLevel += 2;

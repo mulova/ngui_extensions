@@ -104,7 +104,7 @@ namespace ngui.ex {
 				NGUIEditorTools.BeginContents();
 				EditorGUILayout.HelpBox("Modifying structure values may occur unintented result", MessageType.Warning);
 				changed = EditorGUIUtil.PopupEnum<UITableLayout.Arrangement>("Orientation", ref grid.arrangement, GUILayout.ExpandWidth(false));
-				string rowCol = grid.IsHorizontal()? "Column Size": "Row Size";
+				string rowCol = grid.isHorizontal? "Column Size": "Row Size";
 				if (EditorGUIUtil.IntField(rowCol, ref grid.maxPerLine, GUILayout.ExpandWidth(false))) {
 					if (grid.maxPerLine <= 0) {
 						grid.maxPerLine = 1;
@@ -127,12 +127,12 @@ namespace ngui.ex {
 			
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField("Size", GUILayout.Width(WIDTH+10));
-			int col = grid.GetColumnCount();
+			int col = grid.columnCount;
 			for (int c=0; c<col; c++) {
 				EditorGUILayout.LabelField(c.ToString(), EditorStyles.boldLabel, GUILayout.Width(30));
 				changed |= EditorGUIUtil.IntField(null, ref grid.columnWidth[c], GUILayout.Width(WIDTH-30));
 			}
-			if (grid.IsHorizontal()) { EditorGUILayout.LabelField("", GUILayout.Width(42)); }
+			if (grid.isHorizontal) { EditorGUILayout.LabelField("", GUILayout.Width(42)); }
 			EditorGUILayout.EndHorizontal();
 			return changed;
 		}

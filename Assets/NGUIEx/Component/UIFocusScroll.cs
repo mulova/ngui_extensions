@@ -92,7 +92,7 @@ namespace ngui.ex
 
 		private Transform FindTarget()
 		{
-			if (grid == null||grid.IsEmpty())
+			if (grid == null||grid.isEmpty)
 			{
 				return null;
 			}
@@ -135,7 +135,7 @@ namespace ngui.ex
 
 		private void Update()
 		{
-			if (grid == null||grid.IsEmpty())
+			if (grid == null||grid.isEmpty)
 			{
 				return;
 			}

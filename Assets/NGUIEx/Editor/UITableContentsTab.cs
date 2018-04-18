@@ -10,18 +10,18 @@ using comunity;
 namespace ngui.ex {
     public class UITableContentsTab : EditorTab {
 		private UITableLayoutInspectorImpl inspector;
-		private UITableLayout grid;
+        private UITableLayout table;
 		private const float WIDTH = 70;
 		private const float HEIGHT = 16;
 		private GUILayoutOption W_Option = GUILayout.Width(WIDTH);
 		private GUILayoutOption H_Option = GUILayout.Height(HEIGHT);
 		
-		public UITableContentsTab(TabbedEditorWindow window) : base("Grid", window) {
+		public UITableContentsTab(TabbedEditorWindow window) : base("Table", window) {
 		}
 		
-		public void SetLayout(UITableLayout grid) {
-			this.grid = grid;
-			this.inspector = new UITableLayoutInspectorImpl(grid);
+		public void SetLayout(UITableLayout table) {
+			this.table = table;
+			this.inspector = new UITableLayoutInspectorImpl(table);
 			this.inspector.OnEnable();
 		}
 		
@@ -30,8 +30,8 @@ namespace ngui.ex {
 			if (sel != null) {
 				UITableLayout layout = sel.GetComponent<UITableLayout>();
 				if (layout != null) {
-					grid = layout;
-					SetLayout(grid);
+					table = layout;
+					SetLayout(table);
 				}
 			}
 		}
@@ -50,51 +50,51 @@ namespace ngui.ex {
 		
 		private UILabel titleLabelPrefab;
 		public override void OnInspectorGUI() {
-			if (grid == null) {
+			if (table == null) {
 				return;
 			}
 			bool changed = false;
 			
 			
-			EditorGUILayout.BeginHorizontal(GUILayout.Width(WIDTH*grid.GetColumnCount()));
+			EditorGUILayout.BeginHorizontal(GUILayout.Width(WIDTH*table.columnCount));
 			changed |= DrawRowHeader();
 			
 			changed |= DrawColumn();
 			changed |= DrawRowButton();
 			EditorGUILayout.EndHorizontal();
-			if (grid.components.Length == 0) {
+			if (table.components.Length == 0) {
 				if (GUILayout.Button("Click To Add Line")) {
-                    grid.components = new UITableCell[grid.maxPerLine];
-					grid.InitArray();
+                    table.components = new UITableCell[table.maxPerLine];
+					table.InitArray();
 				}
 			}
 			
 			if (changed) {
-				grid.InvalidateLayout();
-				CompatibilityEditor.SetDirty(grid);
+				table.InvalidateLayout();
+				CompatibilityEditor.SetDirty(table);
 			}
 		}
 		
 		public override void OnFooterGUI() { }
 		
 		private bool IsHorizontal() {
-			return grid.IsHorizontal();
+			return table.isHorizontal;
 		}
 		
 		private bool DrawRowHeader() {
 			bool changed = false;
 			EditorGUILayout.BeginVertical();
-            changed |= EditorGUIUtil.ObjectField<UITableCell>(ref grid.defaultPrefab, true, W_Option, H_Option);
+            changed |= EditorGUIUtil.ObjectField<UITableCell>(ref table.defaultPrefab, true, W_Option, H_Option);
 			EditorGUILayout.LabelField("Align", EditorStyles.boldLabel, H_Option);
 			EditorGUILayout.LabelField("Size", EditorStyles.boldLabel, H_Option);
 			EditorGUILayout.LabelField("Index", EditorStyles.boldLabel, H_Option);
-			int row = grid.IsVertical()? grid.GetMaxPerLine(): grid.GetRowCount();
-			grid.InitArray();
+			int row = table.isVertical? table.GetMaxPerLine(): table.rowCount;
+			table.InitArray();
 			for (int r=0; r<row; r++) {
 				EditorGUILayout.BeginHorizontal();
-                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref grid.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
-                changed |= EditorGUIUtil.Popup<UITableLayout.VAlign>(ref grid.valigns[r], EnumUtil.Values<UITableLayout.VAlign>(), GUILayout.Width(40), H_Option);
-				changed |= EditorGUIUtil.IntField(null, ref grid.rowHeight[r], GUILayout.Width(WIDTH-30), H_Option);
+                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref table.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
+                changed |= EditorGUIUtil.Popup<UITableLayout.VAlign>(ref table.valigns[r], EnumUtil.Values<UITableLayout.VAlign>(), GUILayout.Width(40), H_Option);
+				changed |= EditorGUIUtil.IntField(null, ref table.rowHeight[r], GUILayout.Width(WIDTH-30), H_Option);
 				EditorGUILayout.LabelField((r+1).ToString(), EditorStyles.boldLabel, GUILayout.Width(20), H_Option);
 				EditorGUILayout.EndHorizontal();
 			}
@@ -105,22 +105,22 @@ namespace ngui.ex {
 			}
 			EditorGUILayout.EndVertical();
 			if (changed) {
-				grid.InitArray();
+				table.InitArray();
 			}
 			return changed;
 		}
 		
 		private bool DrawColumn() {
 			bool changed = false;
-			int columnSize = grid.IsHorizontal()? grid.GetMaxPerLine(): grid.GetColumnCount();
-			int contentSize = grid.GetColumnCount();
+			int columnSize = table.isHorizontal? table.GetMaxPerLine(): table.columnCount;
+			int contentSize = table.columnCount;
 			for (int c=0; c<columnSize; c++) {
 				EditorGUILayout.BeginVertical();
-                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref grid.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
-                changed |= EditorGUIUtil.Popup<UITableLayout.HAlign>(ref grid.haligns[c], EnumUtil.Values<UITableLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
-				changed |= EditorGUIUtil.IntField(null, ref grid.columnWidth[c], GUILayout.Width(WIDTH-20), H_Option);
+                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref table.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
+                changed |= EditorGUIUtil.Popup<UITableLayout.HAlign>(ref table.haligns[c], EnumUtil.Values<UITableLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
+				changed |= EditorGUIUtil.IntField(null, ref table.columnWidth[c], GUILayout.Width(WIDTH-20), H_Option);
 				EditorGUILayout.LabelField(c.ToString(), EditorStyles.boldLabel, W_Option, H_Option);
-				int row = grid.GetRowCount();
+				int row = table.rowCount;
 				if (c < contentSize) {
 					for (int r=0; r<row; r++) {
 						changed |= DrawCell(r, c);
@@ -134,17 +134,17 @@ namespace ngui.ex {
 					}
 					if (GUILayout.Button("+", GUILayout.ExpandWidth(false), H_Option)) {
                         #pragma warning disable 0618
-                        grid.AddColumn(c+1, new UITableCell[grid.GetRowCount()]);
+                        table.AddColumn(c+1, new UITableCell[table.rowCount]);
                         #pragma warning restore 0618
 						changed = true;
 					}
-					GUI.enabled = c >= grid.columnHeader;
+					GUI.enabled = c >= table.columnHeader;
 					if (GUILayout.Button("-", GUILayout.ExpandWidth(false), H_Option)) {
 						if (EditorUtility.DisplayDialog("Confirm", "Delete column "+(c+1), "OK", "Cancel")) {
                             #pragma warning disable 0618
-                            grid.RemoveColumn(c);
+                            table.RemoveColumn(c);
                             #pragma warning restore 0618
-                            grid.Reposition();
+                            table.Reposition();
 							changed = true;
 						}
 					}
@@ -164,7 +164,7 @@ namespace ngui.ex {
 			EditorGUILayout.LabelField("", W_Option, H_Option);
 			EditorGUILayout.LabelField("", W_Option, H_Option);
 			EditorGUILayout.LabelField("", W_Option, H_Option);
-			int row = grid.GetRowCount();
+			int row = table.rowCount;
 			for (int r=0; r<row; r++) {
 				EditorGUILayout.BeginHorizontal();
 				if (GUILayout.Button(new GUIContent("A", "Add Selected"), EditorStyles.miniButton, GUILayout.ExpandWidth(false), GUILayout.Height(HEIGHT-1))) {
@@ -173,17 +173,17 @@ namespace ngui.ex {
 				}
 				if (GUILayout.Button("+", EditorStyles.miniButton, GUILayout.ExpandWidth(false), GUILayout.Height(HEIGHT-1))) {
                     #pragma warning disable 0618
-                    grid.AddRow(r+1, new UITableCell[grid.GetColumnCount()]);
+                    table.AddRow(r+1, new UITableCell[table.columnCount]);
                     #pragma warning restore 0618
 					changed = true;
 				}
-				GUI.enabled = r >= grid.rowHeader;
+				GUI.enabled = r >= table.rowHeader;
 				if (GUILayout.Button("-", EditorStyles.miniButton, GUILayout.ExpandWidth(false), GUILayout.Height(HEIGHT-1))) {
 					if (EditorUtility.DisplayDialog("Confirm", "Delete row "+(r+1), "OK", "Cancel")) {
                         #pragma warning disable 0618
-                        grid.RemoveRow(r);
+                        table.RemoveRow(r);
                         #pragma warning restore 0618
-                        grid.Reposition();
+                        table.Reposition();
 						changed = true;
 						row--;
 					}
@@ -200,9 +200,9 @@ namespace ngui.ex {
 		
 		private bool DrawCell(int r, int c) {
 			bool changed = false;
-            UITableCell cell = grid.GetCell(r, c);
+            UITableCell cell = table.GetCell(r, c);
             if (EditorGUIUtil.ObjectField<UITableCell>(ref cell, true, W_Option, GUILayout.Height(HEIGHT-1))) {
-				grid.SetCell(r, c, cell);
+				table.SetCell(r, c, cell);
 				changed = true;
 			}
 			return changed;
@@ -213,25 +213,25 @@ namespace ngui.ex {
 			Array.Copy(Selection.gameObjects, objs, objs.Length);
 			Array.Sort(objs, new HVComparer(orientation));
 			if (orientation == UITableLayout.Arrangement.Horizontal) {
-				for (int c=0; c<Math.Min(objs.Length, grid.maxPerLine); c++) {
-                    SetCell(line+c/grid.maxPerLine, c%grid.maxPerLine, objs[c].GetComponent<UITableCell>());
+				for (int c=0; c<Math.Min(objs.Length, table.maxPerLine); c++) {
+                    SetCell(line+c/table.maxPerLine, c%table.maxPerLine, objs[c].GetComponent<UITableCell>());
 				}
 			} else {
-				for (int r=0; r<Math.Min(objs.Length, grid.maxPerLine); r++) {
-                    SetCell(r%grid.maxPerLine, line+r/grid.maxPerLine, objs[r].GetComponent<UITableCell>());
+				for (int r=0; r<Math.Min(objs.Length, table.maxPerLine); r++) {
+                    SetCell(r%table.maxPerLine, line+r/table.maxPerLine, objs[r].GetComponent<UITableCell>());
 				}
 			}
 		}
 		
         private void SetCell(int r, int c, UITableCell cell) {
 			if (cell != null) {
-				int oldIndex = grid.GetIndex(cell);
+				int oldIndex = table.GetIndex(cell);
 				if (oldIndex >= 0) {
-					grid.components[oldIndex] = null;
+					table.components[oldIndex] = null;
 				}
                 NGUIUtil.DisableAnchor(cell.trans);
 			}
-			grid.SetCell(r, c, cell);
+			table.SetCell(r, c, cell);
 		}
 		
 		

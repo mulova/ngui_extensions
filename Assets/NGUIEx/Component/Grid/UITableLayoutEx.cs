@@ -12,7 +12,7 @@ namespace ngui.ex
         public static void SetRowColor(this UITableLayout table, int row, Color color)
         {
             string colorStr = NGUIUtil.ConvertColor2Str(color);
-            for (int col = table.columnHeader; col < table.GetColumnCount(); col++)
+            for (int col = table.columnHeader; col < table.columnCount; col++)
             {
                 UITableCell c = table.GetCell(row+table.rowHeader, col);
                 if (c != null)

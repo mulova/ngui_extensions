@@ -78,9 +78,11 @@ namespace ngui.ex
         public GameObject emptyObj;
 		
         private List<UITableEventListener> listeners = new List<UITableEventListener>();
-        private UITableModel model;
+        public UITableModel model { get; private set; }
         private Vector2[,] cellPos;
         private Action<UITableCell> initFunc = null;
+        private float[] maxHeights;
+        private float[] maxWidths;
 
         void Awake()
         {
@@ -115,7 +117,7 @@ namespace ngui.ex
         /// <param name="index">Index.</param>
         public int GetRowIndex(int index)
         {
-            if (IsHorizontal())
+            if (isHorizontal)
             {
                 return index / GetMaxPerLine();
             } else
@@ -131,7 +133,7 @@ namespace ngui.ex
         /// <param name="index">Index.</param>
         public int GetColumnIndex(int index)
         {
-            if (IsHorizontal())
+            if (isHorizontal)
             {
                 return index % GetMaxPerLine();
             } else
@@ -174,22 +176,28 @@ namespace ngui.ex
         /// [NOTE] This is not the same as contents size.
         /// </summary>
         /// <returns>The row count.</returns>
-        public int GetRowCount()
+        public int rowCount
         {
-            if (components.Length == 0)
+            get
             {
-                return 0;
+                if (components.Length == 0)
+                {
+                    return 0;
+                }
+                int row = isHorizontal? lineCount : GetMaxPerLine();
+                return Math.Max(row, rowHeader);
             }
-            int row = IsHorizontal()? GetLineCount() : GetMaxPerLine();
-            return Math.Max(row, rowHeader);
         }
 
         /**
 		 * column count except row header
 		 */
-        public int GetContentsRowCount()
+        public int contentRowCount
         {
-            return GetRowCount()-rowHeader;
+            get
+            {
+                return rowCount-rowHeader;
+            }
         }
 
         /// <summary>
@@ -197,22 +205,28 @@ namespace ngui.ex
         /// [NOTE] This is not the same as contents size.
         /// </summary>
         /// <returns>The column count.</returns>
-        public int GetColumnCount()
+        public int columnCount
         {
-            if (components.Length == 0)
+            get
             {
-                return 0;
+                if (components.Length == 0)
+                {
+                    return 0;
+                }
+                int col = isHorizontal? GetMaxPerLine() : lineCount;
+                return Math.Max(col, columnHeader);
             }
-            int col = IsHorizontal()? GetMaxPerLine() : GetLineCount();
-            return Math.Max(col, columnHeader);
         }
 
         /**
 		 * column count except column header
 		 */
-        public int GetContentsColumnCount()
+        public int contentsColumnCount
         {
-            return GetColumnCount()-columnHeader;
+            get
+            {
+                return columnCount-columnHeader;
+            }
         }
 
         public int GetMaxPerLine()
@@ -220,25 +234,28 @@ namespace ngui.ex
             return Mathf.Max(1, maxPerLine);
         }
 
-        public int GetLineCount()
+        public int lineCount
         {
-            int l = components.Length / GetMaxPerLine();
-            if (components.Length % GetMaxPerLine() != 0)
+            get
             {
-                l++;
+                int l = components.Length / GetMaxPerLine();
+                if (components.Length % GetMaxPerLine() != 0)
+                {
+                    l++;
+                }
+                return l;
             }
-            return l;
         }
 
         public void SetContents(IList data, Action<UITableCell> initFunc = null)
         {
             if (this.model == null)
             {
-                SetModel(new UITableModel(data, IsHorizontal(), maxPerLine), initFunc);
+                SetModel(new UITableModel(data, isHorizontal, maxPerLine), initFunc);
             } else
             {
                 this.initFunc = initFunc;
-                this.model.SetContents(data, IsHorizontal(), maxPerLine);
+                this.model.SetContents(data, isHorizontal, maxPerLine);
                 RefreshContents();
             }
         }
@@ -247,10 +264,10 @@ namespace ngui.ex
         {
             if (this.model == null)
             {
-                SetModel(new UITableModel(data, IsHorizontal(), maxPerLine), initFunc);
+                SetModel(new UITableModel(data, isHorizontal, maxPerLine), initFunc);
             } else
             {
-                this.model.SetContents(data, IsHorizontal(), maxPerLine);
+                this.model.SetContents(data, isHorizontal, maxPerLine);
                 this.initFunc = initFunc;
                 RefreshContents();
             }
@@ -270,7 +287,7 @@ namespace ngui.ex
         public void SetDummyModel(int count)
         {
             int[] content = new int[count];
-            SetModel(new UITableModel(content, IsHorizontal(), maxPerLine));
+            SetModel(new UITableModel(content, isHorizontal, maxPerLine));
         }
 
         public void Clear()
@@ -278,36 +295,40 @@ namespace ngui.ex
             SetDummyModel(0);
         }
 
-        public UITableModel GetModel()
+        public bool isHorizontal
         {
-            return this.model;
+            get
+            {
+                return arrangement == Arrangement.Horizontal;
+            }
         }
 
-        public bool IsHorizontal()
+        public bool isVertical
         {
-            return arrangement == Arrangement.Horizontal;
+            get
+            {
+                return arrangement == Arrangement.Vertical;
+            }
         }
 
-        public bool IsEmpty()
+        public bool isEmpty
         {
-            return components == null||components.Length == 0||components[0] == null;
-        }
-
-        public bool IsVertical()
-        {
-            return arrangement == Arrangement.Vertical;
+            get
+            {
+                return components == null||components.Length == 0||components[0] == null;
+            }
         }
 
         [Obsolete("Change model instead")]
         public void AddRow(params UITableCell[] row)
         {
-            AddRow(GetRowCount(), row);
+            AddRow(rowCount, row);
         }
 
         [Obsolete("Change model instead")]
         public void AddRow(int rowIndex, params UITableCell[] row)
         {
-            int colSize = GetColumnCount();
+            int colSize = columnCount;
             int insertSize = row.Length;
             // modify insertion array size as the multiple of column size
             if (insertSize % colSize != 0)
@@ -316,7 +337,7 @@ namespace ngui.ex
                 Array.Resize(ref row, insertSize);
             }
             int index = GetIndex(rowIndex, 0);
-            if (IsHorizontal())
+            if (isHorizontal)
             {
                 Insert(index, row);
             } else
@@ -339,13 +360,13 @@ namespace ngui.ex
         [Obsolete("Change model instead")]
         public void AddColumn(params UITableCell[] row)
         {
-            AddColumn(GetColumnCount(), row);
+            AddColumn(columnCount, row);
         }
 
         [Obsolete("Change model instead")]
         public void AddColumn(int colIndex, params UITableCell[] col)
         {
-            int rowSize = GetRowCount();
+            int rowSize = rowCount;
             int insertSize = col.Length;
             // modify insertion array size as the multiple of column size
             if (insertSize % rowSize != 0)
@@ -353,7 +374,7 @@ namespace ngui.ex
                 insertSize = (insertSize / rowSize+1) * rowSize;
                 Array.Resize(ref col, insertSize);
             }
-            if (IsVertical())
+            if (isVertical)
             {
                 int index = GetIndex(0, colIndex);
                 Insert(index, col);
@@ -378,12 +399,12 @@ namespace ngui.ex
         [Obsolete("Change model instead")]
         public void RemoveRow(int rowIndex)
         {
-            if (IsHorizontal())
+            if (isHorizontal)
             {
                 int index = GetIndex(rowIndex, 0);
                 int count = GetMaxPerLine();
                 // when last row is deleted, only remaining parts are removed.
-                if (rowIndex == GetRowCount()-1&&components.Length % GetMaxPerLine() != 0)
+                if (rowIndex == rowCount-1&&components.Length % GetMaxPerLine() != 0)
                 {
                     count = components.Length % GetMaxPerLine();
                 }
@@ -397,8 +418,8 @@ namespace ngui.ex
                 }
             } else
             {
-                int colSize = GetColumnCount();
-                UITableCell[] newComponents = new UITableCell[GetLineCount() * (maxPerLine-1)];
+                int colSize = columnCount;
+                UITableCell[] newComponents = new UITableCell[lineCount * (maxPerLine-1)];
                 Array.Copy(components, 0, newComponents, 0, rowIndex);
                 for (int c = 0; c < colSize; c++)
                 {
@@ -430,11 +451,11 @@ namespace ngui.ex
         [Obsolete("Change model instead")]
         public void RemoveColumn(int colIndex)
         {
-            if (IsVertical())
+            if (isVertical)
             {
                 int index = GetIndex(0, colIndex);
                 int count = GetMaxPerLine();
-                if (colIndex == GetColumnCount()-1&&components.Length % GetMaxPerLine() != 0)
+                if (colIndex == columnCount-1&&components.Length % GetMaxPerLine() != 0)
                 {
                     count = components.Length % GetMaxPerLine();
                 }
@@ -448,8 +469,8 @@ namespace ngui.ex
                 }
             } else
             {
-                int rowSize = GetRowCount();
-                UITableCell[] newComponents = new UITableCell[GetLineCount() * (maxPerLine-1)];
+                int rowSize = rowCount;
+                UITableCell[] newComponents = new UITableCell[lineCount * (maxPerLine-1)];
                 Array.Copy(components, 0, newComponents, 0, colIndex);
                 for (int r = 0; r < rowSize; r++)
                 {
@@ -532,8 +553,8 @@ namespace ngui.ex
 
         public bool InitArray()
         {
-            int rowCount = IsVertical()? GetMaxPerLine() : GetLineCount();
-            int colCount = IsHorizontal()? GetMaxPerLine() : GetLineCount();
+            int rowCount = isVertical? GetMaxPerLine() : lineCount;
+            int colCount = isHorizontal? GetMaxPerLine() : lineCount;
             bool changed = Resize(ref rowHeight, rowCount);
             changed |= Resize(ref columnWidth, colCount);
             if (!Application.isPlaying)
@@ -624,6 +645,110 @@ namespace ngui.ex
             this.listeners.Remove(l);
         }
 
+        void CalculateBound(Rect bound)
+        {
+            int row = rowCount;
+            int col = columnCount;
+            bounds = new Bounds[row, col];
+            for (int i = 0, imax = components.Length; i < imax; ++i)
+            {
+                int r = GetRowIndex(i);
+                int c = GetColumnIndex(i);
+                if (cellSize.x != 0 || cellSize.y != 0)
+                {
+                    float cx = r * cellSize.x+cellSize.x * 0.5f+padding.x * Mathf.Max(0, r-1);
+                    float cy = c * cellSize.y+cellSize.y * 0.5f+padding.y * Mathf.Max(0, c-1);
+                    bounds[r, c] = new Bounds(new Vector3(cx, cy), new Vector3(cellSize.x, cellSize.y, 1));
+                }
+                else
+                {
+                    bounds[r, c] = CalculateBounds(components[i]);
+                }
+            }
+            // max height
+            maxHeights = new float[row];
+            for (int r = 0; r < row; r++)
+            {
+                // check if null row
+                bool filled = false;
+                for (int c = 0; c < col && !filled; c++)
+                {
+                    var cell = GetCell(r, c);
+                    if (cell != null && cell.go.activeSelf)
+                    {
+                        filled = true;
+                    }
+                }
+                if (filled)
+                {
+                    if (r < rowHeight.Length && rowHeight[r] != 0)
+                    {
+                        maxHeights[r] = rowHeight[r];
+                    }
+                    else
+                        if (cellSize.y != 0)
+                        {
+                            maxHeights[r] = cellSize.y;
+                        }
+                        else
+                        {
+                            for (int c = 0; c < col; c++)
+                            {
+                                maxHeights[r] = Mathf.Max(maxHeights[r], bounds[r, c].size.y, cellMinSize.y);
+                            }
+                        }
+                    bound.height += maxHeights[r];
+                }
+            }
+            bound.height += (row-1) * padding.y;
+            maxWidths = new float[col];
+            for (int c = 0; c < col; c++)
+            {
+                // check if null row
+                bool filled = false;
+                for (int r = 0; r < row && !filled; r++)
+                {
+                    var cell = GetCell(r, c);
+                    if (cell != null && cell.go.activeSelf)
+                    {
+                        filled = true;
+                    }
+                }
+                if (filled)
+                {
+                    if (cellSize.x != 0)
+                    {
+                        maxWidths[c] = cellSize.x;
+                    }
+                    else
+                        if (c < columnWidth.Length && columnWidth[c] != 0)
+                        {
+                            maxWidths[c] = columnWidth[c];
+                        }
+                        else
+                        {
+                            for (int r = 0; r < row; r++)
+                            {
+                                maxWidths[c] = Mathf.Max(maxWidths[c], bounds[r, c].size.x, cellMinSize.x);
+                            }
+                        }
+                    bound.width += maxWidths[c];
+                }
+            }
+            float cellTotalWidth = bound.width;
+            bound.width += (col-1) * padding.x;
+            // expand cell width by ratio
+            if (totalWidth > 0 && bound.width < totalWidth)
+            {
+                float pad = totalWidth-bound.width;
+                for (int c = 0; c < col; c++)
+                {
+                    maxWidths[c] += pad * (maxWidths[c] / cellTotalWidth);
+                }
+                bound.width = totalWidth;
+            }
+        }
+
         /// <summary>
         /// Recalculate the position of all elements within the grid, sorting them alphabetically if necessary.
         /// </summary>
@@ -636,108 +761,9 @@ namespace ngui.ex
             InitArray();
             Rect bound = new Rect();
 			
-            int row = GetRowCount();
-            int col = GetColumnCount();
-			
-            bounds = new Bounds[row, col];
-            UITableCell[,] table = new UITableCell[row, col];
-
-            for (int i = 0, imax = components.Length; i < imax; ++i)
-            {
-                int r = GetRowIndex(i);
-                int c = GetColumnIndex(i);
-                //			int line = GetLineIndex(i);
-                table[r, c] = components[i];
-                if (cellSize.x != 0 || cellSize.y != 0)
-                {
-                    float cx = r * cellSize.x+cellSize.x * 0.5f+padding.x * Mathf.Max(0, r-1);
-                    float cy = c * cellSize.y+cellSize.y * 0.5f+padding.y * Mathf.Max(0, c-1);
-                    bounds[r, c] = new Bounds(new Vector3(cx, cy), new Vector3(cellSize.x, cellSize.y, 1));
-                } else
-                {
-                    bounds[r, c] = CalculateBounds(components[i]);
-                }
-            }
-			
-            // max height
-            float[] maxHeights = new float[row];
-            for (int r = 0; r < row; r++)
-            {
-                // check if null row
-                bool filled = false;
-                for (int c = 0; c < col&&!filled; c++)
-                {
-                    var cell = GetCell(r, c);
-                    if (cell != null&&cell.go.activeSelf)
-                    {
-                        filled = true; 
-                    }
-                }
-                if (filled)
-                {
-                    if (r < rowHeight.Length&&rowHeight[r] != 0)
-                    {
-                        maxHeights[r] = rowHeight[r];
-                    } else if (cellSize.y != 0)
-                    {
-                        maxHeights[r] = cellSize.y;
-                    } else
-                    {
-                        for (int c = 0; c < col; c++)
-                        {
-                            maxHeights[r] = Mathf.Max(maxHeights[r], bounds[r, c].size.y, cellMinSize.y);
-                        }
-                    }
-                    bound.height += maxHeights[r];
-                }
-            }
-            bound.height += (row-1) * padding.y;
-			
-            float[] maxWidths = new float[col];
-            for (int c = 0; c < col; c++)
-            {
-                // check if null row
-                bool filled = false;
-                for (int r = 0; r < row&&!filled; r++)
-                {
-                    var cell = GetCell(r, c);
-                    if (cell != null&&cell.go.activeSelf)
-                    {
-                        filled = true; 
-                    }
-                }
-                if (filled)
-                {
-                    if (cellSize.x != 0)
-                    {
-                        maxWidths[c] = cellSize.x;
-                    } else if (c < columnWidth.Length&&columnWidth[c] != 0)
-                    {
-                        maxWidths[c] = columnWidth[c];
-                    } else
-                    {
-                        for (int r = 0; r < row; r++)
-                        {
-                            maxWidths[c] = Mathf.Max(maxWidths[c], bounds[r, c].size.x, cellMinSize.x);
-                        }
-                    }
-                    bound.width += maxWidths[c];
-                }
-            }
-			
-            float cellTotalWidth = bound.width;
-            bound.width += (col-1) * padding.x;
-			
-            // expand cell width by ratio
-            if (totalWidth > 0&&bound.width < totalWidth)
-            {
-                float pad = totalWidth-bound.width;
-                for (int c = 0; c < col; c++)
-                {
-                    maxWidths[c] += pad * (maxWidths[c] / cellTotalWidth);
-                }
-                bound.width = totalWidth;
-            }
+            CalculateBound(bound);
+            int row = rowCount;
+            int col = columnCount;
 
             UITablePrefabs prefabs = GetPrefabs();
             float pixely = 0;
@@ -747,10 +773,10 @@ namespace ngui.ex
                 bool activeRow = false; // inactive row is removed from layout computation
                 for (int c = 0; c < col; c++)
                 {
-                    UITableCell cell = table[r, c];
-                    Transform t = cell.trans;
-                    if (t != null&&t.gameObject.activeInHierarchy)
+                    UITableCell cell = GetCell(r, c);
+                    if (cell != null&&cell.go.activeInHierarchy)
                     {
+                        Transform t = cell.trans;
                         if (!t.IsChildOf(transform))
                         {
                             t.SetParent(transform, false);
@@ -888,7 +914,7 @@ namespace ngui.ex
                     bounds[r, c].center = new Vector2(pixelx+extent.x, pixely-extent.y);
 
                     cellPos[r, c] = new Vector2(pixelx, pixely);
-                    activeRow |= t == null||t.gameObject.activeInHierarchy;
+                    activeRow |= cell == null||cell.go.activeInHierarchy;
                     pixelx += maxWidths[c]+padding.x;
                 }
                 if (activeRow)
@@ -913,17 +939,23 @@ namespace ngui.ex
 
         private Bounds CalculateBounds(UITableCell c)
         {
-            Transform t = c.trans;
-            GameObject o = c.go;
-            if (t == null||!o.activeInHierarchy)
+            if (c != null)
+            {
+                Transform t = c.trans;
+                GameObject o = c.go;
+                if (!o.activeInHierarchy)
+                {
+                    return new Bounds();
+                }
+                if (c != null&&c.bound != null)
+                {
+                    return c.bound.CalculateBounds(c.transform);
+                }
+                return GetBounds(t);
+            } else
             {
                 return new Bounds();
             }
-            if (c != null&&c.bound != null)
-            {
-                return c.bound.CalculateBounds(c.transform);
-            }
-            return GetBounds(t);
         }
 
         private UITablePrefabs GetPrefabs()
@@ -942,7 +974,7 @@ namespace ngui.ex
             emptyObj.SetActiveEx(model.IsEmpty());
             AssertDimension();
             UITablePrefabs prefabs = GetPrefabs();
-            if (IsHorizontal())
+            if (isHorizontal)
             {
                 for (int r = 0; r < model.GetRowCount(); r++)
                 {
@@ -953,7 +985,7 @@ namespace ngui.ex
                     }
                 }
                 /*  여분의 Row를 삭제한다. */
-                for (int r = GetRowCount()-1; r >= rowHeader+model.GetRowCount(); r--)
+                for (int r = rowCount-1; r >= rowHeader+model.GetRowCount(); r--)
                 {
                     #pragma warning disable 0618
                     RemoveRow(r);
@@ -969,7 +1001,7 @@ namespace ngui.ex
                         SetCellValue(prefabs, r+rowHeader, c+columnHeader, cellValue, initFunc);
                     }
                 }
-                for (int c = GetColumnCount()-1; c >= columnHeader+model.GetColumnCount(); c--)
+                for (int c = columnCount-1; c >= columnHeader+model.GetColumnCount(); c--)
                 {
                     #pragma warning disable 0618
                     RemoveColumn(c);
@@ -1023,11 +1055,11 @@ namespace ngui.ex
         private void AssertDimension()
         {
             Assert.IsTrue(model.IsEmpty()
-            ||(IsHorizontal()&&GetMaxPerLine()-columnHeader == model.GetColumnCount())
-            ||(IsVertical()&&GetMaxPerLine()-rowHeader == model.GetRowCount()),
+            ||(isHorizontal&&GetMaxPerLine()-columnHeader == model.GetColumnCount())
+            ||(isVertical&&GetMaxPerLine()-rowHeader == model.GetRowCount()),
                 "[Grid]{0} [Model]{1} [Grid]{2}x{3} [Model]{4}x{5} [Header]{6}x{7} ",
                 name, model.GetType().FullName, 
-                GetRowCount(), GetColumnCount(),
+                rowCount, columnCount,
                 model.GetRowCount(), model.GetColumnCount(),
                 rowHeader, columnHeader
             );
@@ -1196,9 +1228,9 @@ namespace ngui.ex
 
         public C GetSelectedData<C>()
         { 
-            for (int r = rowHeader; r < GetRowCount(); ++r)
+            for (int r = rowHeader; r < rowCount; ++r)
             {
-                for (int c = columnHeader; c < GetColumnCount(); ++c)
+                for (int c = columnHeader; c < columnCount; ++c)
                 {
                     UITableCell cell = GetCell(r, c);
                     if (cell.toggle != null&&cell.toggle.value)
