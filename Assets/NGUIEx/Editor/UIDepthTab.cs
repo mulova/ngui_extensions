@@ -204,8 +204,8 @@ namespace ngui.ex {
                 } else if (l != null) {
                     if (l.trueTypeFont != null) {
                         widgetName = string.Format("[TTF {0}] {1}", l.trueTypeFont.name, w.name);
-                    } else if (l.bitmapFont != null && l.bitmapFont.atlas != null) {
-                        widgetName = string.Format("[BMF {0}] {1}", l.bitmapFont.atlas.name, w.name);
+                    } else if (l.bitmapFont != null) {
+						widgetName = string.Format("[BMF {0}] {1}", l.bitmapFont.name, w.name);
                     } else {
                         widgetName = string.Format("FNT {0}", w.name);
                     }
