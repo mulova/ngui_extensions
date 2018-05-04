@@ -15,7 +15,9 @@ namespace ngui.ex
         protected override void PreprocessComponent(Component comp)
         {
             UITableLayout layout = comp as UITableLayout;
-//            Deactivate(layout.rowPrefab);
+            Deactivate(layout.rowPrefab);
+            Deactivate(layout.columnPrefab);
+            Deactivate(layout.defaultPrefab);
         }
         
         protected override void PreprocessOver(Component c)

@@ -32,7 +32,7 @@ namespace ngui.ex
 		}
 		
 		public void OnChange(UIToggle changed) {
-			if (changed.value) {
+			if (changed != null && changed.value) {
 				this.selected = changed;
 			}
 			foreach (UIToggle t in toggles) {

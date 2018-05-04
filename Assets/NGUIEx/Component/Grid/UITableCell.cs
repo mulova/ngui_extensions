@@ -15,44 +15,14 @@ using Object = UnityEngine.Object;
 namespace ngui.ex {
     public abstract class UITableCell : comunity.Script
 	{
-		public UIWidget bound;
-		public UIToggle toggle;
-        private bool isColliderAssigned;
-        [SerializeField] private BoxCollider _collider;
-        private bool isCollider2DAssigned;
-        [SerializeField] private BoxCollider2D _collider2d;
+		[Nullable] public UIWidget bound;
+		[Nullable] public UIToggle toggle;
         [HideInInspector] public int row;
         [HideInInspector] public int column;
 
-        protected UITableLayout table;
+        protected UITableLayout containerGrid;
         protected Action<UITableCell> initFunc { get; set; }
         public object data { get; protected set; }
-
-        public BoxCollider collider
-        {
-            get
-            {
-                if (_collider == null && !isColliderAssigned)
-                {
-                    isColliderAssigned = true;
-                    _collider = GetComponent<BoxCollider>();
-                }
-                return _collider;
-            }
-        }
-
-        public BoxCollider2D collider2d
-        {
-            get
-            {
-                if (_collider2d == null && !isCollider2DAssigned)
-                {
-                    isCollider2DAssigned = true;
-                    _collider2d = GetComponent<BoxCollider2D>();
-                }
-                return _collider2d;
-            }
-        }
 
 		public void Refresh() {
             SetCell(data, initFunc);
@@ -79,7 +49,7 @@ namespace ngui.ex {
 		/// <param name="status">Status.</param>
         public static void SetValue(UITableLayout grid, UITableCell c, int row, int column, object val, Action<UITableCell> initFunc = null) {
 			if (c != null) {
-                c.table = grid;
+                c.containerGrid = grid;
 				c.row = row;
 				c.column = column;
                 c.SetCell(val, initFunc);

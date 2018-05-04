@@ -59,38 +59,41 @@ Assets/Legionz/Sprite/.*\.prefab$");
 		{
 		}
 
-		protected override List<Object> SearchResource(Object root)
+		protected override List<Object> SearchResource()
 		{
 			List<Object> list = new List<Object>();
-			if (AssetDatabase.GetAssetPath(root).IsEmpty()) {
-				IEnumerable<Transform> roots = null;
-				if (root != null) {
-					roots = new Transform[] {(root as GameObject).transform};
+			foreach (var root in roots)
+			{
+				if (AssetDatabase.GetAssetPath(root).IsEmpty()) {
+					IEnumerable<Transform> roots = null;
+					if (root != null) {
+						roots = new Transform[] {(root as GameObject).transform};
+					} else {
+						roots = EditorUtil.GetSceneRoots().ConvertAll(o=>o.transform);
+					}
+					foreach (Transform r in roots) {
+						foreach (Component c in r.GetComponentsInChildren<Component>(true)) {
+							if (c != null) {
+								if (HasAssetRef(c, 0)) {
+									list.Add(c);
+								}
+							}
+						}
+					}
 				} else {
-                    roots = EditorSceneManager.GetActiveScene().GetRootGameObjects().Convert(o=>o.transform);
-				}
-				foreach (Transform r in roots) {
-					foreach (Component c in r.GetComponentsInChildren<Component>(true)) {
-						if (c != null) {
-							if (HasAssetRef(c, 0)) {
-								list.Add(c);
+					foreach (Object o in SearchAssets(typeof(GameObject), FileType.Prefab)) {
+						foreach (Component c in (o as GameObject).GetComponentsInChildren<Component>(true)) {
+							if (c != null) {
+								if (HasAssetRef(c, 0)) {
+									list.Add(c);
+								}
 							}
 						}
 					}
-				}
-			} else {
-				foreach (Object o in SearchAssets(typeof(GameObject), FileType.Prefab)) {
-					foreach (Component c in (o as GameObject).GetComponentsInChildren<Component>(true)) {
-						if (c != null) {
-							if (HasAssetRef(c, 0)) {
-								list.Add(c);
-							}
+					foreach (Object o in SearchAssets(typeof(Material), FileType.Material)) {
+						if (HasAssetRef(o, 0)) {
+							list.Add(o);
 						}
-					}
-				}
-				foreach (Object o in SearchAssets(typeof(Material), FileType.Material)) {
-					if (HasAssetRef(o, 0)) {
-						list.Add(o);
 					}
 				}
 			}

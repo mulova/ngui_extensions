@@ -61,7 +61,9 @@ namespace ngui.ex
         public Color gizmoColor = new Color(1f, 0f, 0f);
         private Bounds[,] bounds;
 		
-        [SerializeField] private UITableCell[] prefab = new UITableCell[0];
+        public UITableCell[] rowPrefab = new UITableCell[0];
+        public UITableCell[] columnPrefab = new UITableCell[0];
+        public UITableCell defaultPrefab;
         public int[] rowHeight = new int[0];
         public int[] columnWidth = new int[0];
         // rows for background
@@ -84,12 +86,9 @@ namespace ngui.ex
 
         void Awake()
         {
-            if (Application.isPlaying)
-            {
-                this.prefab = components;
-                this.components = new UITableCell[0];
-                MakePrefabInactive(prefab);
-            }
+            MakePrefabInactive(rowPrefab);
+            MakePrefabInactive(columnPrefab);
+            MakePrefabInactive(defaultPrefab);
         }
 
         /**
@@ -352,6 +351,7 @@ namespace ngui.ex
                     index += unit+GetMaxPerLine();
                 }
                 rowHeight = rowHeight.Insert(rowIndex, 0);
+                rowPrefab = rowPrefab.Insert(rowIndex, new UITableCell[1] { null });
                 valigns = valigns.Insert(rowIndex, valign);
                 maxPerLine++;
             }
@@ -390,6 +390,7 @@ namespace ngui.ex
                     index += unit+GetMaxPerLine();
                 }
                 columnWidth = columnWidth.Insert(colIndex, 0);
+                columnPrefab = columnPrefab.Insert(colIndex, new UITableCell[1] { null });
                 haligns = haligns.Insert(colIndex, halign);
                 maxPerLine++;
             }
@@ -440,6 +441,7 @@ namespace ngui.ex
                 {
                     components = newComponents;
                     rowHeight = rowHeight.Remove(rowIndex);
+                    rowPrefab = rowPrefab.Remove(rowIndex);
                     valigns = valigns.Remove(rowIndex);			
                     maxPerLine--;
                 }
@@ -481,6 +483,7 @@ namespace ngui.ex
                 {
                     components = newComponents;
                     columnWidth = columnWidth.Remove(colIndex);
+                    columnPrefab = columnPrefab.Remove(colIndex);
                     haligns = haligns.Remove(colIndex);
                     maxPerLine--;
                 }
@@ -554,6 +557,11 @@ namespace ngui.ex
             int colCount = isHorizontal? GetMaxPerLine() : lineCount;
             bool changed = Resize(ref rowHeight, rowCount);
             changed |= Resize(ref columnWidth, colCount);
+            if (!Application.isPlaying)
+            {
+                changed |= Resize(ref rowPrefab, rowCount);
+                changed |= Resize(ref columnPrefab, colCount);
+            }
             if (haligns.Length != colCount)
             {
                 int c = haligns.Length;
@@ -637,9 +645,8 @@ namespace ngui.ex
             this.listeners.Remove(l);
         }
 
-        private Rect CalculateBound()
+        void CalculateBound(Rect bound)
         {
-            Rect bound = new Rect();
             int row = rowCount;
             int col = columnCount;
             bounds = new Bounds[row, col];
@@ -740,7 +747,6 @@ namespace ngui.ex
                 }
                 bound.width = totalWidth;
             }
-            return bound;
         }
 
         /// <summary>
@@ -753,11 +759,13 @@ namespace ngui.ex
 //				return new Bounds();
 //			}
             InitArray();
-            Rect bound = CalculateBound();
+            Rect bound = new Rect();
+			
+            CalculateBound(bound);
             int row = rowCount;
             int col = columnCount;
 
-            TableInfo prefabs = GetPrefabs();
+            UITablePrefabs prefabs = GetPrefabs();
             float pixely = 0;
             for (int r = 0; r < row; r++)
             {
@@ -783,8 +791,16 @@ namespace ngui.ex
                             if (r >= rowHeader&&c >= columnHeader)
                             {
                                 UITableCell prefab = prefabs.GetPrefab(r, c);
-                                float relx = prefabs.GetRelativeX(r, c);
-                                pos.x = pixelx+relx;
+                                if (prefab != null)
+                                {
+                                    if (prefab == defaultPrefab)
+                                    {
+                                        pos.x = pixelx+prefab.transform.localPosition.x;
+                                    } else
+                                    {
+                                        pos.x = prefab.transform.localPosition.x;
+                                    }
+                                }
                             }
                         } else
                         {
@@ -802,7 +818,16 @@ namespace ngui.ex
                             if (r >= rowHeader&&c >= columnHeader)
                             {
                                 UITableCell prefab = prefabs.GetPrefab(r, c);
-                                pos.y = pixely+prefab.transform.localPosition.y;
+                                if (prefab != null)
+                                {
+                                    if (prefab == defaultPrefab)
+                                    {
+                                        pos.y = pixely+prefab.transform.localPosition.y;
+                                    } else
+                                    {
+                                        pos.y = prefab.transform.localPosition.y;
+                                    }
+                                }
                             }
                         } else
                         {
@@ -822,7 +847,7 @@ namespace ngui.ex
                         // update Collider Bound
                         if (resizeCollider)
                         {
-                            BoxCollider box = cell.collider;
+                            BoxCollider box = t.GetComponentInChildren<BoxCollider>();
                             if (box != null)
                             {
                                 Vector3 center = box.center; 
@@ -850,7 +875,7 @@ namespace ngui.ex
                                 box.size = boxSize;
                             } else
                             {
-                                BoxCollider2D box2d = cell.collider2d;
+                                BoxCollider2D box2d = t.GetComponentInChildren<BoxCollider2D>();
                                 if (box2d != null)
                                 {
                                     Vector2 center = box2d.offset; 
@@ -933,9 +958,9 @@ namespace ngui.ex
             }
         }
 
-        private TableInfo GetPrefabs()
+        private UITablePrefabs GetPrefabs()
         {
-            return new TableInfo(prefab, rowHeader, columnHeader);
+            return new UITablePrefabs(defaultPrefab, rowPrefab, columnPrefab, rowHeader, columnHeader);
         }
 
         public void RefreshContents()
@@ -948,7 +973,7 @@ namespace ngui.ex
             List<object> sel = GetSelectedDataList<object>();
             emptyObj.SetActiveEx(model.IsEmpty());
             AssertDimension();
-            TableInfo prefabs = GetPrefabs();
+            UITablePrefabs prefabs = GetPrefabs();
             if (isHorizontal)
             {
                 for (int r = 0; r < model.GetRowCount(); r++)
@@ -1000,7 +1025,7 @@ namespace ngui.ex
 		 * cell 값이 GameObject일 경우 prefab이라고 가정하고 새로 생성한다.
 		 * 이외의 값일 경우 ToString()을 사용하여 Label을 넣는다.
 		 */
-        private void SetCellValue(TableInfo prefabs, int row, int col, object cellValue, Action<UITableCell> initFunc)
+        private void SetCellValue(UITablePrefabs prefabs, int row, int col, object cellValue, Action<UITableCell> initFunc)
         {
             UITableCell cell = GetCell(row, col);
             if (cellValue == null)
