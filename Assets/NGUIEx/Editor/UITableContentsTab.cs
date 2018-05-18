@@ -229,7 +229,7 @@ namespace ngui.ex {
 				if (oldIndex >= 0) {
 					table.components[oldIndex] = null;
 				}
-                NGUIUtil.DisableAnchor(cell.trans);
+                NGUIUtil.DisableAnchor(cell.transform);
 			}
 			table.SetCell(r, c, cell);
 		}

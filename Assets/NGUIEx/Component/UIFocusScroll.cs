@@ -102,10 +102,10 @@ namespace ngui.ex
 			// Find obj that placed in most nearby
 			for (int idx = 0; idx < comps.Length; ++idx)
 			{
-				float dis = Vector3.Distance(focusCenter.position, comps[idx].trans.position);
+				float dis = Vector3.Distance(focusCenter.position, comps[idx].transform.position);
 				if (shortestDis > dis)
 				{
-                    target = comps[idx].trans;
+                    target = comps[idx].transform;
 					shortestDis = dis;
 				}
 			}
@@ -146,7 +146,7 @@ namespace ngui.ex
 				{
 					continue;
 				}
-				float dis = Vector3.Distance(focusCenter.position, comps[idx].trans.position);
+				float dis = Vector3.Distance(focusCenter.position, comps[idx].transform.position);
 				float scale = outsideObjScale;
 				if (dis < scalingCoverage)
 				{
@@ -154,7 +154,7 @@ namespace ngui.ex
 					float scalePer = (dis == 0? 1 : 1-(dis / scalingCoverage));
 					scale += ((centerObjScale-outsideObjScale) * scalePer);
 				}
-				comps[idx].trans.localScale = new Vector3(scale, scale);
+				comps[idx].transform.localScale = new Vector3(scale, scale);
 			}
 		}
 	}

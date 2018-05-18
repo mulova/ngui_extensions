@@ -129,7 +129,7 @@ namespace ngui.ex
 					}
 					if (child.go.activeSelf)
 					{
-                        RepositionNow(child.trans);
+                        RepositionNow(child.transform);
 					}
 				}
 			} else

@@ -99,7 +99,7 @@ namespace ngui.ex
                 inst.SetActive(true);
                 PopupBase p = inst.GetComponent<PopupBase>();
                 p.shared = loadData.shared;
-                p.trans.SetParent(trans, false);
+                p.transform.SetParent(transform, false);
                 if (loadData.shared)
                 {
                     instanceMap[loadData.key] = p;

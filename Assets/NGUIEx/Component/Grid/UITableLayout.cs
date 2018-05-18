@@ -776,7 +776,7 @@ namespace ngui.ex
                     UITableCell cell = GetCell(r, c);
                     if (cell != null&&cell.go.activeInHierarchy)
                     {
-                        Transform t = cell.trans;
+                        Transform t = cell.transform;
                         if (!t.IsChildOf(transform))
                         {
                             t.SetParent(transform, false);
@@ -941,7 +941,7 @@ namespace ngui.ex
         {
             if (c != null)
             {
-                Transform t = c.trans;
+                Transform t = c.transform;
                 GameObject o = c.go;
                 if (!o.activeInHierarchy)
                 {
@@ -1041,9 +1041,9 @@ namespace ngui.ex
             if (cell == null)
             {
                 cell = prefabs.Instantiate(row, col);
-                if (!cell.trans.IsChildOf(transform))
+                if (!cell.transform.IsChildOf(transform))
                 {
-                    cell.trans.SetParent(transform, false);
+                    cell.transform.SetParent(transform, false);
                 }
             }
             // Set Cell Value

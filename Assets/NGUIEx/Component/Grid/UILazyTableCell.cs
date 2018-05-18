@@ -172,7 +172,7 @@ namespace ngui.ex
         private bool IsDragged()
         {
             GameObject o = UICamera.selectedObject;
-            return o != null&&o.transform.IsChildOf(trans);
+            return o != null&&o.transform.IsChildOf(transform);
         }
 
         private void RefreshBounds()
