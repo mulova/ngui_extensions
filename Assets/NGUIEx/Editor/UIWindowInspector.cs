@@ -20,7 +20,7 @@ namespace ngui.ex
                 UITabHandler tab = popup.GetComponentInChildrenEx<UITabHandler>();
                 if (tab != null) {
                     popup.tabs = tab;
-                    CompatibilityEditor.SetDirty(popup);
+                    EditorUtil.SetDirty(popup);
                 }
             }
         }

@@ -44,7 +44,7 @@ namespace ngui.ex {
 				NGUIUtil.DisableAnchor(layout.left);
 				NGUIUtil.DisableAnchor(layout.right);
 				layout.InvalidateLayout();
-				CompatibilityEditor.SetDirty(target);
+				EditorUtil.SetDirty(target);
 			}
 		}
 	}

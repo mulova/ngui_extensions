@@ -52,7 +52,7 @@ public class TextLayerInspector : Editor
 				if (IsChanged(t)) {
 					t.sortingLayerID = sortingLayerId;
 					t.GetComponent<Renderer>().sortingLayerID = sortingLayerId;
-					CompatibilityEditor.SetDirty(t);
+					EditorUtil.SetDirty(t);
 				}
 			}
 		}

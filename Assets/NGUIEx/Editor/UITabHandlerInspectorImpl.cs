@@ -62,7 +62,7 @@ namespace ngui.ex
                     tabHandler.tabs = tabHandler.tabs.Add(t);
                     OnTabChanged(t, 0);
                 }
-                CompatibilityEditor.SetDirty(tabHandler);
+                EditorUtil.SetDirty(tabHandler);
                 //          for (int i=0; i<tabHandler.tabs.Length; ++i) {
                 //              UITab t = tabHandler.tabs[i];
                 //              OnTabRemoved(t, 0);
@@ -96,7 +96,7 @@ namespace ngui.ex
                     tabHandler.Init(tabHandler);
                     foreach (UITab t in tabHandler.tabs) {
                         if (t != null) {
-                            CompatibilityEditor.SetDirty(t.uiRoot);
+                            EditorUtil.SetDirty(t.uiRoot);
                         }
                     }
                 }
@@ -149,7 +149,7 @@ namespace ngui.ex
                 label.effectStyle = UILabel.Effect.Outline;
                 label.effectColor = Color.black;
                 c.tweenTarget = label.gameObject;
-                CompatibilityEditor.SetDirty(label.gameObject);
+                EditorUtil.SetDirty(label.gameObject);
             }
             foreach (UIButtonColor c in tabButton.GetComponents<UIButtonColor>()) {
                 if (c.tweenTarget == tabButton.gameObject)
@@ -160,7 +160,7 @@ namespace ngui.ex
                     c.disabledColor = activeTabColor;
                 }
             }
-            CompatibilityEditor.SetDirty(tabButton.gameObject);
+            EditorUtil.SetDirty(tabButton.gameObject);
         }
         
         private void ExtendTabCollider(UIButton tabButton)
@@ -176,7 +176,7 @@ namespace ngui.ex
             size.x += 8;
             collider.size = size;
             collider.offset = offset;
-            CompatibilityEditor.SetDirty(tabButton.gameObject);
+            EditorUtil.SetDirty(tabButton.gameObject);
         }
     }
     
@@ -200,7 +200,7 @@ namespace ngui.ex
                         if (tab != t) {
                             t.uiRoot.SetActive(false);
                         }
-                        CompatibilityEditor.SetDirty(t.gameObject);
+                        EditorUtil.SetDirty(t.gameObject);
                     }
                     tab.uiRoot.SetActive(true);
                 }

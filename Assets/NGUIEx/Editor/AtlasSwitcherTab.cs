@@ -48,8 +48,8 @@ namespace ngui.ex {
 					CopySpriteProperty(atlasFrom.GetSprite(fromSprite), atlasTo.GetSprite(toSprite));
 					s.atlas = atlasTo;
 					s.spriteName = toSprite;
-					CompatibilityEditor.SetDirty(s);
-					CompatibilityEditor.SetDirty(atlasTo);
+					EditorUtil.SetDirty(s);
+					EditorUtil.SetDirty(atlasTo);
 					str.AppendFormat("{0}({1})\n", GetScenePath(s.gameObject), s.GetType().FullName);
 				}
 			}
@@ -70,8 +70,8 @@ namespace ngui.ex {
 			foreach (UISprite s in sprites) {
 				if (s.atlas == atlasFrom && set.Contains(s.spriteName)) {
 					s.atlas = atlasTo;
-					CompatibilityEditor.SetDirty(s);
-					CompatibilityEditor.SetDirty(atlasTo);
+					EditorUtil.SetDirty(s);
+					EditorUtil.SetDirty(atlasTo);
 					str.AppendFormat("{0}({1})\n", GetScenePath(s.gameObject), s.GetType().FullName);
 				}
 			}

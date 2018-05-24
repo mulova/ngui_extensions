@@ -41,7 +41,7 @@ namespace ngui.ex
                         ||button.onClick[0].parameters[0].obj != button.gameObject)
                     {
                         EventDelegateUtil.SetCallback(button.onClick, callback, button.gameObject);
-                        CompatibilityEditor.SetDirty(button.gameObject);
+                        EditorUtil.SetDirty(button.gameObject);
                         changed = true;
                         //              EditorGUILayout.HelpBox(o.name+" is invalid", MessageType.Error);
                     }
@@ -79,7 +79,7 @@ namespace ngui.ex
         
         private void InvalidateArray()
         {
-            CompatibilityEditor.SetDirty(handler);
+            EditorUtil.SetDirty(handler);
             foreach (GameObject o in handler.buttons)
             {
                 if (o != null)
@@ -106,14 +106,14 @@ namespace ngui.ex
             {
                 return;
             }
-            CompatibilityEditor.SetDirty(btn);
+            EditorUtil.SetDirty(btn);
             if (btn.onClick != null)
             {
                 foreach (EventDelegate d in btn.onClick)
                 {
                     if (d.parameters.IsNotEmpty()&&d.parameters[0].obj != null)
                     {
-                        CompatibilityEditor.SetDirty(d.parameters[0].obj);
+                        EditorUtil.SetDirty(d.parameters[0].obj);
                     }
                 }
             }
@@ -142,7 +142,7 @@ namespace ngui.ex
                     }
                 }
             }
-            CompatibilityEditor.SetDirty(o);
+            EditorUtil.SetDirty(o);
         }
 
         private void OnItemAdd(Object o, int i)
@@ -169,7 +169,7 @@ namespace ngui.ex
                     }
                 }
             }
-            CompatibilityEditor.SetDirty(obj);
+            EditorUtil.SetDirty(obj);
         }
         
         private static EventDelegate GetCallback(List<EventDelegate> callbackList, MonoBehaviour target, Action<GameObject> method)

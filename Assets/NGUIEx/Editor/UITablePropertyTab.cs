@@ -75,7 +75,7 @@ namespace ngui.ex {
 			changed |= DrawTextMod();
 			if (changed) {
 				grid.InvalidateLayout();
-                CompatibilityEditor.SetDirty(grid);
+                EditorUtil.SetDirty(grid);
 			}
 		}
 		

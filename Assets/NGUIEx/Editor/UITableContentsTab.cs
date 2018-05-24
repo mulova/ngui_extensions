@@ -71,7 +71,7 @@ namespace ngui.ex {
 			
 			if (changed) {
 				table.InvalidateLayout();
-				CompatibilityEditor.SetDirty(table);
+				EditorUtil.SetDirty(table);
 			}
 		}
 		

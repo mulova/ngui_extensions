@@ -68,13 +68,13 @@ namespace ngui.ex {
                 if (GUILayout.Button("+1 over selection")) {
                     for (int i=0; i<=index; ++i) {
                         widgets[i].depth = widgets[i].depth+1;
-                        CompatibilityEditor.SetDirty(widgets[i]);
+                        EditorUtil.SetDirty(widgets[i]);
                     }
                 }
                 if (GUILayout.Button("-1 under selection")) {
                     for (int i=index; i<widgets.Length; ++i) {
                         widgets[i].depth = widgets[i].depth-1;
-                        CompatibilityEditor.SetDirty(widgets[i]);
+                        EditorUtil.SetDirty(widgets[i]);
                     }
                 }
                 // TODOM key handling
@@ -228,7 +228,7 @@ namespace ngui.ex {
                     }
                     if (EditorGUIUtil.IntField(null, ref depth, GUILayout.Width(40))) {
                         w.depth = depth;
-                        CompatibilityEditor.SetDirty(w);
+                        EditorUtil.SetDirty(w);
                     }
                 }
                 EditorGUILayout.EndHorizontal();

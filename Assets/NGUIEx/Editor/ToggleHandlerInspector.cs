@@ -30,7 +30,7 @@ namespace ngui.ex
                             if (d.isValid) {
                                 d.parameters[0] = p[0];
                             }
-                            CompatibilityEditor.SetDirty(o);
+                            EditorUtil.SetDirty(o);
                         }
                     }
                 } else {
@@ -62,7 +62,7 @@ namespace ngui.ex
         
         private void InvalidateArray() {
             handler.InitToggles();
-            CompatibilityEditor.SetDirty(handler);
+            EditorUtil.SetDirty(handler);
             foreach (GameObject b in handler.toggleObj) {
                 if (b != null) {
                     SetDirty(b.GetComponentEx<UIToggle>());
@@ -75,11 +75,11 @@ namespace ngui.ex
             if (btn == null) {
                 return;
             }
-            CompatibilityEditor.SetDirty(btn);
+            EditorUtil.SetDirty(btn);
             if (btn.onChange != null) {
                 foreach (EventDelegate d in btn.onChange) {
                     if (d.parameters.IsNotEmpty() && d.parameters[0].obj != null) {
-                        CompatibilityEditor.SetDirty(d.parameters[0].obj);
+                        EditorUtil.SetDirty(d.parameters[0].obj);
                     }
                 }
             }

@@ -396,7 +396,7 @@ namespace ngui.ex
                 {
                     var s = tex.ConvertToSprite();
                     s.atlas = atlas;
-                    CompatibilityEditor.SetDirty(s.atlas);
+                    EditorUtil.SetDirty(s.atlas);
                     spriteList.Add(s);
                 }
             }

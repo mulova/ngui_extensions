@@ -155,7 +155,7 @@ namespace ngui.ex
 			foreach (var pair in mod)
 			{
 				pair.Key.textKey = pair.Value;
-                CompatibilityEditor.SetDirty(pair.Key);
+                EditorUtil.SetDirty(pair.Key);
 			}
 			mod.Clear();
 			foreach (UIText l in labels)
@@ -166,7 +166,7 @@ namespace ngui.ex
 					if (trans.IsNotEmpty())
 					{
 						l.SetText(trans);
-                        CompatibilityEditor.SetDirty(l);
+                        EditorUtil.SetDirty(l);
 					}
 				}
 			}
@@ -274,7 +274,7 @@ namespace ngui.ex
 				if (text != l.text)
 				{
 					l.SetText(text);
-                    CompatibilityEditor.SetDirty(l);
+                    EditorUtil.SetDirty(l);
 				}
 				EditorGUILayout.EndHorizontal();
 			}
@@ -292,7 +292,7 @@ namespace ngui.ex
 			foreach (var pair in mod)
 			{
 				pair.Key.textKey = pair.Value;
-                CompatibilityEditor.SetDirty(pair.Key);
+                EditorUtil.SetDirty(pair.Key);
 				GameObject p = PrefabUtility.FindPrefabRoot(pair.Key.gameObject);
 				if (p != null)
 				{
@@ -321,7 +321,7 @@ namespace ngui.ex
 				if (key.IsNotEmpty())
 				{
 					l.textKey = key;
-                    CompatibilityEditor.SetDirty(l.gameObject);
+                    EditorUtil.SetDirty(l.gameObject);
 				} else
 				{
 				}
@@ -358,7 +358,7 @@ namespace ngui.ex
 			if (t.IsNotEmpty())
 			{
 				l.SetText(t);
-                CompatibilityEditor.SetDirty(l);
+                EditorUtil.SetDirty(l);
 			}
 		}
 	}

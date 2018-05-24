@@ -41,7 +41,7 @@ namespace ngui.ex
             }
             EditorGUI.indentLevel--;
             if (changed) {
-                CompatibilityEditor.SetDirty(script);
+                EditorUtil.SetDirty(script);
             }
             return changed;
         }

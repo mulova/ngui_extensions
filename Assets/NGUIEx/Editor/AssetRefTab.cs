@@ -183,6 +183,6 @@ class AllocateInfo {
 		} else if (property != null) {
 			property.SetValue(obj, val, null);
 		}
-		CompatibilityEditor.SetDirty(obj);
+		EditorUtil.SetDirty(obj);
 	}
 }

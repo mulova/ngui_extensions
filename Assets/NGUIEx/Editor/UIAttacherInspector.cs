@@ -138,9 +138,9 @@ namespace ngui.ex
 					}
 	
 					if (changed) {
-						CompatibilityEditor.SetDirty(attach.anchor);
-						CompatibilityEditor.SetDirty(attach.pivot);
-						CompatibilityEditor.SetDirty(attach);
+						EditorUtil.SetDirty(attach.anchor);
+						EditorUtil.SetDirty(attach.pivot);
+						EditorUtil.SetDirty(attach);
 					}
 				}
 			}

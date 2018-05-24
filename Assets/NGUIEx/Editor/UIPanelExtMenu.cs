@@ -25,7 +25,7 @@ namespace ngui.ex
             UIDragScrollView drag = zone.GetComponentEx<UIDragScrollView>();
             drag.scrollView = panel.GetComponent<UIScrollView>();
             zone.GetComponentEx<ScrollZone>();
-            CompatibilityEditor.SetDirty(zone);
+            EditorUtil.SetDirty(zone);
             AddDragScrollView();
         }
         
@@ -53,7 +53,7 @@ namespace ngui.ex
             foreach (BoxCollider2D box in view.GetComponentsInChildren<BoxCollider2D>(true)) {
                 UIDragScrollView drag = box.gameObject.GetComponentEx<UIDragScrollView>();
                 drag.scrollView = view;
-                CompatibilityEditor.SetDirty(drag);
+                EditorUtil.SetDirty(drag);
                 Debug.Log("Add DragScrollView for "+box.transform.GetScenePath(), box.gameObject);
             }
         }

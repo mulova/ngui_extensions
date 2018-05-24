@@ -51,7 +51,7 @@ namespace ngui.ex {
 				UIButton btn = o.GetComponent<UIButton>();
 				if (btn != null) {
 					btn.SetButtonTextColor();
-					CompatibilityEditor.SetDirty(btn.gameObject);
+					EditorUtil.SetDirty(btn.gameObject);
 				}
 			}
 		}
@@ -85,7 +85,7 @@ namespace ngui.ex {
 						c.pressed = INACTIVE_TAB_COLOR;
 						c.disabledColor = ACTIVE_TAB_COLOR;
 					}
-					CompatibilityEditor.SetDirty(tab.gameObject);
+					EditorUtil.SetDirty(tab.gameObject);
 					
 				}
 			}

@@ -35,7 +35,7 @@ namespace ngui.ex
             changed |= keyInspector.DrawKey("Double Click", ref audio.doubleClick);
             EditorGUI.indentLevel--;
             if (changed) {
-                CompatibilityEditor.SetDirty(audio);
+                EditorUtil.SetDirty(audio);
             }
         }
     }

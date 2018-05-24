@@ -35,7 +35,7 @@ namespace ngui.ex {
                 return;
             }
             if (arrDrawer.Draw(Rotorz.ReorderableList.ReorderableListFlags.ShowIndices)) {
-                CompatibilityEditor.SetDirty(target);
+                EditorUtil.SetDirty(target);
 			}
 			
 			if (sprite.anim != null && sprite.anim.Length == 1 && GUILayout.Button("Add all")) {
@@ -54,13 +54,13 @@ namespace ngui.ex {
                     name = baseName.AddSuffix(separator, i);
 					s = sprite.sprite.atlas.GetSprite(name);
 				}
-                CompatibilityEditor.SetDirty(sprite);
+                EditorUtil.SetDirty(sprite);
 			}
 			if (EditorGUIUtil.FloatField("Global Delay", ref globalDelay)) {
 				foreach (SpriteAnimInfo i in sprite.anim) {
 					i.delay = globalDelay;
 				}
-                CompatibilityEditor.SetDirty(sprite);
+                EditorUtil.SetDirty(sprite);
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace ngui.ex {
             public override bool DrawItem(Rect rect, int index, SpriteAnimInfo obj, out SpriteAnimInfo newObj)
             {
                 bool changed = false;
-                var r = SplitRectHorizontally(rect, 0.7f);
+                var r = EditorGUIUtil.SplitRectHorizontally(rect, 0.7f);
 
                 int nameIndex = sprList.FindIndex(obj.name);
                 var nameIndex2 = EditorGUI.Popup(r[0], nameIndex, sprList);

@@ -93,7 +93,7 @@ namespace ngui.ex
                     if (i.trigger.audioGroupGuid.IsEmpty () || i.trigger.clip.IsEmpty ()) {
                         i.SelectTable(missingTable);
                         i.trigger.clip = missingClip;
-                        CompatibilityEditor.SetDirty(i.trigger);
+                        EditorUtil.SetDirty(i.trigger);
                         changedList.Add (i.trigger.gameObject);
                     }
                 }
@@ -111,7 +111,7 @@ namespace ngui.ex
                         if (t.IsEmpty ()) {
                             t = new AudioTrigger[] { btn.gameObject.AddComponent<AudioTrigger> () };
                             changedList.Add (btn.gameObject);
-                            CompatibilityEditor.SetDirty(btn.gameObject);
+                            EditorUtil.SetDirty(btn.gameObject);
                         }
                         audio.AddRange (t);
                     }

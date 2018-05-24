@@ -108,7 +108,7 @@ namespace ngui.ex {
                         {
                             Debug.LogFormat("{0} -> {1}", s.spriteName, r[1]);
                             s.spriteName = r[1];
-                            CompatibilityEditor.SetDirty(s);
+                            EditorUtil.SetDirty(s);
                         }
                     }
                 }

@@ -33,7 +33,7 @@ public class TexSetterInspector : Editor
             r.cdn = true;
             r.SetPath(l.Target.mainTexture);
             s.textures.Add(r);
-            CompatibilityEditor.SetDirty(s);
+            EditorUtil.SetDirty(s);
         }
     }
 

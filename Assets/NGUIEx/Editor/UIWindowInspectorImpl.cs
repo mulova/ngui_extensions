@@ -34,7 +34,7 @@ namespace ngui.ex
                         t.parent = window.ui.transform;
                     }
                 }
-                CompatibilityEditor.SetDirty(window);
+                EditorUtil.SetDirty(window);
             }
         }
         
@@ -52,7 +52,7 @@ namespace ngui.ex
                 NGUIEditorTools.EndContents();
             }
             if (changed) {
-                CompatibilityEditor.SetDirty(window);
+                EditorUtil.SetDirty(window);
             }
         }
     }

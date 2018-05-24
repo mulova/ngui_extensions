@@ -18,7 +18,7 @@ namespace ngui.ex {
 		
 		public void OnEnable() {
 			if (grid.InitArray()) {
-				CompatibilityEditor.SetDirty(grid);
+				EditorUtil.SetDirty(grid);
 			}
 			if (grid.enabled) {
 				grid.InvalidateLayout();
@@ -28,7 +28,7 @@ namespace ngui.ex {
 		public void OnInspectorGUI() {
 			if (EditorGUIUtil.ObjectField<GameObject>("Empty Obj", ref grid.emptyObj, true))
 			{
-				CompatibilityEditor.SetDirty(grid.emptyObj);
+				EditorUtil.SetDirty(grid.emptyObj);
 			}
 			OnGridGUI();
 		}
@@ -53,7 +53,7 @@ namespace ngui.ex {
 			
 			if (changed) {
 				grid.InitArray();
-				CompatibilityEditor.SetDirty(grid);
+				EditorUtil.SetDirty(grid);
 				if (grid.enabled) {
 					NGUIUtil.Reposition(grid.transform);
 					grid.Reposition();

@@ -44,7 +44,7 @@ public static class UIBuildScript {
 			foreach (UITexture t in popup.GetComponentsInChildren<UITexture>(true)) {
 				if (t.mainTexture == srcTex) {
 					t.mainTexture = dstTex;
-                    CompatibilityEditor.SetDirty(t);
+                    EditorUtil.SetDirty(t);
 				}
 			}
 			return null;
@@ -54,7 +54,7 @@ public static class UIBuildScript {
 				foreach (UITexture t in r.GetComponentsInChildren<UITexture>(true)) {
 					if (t.mainTexture == srcTex) {
 						t.mainTexture = dstTex;
-                        CompatibilityEditor.SetDirty(t);
+                        EditorUtil.SetDirty(t);
 					}
 				}
 			}
