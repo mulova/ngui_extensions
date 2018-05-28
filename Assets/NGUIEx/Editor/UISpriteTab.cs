@@ -98,7 +98,7 @@ namespace ngui.ex
                     ConvertToTexture(texFolder);
                 }
                 EditorGUILayout.EndHorizontal();
-                EditorGUIUtil.ObjectFieldList<UITexture>(texList);
+                EditorGUIUtil.ObjectFieldReorderList(texList);
                 EditorUI.EndContents();
             }
             if (EditorUI.DrawHeader("Texture -> Sprite"))
@@ -128,7 +128,7 @@ namespace ngui.ex
                             filtered.Add(a);
                         }
                     }
-                    EditorGUIUtil.ObjectFieldList(filtered);
+                    EditorGUIUtil.ObjectFieldReorderList(filtered);
                     EditorGUILayout.BeginHorizontal();
                     EditorGUIUtil.Popup("Change to", ref changeAtlas, filtered);
                     if (GUILayout.Button("Apply"))
@@ -146,10 +146,10 @@ namespace ngui.ex
                         });
                     }
                     EditorGUILayout.EndHorizontal();
-                    EditorGUIUtil.ObjectFieldList<UISprite>(spriteList);
+                    EditorGUIUtil.ObjectFieldReorderList(spriteList);
                 } else
                 {
-                    if (EditorGUIUtil.ObjectFieldList(atlasRefs))
+                    if (EditorGUIUtil.ObjectFieldReorderList(atlasRefs))
                     {
                         SaveAtlasRefs();
                     }

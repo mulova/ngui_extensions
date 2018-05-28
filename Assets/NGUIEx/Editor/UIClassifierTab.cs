@@ -82,11 +82,11 @@ namespace ngui.ex {
 				List<GameObject> list = classifier[widgetType];
 				if (list.Count == 0) continue;
 				EditorGUILayout.LabelField(widgetType.ToString(), EditorStyles.boldLabel);
-				EditorGUIUtil.ObjectFieldList(list);
+				EditorGUIUtil.ObjectFieldReorderList(list);
 			}
 			
 			EditorGUILayout.LabelField("Panel", EditorStyles.boldLabel);
-			EditorGUIUtil.ObjectFieldList(panels);
+            EditorGUIUtil.ObjectFieldReorderList(panels);
 			EditorGUI.indentLevel -= 2;
 		}
 		

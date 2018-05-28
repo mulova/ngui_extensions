@@ -152,7 +152,7 @@ Assets/Legionz/Sprite/.*\.prefab$");
 		protected override void OnInspectorGUI(List<Object> found)
 		{
 			GUI.enabled = true;
-			EditorGUIUtil.ObjectFieldList<Object>(found);
+			EditorGUIUtil.ObjectFieldReorderList(found);
 		}
 		
 		public override void OnChangePlayMode() {}
