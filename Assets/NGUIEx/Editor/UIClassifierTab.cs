@@ -67,7 +67,8 @@ namespace ngui.ex {
 					EditorGUILayout.LabelField(widgetType.ToString(), EditorStyles.boldLabel);
 					EditorGUI.indentLevel += 2;
 					foreach (KeyValuePair<string, List<DupEntry>> slot in map) {
-						EditorGUIUtil.ObjectFieldList(slot.Value);
+						ObjWrapperReorderList drawer = new ObjWrapperReorderList(null, slot.Value);
+						drawer.Draw();
 						EditorGUILayout.Space();
 					}
 					EditorGUI.indentLevel -= 2;
