@@ -12,7 +12,7 @@ namespace ngui.ex
         private UITabHandler tabHandler;
         private UITabArrInspector tabArrInspector;
         private UITabArrInspector tabPrefabArrInspector;
-        private ArrayDrawer<UIButton> tabButtonArrInspector;
+		private ObjReorderList<UIButton> tabButtonArrInspector;
         
         public UITabHandlerInspectorImpl(UITabHandler handler)
         {
@@ -20,15 +20,16 @@ namespace ngui.ex
             tabArrInspector = new UITabArrInspector(tabHandler, "tabs", true);
             tabPrefabArrInspector = new UITabArrInspector(tabHandler, "tabPrefabs", false);
             tabPrefabArrInspector.selectTab = false;
-            tabButtonArrInspector = new ArrayDrawer<UIButton>(tabHandler, "tabButtons");
+			tabButtonArrInspector = new ObjReorderList<UIButton>(tabHandler, "tabButtons");
             bool auto = false;
-            if (auto) {
-                tabArrInspector.AddItemAddCallback(OnTabChanged);
-                tabArrInspector.AddItemChangeCallback(OnTabChanged);
-                tabArrInspector.AddItemRemoveCallback(OnTabRemoved);
-            }
+//            if (auto) {
+//				tabButtonArrInspector.drawer.onAddCallback += 
+//                tabArrInspector.AddItemAddCallback(OnTabChanged);
+//                tabArrInspector.AddItemChangeCallback(OnTabChanged);
+//                tabArrInspector.AddItemRemoveCallback(OnTabRemoved);
+//            }
         }
-        
+
         private UIButton  button;
         
         private void OnTabChanged(Object o, int index) {
