@@ -10,7 +10,7 @@ namespace ngui.ex {
     public class UIClassifierTab : EditorTab {
 		
 		private Vector2 scroll;
-		private GameObject root;
+        private UIRoot root;
 		private UIWidgetClassifier classifier = new UIWidgetClassifier(null);
 		private List<GameObject> panels = new List<GameObject>();
 		
@@ -34,7 +34,7 @@ namespace ngui.ex {
 		{
 			GUI.enabled = true;
 			EditorGUILayout.BeginHorizontal();
-			if (EditorGUIUtil.ObjectField<GameObject>("Root", ref root, true)) {
+            if (EditorGUIUtil.ObjectField<UIRoot>("Root", ref root, true)) {
 				Classify(ref root);
 			}
 			if (GUILayout.Button("Refresh", GUILayout.ExpandWidth(false)) || root == null) {
@@ -67,7 +67,8 @@ namespace ngui.ex {
 					EditorGUILayout.LabelField(widgetType.ToString(), EditorStyles.boldLabel);
 					EditorGUI.indentLevel += 2;
 					foreach (KeyValuePair<string, List<DupEntry>> slot in map) {
-						EditorGUIUtil.ObjectFieldList(slot.Value);
+                        DupEntryReorderList drawer = new DupEntryReorderList(slot.Value);
+                        drawer.Draw();
 						EditorGUILayout.Space();
 					}
 					EditorGUI.indentLevel -= 2;
@@ -90,16 +91,10 @@ namespace ngui.ex {
 			EditorGUI.indentLevel -= 2;
 		}
 		
-		private void Classify(ref GameObject root) {
-			/*  root가 없을 경우 하나를 선택한다. */
-			if (Camera.main == null || Camera.main.transform.parent == null) {
+        private void Classify(ref UIRoot root) {
+			if (root == null) {
 				return;
 			}
-			UIRoot uiRoot = Camera.main.transform.parent.GetComponent<UIRoot>();
-			if (uiRoot == null) {
-				return;
-			}
-			root = uiRoot.gameObject;
 			
 			classifier.SetRoot(root);
 			panels.Clear();
@@ -171,7 +166,7 @@ namespace ngui.ex {
 			}
 		}
 		
-		class DupEntry : ObjWrapper {
+		public class DupEntry : ObjWrapper {
 			public GameObject obj;
 			public string name;
 			
@@ -186,5 +181,20 @@ namespace ngui.ex {
 			public Object Obj { get { return obj;} }
 			public string Name { get { return name;} }
 		}
+
+        public class DupEntryReorderList : ReorderList<DupEntry>
+        {
+            public DupEntryReorderList(List<DupEntry> list): base(null, list)
+            {
+                showAdd = false;
+            }
+
+            protected override bool DrawItem(Rect rect, int index, bool isActive, bool isFocused)
+            {
+                var o = this[index];
+                EditorGUI.ObjectField(rect, o.obj, typeof(Object), true);
+                return false;
+            }
+        }
 	}
 }

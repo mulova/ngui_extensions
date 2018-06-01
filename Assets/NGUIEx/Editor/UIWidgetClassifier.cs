@@ -29,11 +29,11 @@ namespace ngui.ex {
 		
 		private MultiMap<WidgetType, GameObject> widgets = new MultiMap<WidgetType, GameObject>();
 		
-		public UIWidgetClassifier(GameObject root) {
+        public UIWidgetClassifier(UIRoot root) {
 			SetRoot(root);
 		}
 		
-		public void SetRoot(GameObject root) {
+		public void SetRoot(UIRoot root) {
 			widgets.RemoveAll();
 			
 			if (root == null) {
