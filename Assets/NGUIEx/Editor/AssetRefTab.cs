@@ -155,7 +155,7 @@ Assets/Legionz/Sprite/.*\.prefab$");
 			EditorGUIUtil.ObjectFieldReorderList(found);
 		}
 		
-		public override void OnChangePlayMode() {}
+		public override void OnChangePlayMode(PlayModeStateChange stateChange) {}
 		public override void OnChangeScene(string sceneName) {}
 		public override void OnFocus(bool focus) {}
 		public override void OnSelected(bool sel) {}
@@ -165,6 +165,7 @@ Assets/Legionz/Sprite/.*\.prefab$");
 class AllocateInfo {
 	public Object obj;
 	public FieldInfo field;
+
 	public PropertyInfo property;
 
 	public AllocateInfo(Object o, FieldInfo f) {

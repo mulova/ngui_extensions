@@ -51,7 +51,7 @@ namespace ngui.ex {
 		}
 		
 		public override void OnDisable() { }
-		public override void OnChangePlayMode() {}
+		public override void OnChangePlayMode(PlayModeStateChange stateChange) {}
 		public override void OnChangeScene(string sceneName) {}
 		public override void OnHeaderGUI() { }
 		public override void OnSelected(bool sel) { }

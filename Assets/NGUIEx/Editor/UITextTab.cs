@@ -31,7 +31,7 @@ namespace ngui.ex
 		{
 		}
 
-		public override void OnChangePlayMode()
+		public override void OnChangePlayMode(PlayModeStateChange stateChange)
 		{
 		}
 
