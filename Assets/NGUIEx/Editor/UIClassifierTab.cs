@@ -10,7 +10,7 @@ namespace ngui.ex {
     public class UIClassifierTab : EditorTab {
 		
 		private Vector2 scroll;
-		private GameObject root;
+		private UIRoot root;
 		private UIWidgetClassifier classifier = new UIWidgetClassifier(null);
 		private List<GameObject> panels = new List<GameObject>();
 		
@@ -34,7 +34,7 @@ namespace ngui.ex {
 		{
 			GUI.enabled = true;
 			EditorGUILayout.BeginHorizontal();
-			if (EditorGUIUtil.ObjectField<GameObject>("Root", ref root, true)) {
+			if (EditorGUIUtil.ObjectField<UIRoot>("Root", ref root, true)) {
 				Classify(ref root);
 			}
 			if (GUILayout.Button("Refresh", GUILayout.ExpandWidth(false)) || root == null) {
@@ -91,18 +91,11 @@ namespace ngui.ex {
 			EditorGUI.indentLevel -= 2;
 		}
 		
-		private void Classify(ref GameObject root) {
-			/*  root가 없을 경우 하나를 선택한다. */
-			if (Camera.main == null || Camera.main.transform.parent == null) {
-				return;
-			}
-			UIRoot uiRoot = Camera.main.transform.parent.GetComponent<UIRoot>();
+		private void Classify(ref UIRoot uiRoot) {
 			if (uiRoot == null) {
 				return;
 			}
-			root = uiRoot.gameObject;
-			
-			classifier.SetRoot(root);
+			classifier.SetRoot(uiRoot);
 			panels.Clear();
 			foreach (Object o in Object.FindObjectsOfType(typeof(UIPanel))) {
 				panels.Add(((UIPanel)o).gameObject);
