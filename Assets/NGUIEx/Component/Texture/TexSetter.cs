@@ -6,11 +6,7 @@
 
 using System;
 using UnityEngine;
-
 using System.Collections.Generic;
-
-
-
 using commons;
 using comunity;
 

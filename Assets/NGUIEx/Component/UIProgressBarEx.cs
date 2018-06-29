@@ -7,25 +7,28 @@
 using UnityEngine;
 using System.Text;
 
-public static class UIProgressBarEx
+namespace ngui.ex
 {
-
-	public static void SetValue(this UIProgressBar bar, int val, int max)
+	public static class UIProgressBarEx
 	{
-		if (bar == null)
+		
+		public static void SetValue(this UIProgressBar bar, int val, int max)
 		{
-			return;
+			if (bar == null)
+			{
+				return;
+			}
+			bar.value = val / (float)max;
 		}
-		bar.value = val / (float)max;
-	}
-
-	public static void SetValue(this UIProgressBar bar, float val, float max)
-	{
-		if (bar == null)
+		
+		public static void SetValue(this UIProgressBar bar, float val, float max)
 		{
-			return;
+			if (bar == null)
+			{
+				return;
+			}
+			bar.value = val / max;
 		}
-		bar.value = val / max;
+		
 	}
-
 }

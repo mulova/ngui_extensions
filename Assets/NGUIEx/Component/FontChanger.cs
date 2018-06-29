@@ -9,7 +9,7 @@ using UnityEngine;
 using System;
 
 
-
+namespace ngui.ex {
 /// <summary>
 /// Replace ttf or BMFont reference in prefab
 /// </summary>
@@ -102,5 +102,6 @@ public class FontChangeData : ICloneable {
 		that.references = ArrayUtil.Clone<UIFont>(this.references);
 		return that;
 	}
+}
 }
 #endif

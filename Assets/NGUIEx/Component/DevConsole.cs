@@ -5,6 +5,9 @@ using ngui.ex;
 using System.Collections.Generic;
 using System.Text;
 
+namespace ngui.ex
+{
+
 public class DevConsole : MonoBehaviour {
 
 	public UITableLayout layout;
@@ -53,5 +56,6 @@ public class DevConsole : MonoBehaviour {
 			Debug.Log("Test");
 		}
 	}
+}
 }
 #endif

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using comunity;
 using commons;
 
-
 namespace ngui.ex
 {
     public class AtlasLoader : comunity.Script

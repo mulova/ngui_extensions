@@ -42,12 +42,12 @@ namespace ngui.ex
         }
         
         
-        [MenuItem("GameObject/UI/Add all DragScrollView", true)]
+        [MenuItem("GameObject/UI/Add All DragScrollView", true)]
         public static bool IsAddDragScrollView() {
             return IsAddScrollZone();
         }
         
-        [MenuItem("GameObject/UI/Add all DragScrollView")]
+        [MenuItem("GameObject/UI/Add All DragScrollView")]
         public static void AddDragScrollView() {
             UIScrollView view = Selection.activeGameObject.GetComponent <UIScrollView>();
             foreach (BoxCollider2D box in view.GetComponentsInChildren<BoxCollider2D>(true)) {
@@ -56,6 +56,12 @@ namespace ngui.ex
                 EditorUtil.SetDirty(drag);
                 Debug.Log("Add DragScrollView for "+box.transform.GetScenePath(), box.gameObject);
             }
+			foreach (BoxCollider box in view.GetComponentsInChildren<BoxCollider>(true)) {
+				UIDragScrollView drag = box.gameObject.GetComponentEx<UIDragScrollView>();
+				drag.scrollView = view;
+				EditorUtil.SetDirty(drag);
+				Debug.Log("Add DragScrollView for "+box.transform.GetScenePath(), box.gameObject);
+			}
         }
     }
 }

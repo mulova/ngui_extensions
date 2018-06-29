@@ -12,8 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using comunity;
 
-
-
 namespace ngui.ex
 {
     /// <summary>
