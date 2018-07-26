@@ -20,7 +20,7 @@ namespace ngui.ex {
         [HideInInspector] public int row;
         [HideInInspector] public int column;
 
-        protected UITableLayout containerGrid;
+        protected UITableLayout container;
         protected Action<UITableCell> initFunc { get; set; }
         public object data { get; protected set; }
 
@@ -47,9 +47,9 @@ namespace ngui.ex {
 		/// <param name="t">T.</param>
 		/// <param name="val">Value.</param>
 		/// <param name="status">Status.</param>
-        public static void SetValue(UITableLayout grid, UITableCell c, int row, int column, object val, Action<UITableCell> initFunc = null) {
+        public static void SetValue(UITableLayout table, UITableCell c, int row, int column, object val, Action<UITableCell> initFunc = null) {
 			if (c != null) {
-                c.containerGrid = grid;
+                c.container = table;
 				c.row = row;
 				c.column = column;
                 c.SetCell(val, initFunc);
