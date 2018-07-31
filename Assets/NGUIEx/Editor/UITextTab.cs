@@ -308,7 +308,7 @@ namespace ngui.ex
                     #if UNITY_2018_1_OR_LATER
                     PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
                     #else
-                    PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
+                    PrefabUtility.ReplacePrefab(p, PrefabUtility.GetPrefabParent(p), ReplacePrefabOptions.ConnectToPrefab);
                     #endif
 				}
 				AssetDatabase.SaveAssets();
