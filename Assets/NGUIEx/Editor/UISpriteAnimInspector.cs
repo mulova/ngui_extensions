@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using comunity;
 using commons;
+using Rotorz.Games.Collections;
 
 
 namespace ngui.ex {
@@ -34,7 +35,7 @@ namespace ngui.ex {
             {
                 return;
             }
-            if (arrDrawer.Draw(Rotorz.ReorderableList.ReorderableListFlags.ShowIndices)) {
+			if (arrDrawer.Draw(ReorderableListFlags.ShowIndices)) {
                 EditorUtil.SetDirty(target);
 			}
 			
