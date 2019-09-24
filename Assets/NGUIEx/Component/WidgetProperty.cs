@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	[ExecuteInEditMode]
+    [ExecuteInEditMode]
 	public class WidgetProperty : MonoBehaviour
 	{
 		public UIRect rect;

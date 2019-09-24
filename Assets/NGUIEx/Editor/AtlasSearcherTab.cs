@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using System.Text;
+using System.Collections.Generic.Ex;
+using mulova.commons;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using commons;
-using comunity;
-
 
 namespace ngui.ex
 {
@@ -26,11 +25,11 @@ namespace ngui.ex
         private string filter = "";
         private bool expand;
         public override void OnHeaderGUI() {
-            EditorGUIUtil.ObjectField<GameObject>("Scene Root", ref sceneRoot, true);
+            EditorGUILayoutUtil.ObjectField<GameObject>("Scene Root", ref sceneRoot, true);
             GUI.enabled = sceneRoot != null;
             ComponentSelector.Draw<UIAtlas>("Select", NGUISettings.atlas, OnSelectAtlas, true);
-            EditorGUIUtil.TextField("Filter", ref filter);
-            if (EditorGUIUtil.Toggle("Expand", ref expand)) {
+            EditorGUILayoutUtil.TextField("Filter", ref filter);
+            if (EditorGUILayoutUtil.Toggle("Expand", ref expand)) {
                 foreach (string s in spriteMap.Keys) {
                     foldMap[s] = expand;
                 }

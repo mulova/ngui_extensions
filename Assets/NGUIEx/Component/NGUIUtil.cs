@@ -1,18 +1,17 @@
 ﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
-using System;
 using System.Text;
-
+using mulova.unicore;
 using UnityEngine;
-using comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	public static class NGUIUtil
+    public static class NGUIUtil
 	{
 		/// <summary>
 		/// if button is started as alpha 0, it doesn't work as expected. So Init DefaultButtonColors
@@ -56,20 +55,20 @@ namespace ngui.ex
 
 		private static bool Equals(Vector4 b1, Rect b2, float tolerance)
 		{
-			return VectorUtil.Equals(b1.x, b2.x, tolerance)
-			&&VectorUtil.Equals(b1.y, b2.y, tolerance)
-			&&VectorUtil.Equals(b1.z, b2.width, tolerance)
-			&&VectorUtil.Equals(b1.w, b2.height, tolerance);
+			return b1.x.Equals(b2.x, tolerance)
+			&&b1.y.Equals(b2.y, tolerance)
+			&&b1.z.Equals(b2.width, tolerance)
+			&&b1.w.Equals(b2.height, tolerance);
 		}
 
 		private static bool Equals(Vector4 b1, Bounds b2, float tolerance)
 		{
 			Vector3 min = b2.min;
 			Vector3 size = b2.size;
-			return VectorUtil.Equals(b1.x, min.x, tolerance)
-			&&VectorUtil.Equals(b1.y, min.y, tolerance)
-			&&VectorUtil.Equals(b1.z, size.x, tolerance)
-			&&VectorUtil.Equals(b1.w, size.y, tolerance);
+			return b1.x.Equals(min.x, tolerance)
+			&&b1.y.Equals(min.y, tolerance)
+			&&b1.z.Equals(size.x, tolerance)
+			&&b1.w.Equals(size.y, tolerance);
 		}
 
 		public static Vector2 GetSize(UIWidget widget)
@@ -127,7 +126,7 @@ namespace ngui.ex
 					{
 						continue;
 					}
-					if (child.go.activeSelf)
+					if (child.gameObject.activeSelf)
 					{
                         RepositionNow(child.transform);
 					}

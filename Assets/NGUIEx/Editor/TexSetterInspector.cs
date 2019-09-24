@@ -1,13 +1,12 @@
-using UnityEditor;
-using UnityEngine;
-using Object = UnityEngine.Object;
-
 using System.Collections.Generic;
-using System;
+using mulova.commons;
+using mulova.comunity;
+using mulova.unicore;
 using ngui.ex;
+using UnityEditor;
 using UnityEditor.SceneManagement;
-using commons;
-using comunity;
+using UnityEngine;
+using UnityEngine.Ex;
 
 [CustomEditor (typeof(TexSetter))]
 public class TexSetterInspector : Editor
@@ -156,8 +155,8 @@ public class TexSetterInspector : Editor
         /// Add TexSetter if texture is from CDN
         if (AssetBundlePath.inst.IsCdnAsset(tex.mainTexture))
         {
-            TexLoader l = tex.GetComponentEx<TexLoader>();
-            TexSetter s = l.GetComponentEx<TexSetter>();
+            TexLoader l = tex.FindComponent<TexLoader>();
+            TexSetter s = l.FindComponent<TexSetter>();
             TexSetterInspector.CopyTexture(s, l);
         }
     }

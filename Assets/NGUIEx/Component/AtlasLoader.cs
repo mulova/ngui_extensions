@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Ex;
+using mulova.comunity;
 using UnityEngine;
-using System.Collections.Generic;
-using comunity;
-using commons;
 
 namespace ngui.ex
 {
-    public class AtlasLoader : comunity.Script
+    public class AtlasLoader : LogBehaviour
     {
         [Serializable]
         public class AtlasPair

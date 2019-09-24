@@ -1,17 +1,16 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
+using mulova.unicore;
 using UnityEngine;
-
-using Assert = commons.Assert;
-using comunity;
+using Assert = mulova.commons.Assert;
 
 namespace ngui.ex
 {
-	[ExecuteInEditMode]
+    [ExecuteInEditMode]
 	public class UIPivot : UILayout
 	{
 		public UIWidget.Pivot pivot = UIWidget.Pivot.Center;

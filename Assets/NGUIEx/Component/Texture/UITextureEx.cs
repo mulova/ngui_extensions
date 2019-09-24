@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using comunity;
+using mulova.comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -36,7 +37,7 @@ namespace ngui.ex
 			Color c = tex.color;
 			UIBasicSprite.Flip flip = tex.flip;
 			tex.DestroyEx();
-			UISprite s = obj.GetComponentEx<UISprite>();
+			UISprite s = obj.FindComponent<UISprite>();
 			s.type = spriteType;
 			s.spriteName = name;
 			s.depth = depth;

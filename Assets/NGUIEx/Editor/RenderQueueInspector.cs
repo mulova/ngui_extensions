@@ -1,11 +1,12 @@
-using UnityEngine;
-using System.Collections;
-using UnityEditor;
 using System.Collections.Generic;
-using comunity;
+using mulova.comunity;
+using mulova.unicore;
+using UnityEditor;
+using UnityEngine;
 
-namespace ngui.ex {
-	[CustomEditor(typeof(RenderQueue))]
+namespace ngui.ex
+{
+    [CustomEditor(typeof(RenderQueue))]
 	public class RenderQueueInspector : Editor {
 		
 		private RenderQueue rq;
@@ -26,8 +27,8 @@ namespace ngui.ex {
 			showZ = EditorGUILayout.BeginToggleGroup("Z Transform", showZ);
 			if (showZ) {
 				EditorGUI.indentLevel += 2;
-				EditorGUIUtil.FloatField("Z Base", ref rq.zBase);
-				EditorGUIUtil.FloatField("Z Scale", ref rq.zScale);
+				EditorGUILayoutUtil.FloatField("Z Base", ref rq.zBase);
+				EditorGUILayoutUtil.FloatField("Z Scale", ref rq.zScale);
 				EditorGUI.indentLevel -= 2;
 			}
 			EditorGUILayout.EndToggleGroup();
@@ -60,8 +61,8 @@ namespace ngui.ex {
 		{
 			float width = GetWidth();
 			bool changed = false;
-			changed |= EditorGUIUtil.TextField(null, ref info.name, GUILayout.MinWidth(width*0.5F));
-			changed |= EditorGUIUtil.IntField(null, ref info.value, GUILayout.MinWidth(width*0.3F));
+			changed |= EditorGUILayoutUtil.TextField(null, ref info.name, GUILayout.MinWidth(width*0.5F));
+			changed |= EditorGUILayoutUtil.IntField(null, ref info.value, GUILayout.MinWidth(width*0.3F));
 			return changed;
 		}
 

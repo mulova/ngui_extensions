@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-
+using mulova.commons;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using commons;
-using comunity;
 
-namespace ngui.ex {
+namespace ngui.ex
+{
     public class UITableContentsTab : EditorTab {
 		private UITableLayoutInspectorImpl inspector;
         private UITableLayout table;
@@ -84,7 +83,7 @@ namespace ngui.ex {
 		private bool DrawRowHeader() {
 			bool changed = false;
 			EditorGUILayout.BeginVertical();
-            changed |= EditorGUIUtil.ObjectField<UITableCell>(ref table.defaultPrefab, true, W_Option, H_Option);
+            changed |= EditorGUILayoutUtil.ObjectField<UITableCell>(ref table.defaultPrefab, true, W_Option, H_Option);
 			EditorGUILayout.LabelField("Align", EditorStyles.boldLabel, H_Option);
 			EditorGUILayout.LabelField("Size", EditorStyles.boldLabel, H_Option);
 			EditorGUILayout.LabelField("Index", EditorStyles.boldLabel, H_Option);
@@ -92,9 +91,9 @@ namespace ngui.ex {
 			table.InitArray();
 			for (int r=0; r<row; r++) {
 				EditorGUILayout.BeginHorizontal();
-                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref table.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
-                changed |= EditorGUIUtil.Popup<UITableLayout.VAlign>(ref table.valigns[r], EnumUtil.Values<UITableLayout.VAlign>(), GUILayout.Width(40), H_Option);
-				changed |= EditorGUIUtil.IntField(null, ref table.rowHeight[r], GUILayout.Width(WIDTH-30), H_Option);
+                changed |= EditorGUILayoutUtil.ObjectField<UITableCell>(ref table.rowPrefab[r], true, GUILayout.Width(WIDTH-20), H_Option);
+                changed |= EditorGUILayoutUtil.Popup<UITableLayout.VAlign>(ref table.valigns[r], EnumUtil.Values<UITableLayout.VAlign>(), GUILayout.Width(40), H_Option);
+				changed |= EditorGUILayoutUtil.IntField(null, ref table.rowHeight[r], GUILayout.Width(WIDTH-30), H_Option);
 				EditorGUILayout.LabelField((r+1).ToString(), EditorStyles.boldLabel, GUILayout.Width(20), H_Option);
 				EditorGUILayout.EndHorizontal();
 			}
@@ -116,9 +115,9 @@ namespace ngui.ex {
 			int contentSize = table.columnCount;
 			for (int c=0; c<columnSize; c++) {
 				EditorGUILayout.BeginVertical();
-                changed |= EditorGUIUtil.ObjectField<UITableCell>(ref table.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
-                changed |= EditorGUIUtil.Popup<UITableLayout.HAlign>(ref table.haligns[c], EnumUtil.Values<UITableLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
-				changed |= EditorGUIUtil.IntField(null, ref table.columnWidth[c], GUILayout.Width(WIDTH-20), H_Option);
+                changed |= EditorGUILayoutUtil.ObjectField<UITableCell>(ref table.columnPrefab[c], true, GUILayout.ExpandWidth(false), H_Option);
+                changed |= EditorGUILayoutUtil.Popup<UITableLayout.HAlign>(ref table.haligns[c], EnumUtil.Values<UITableLayout.HAlign>(), GUILayout.Width(WIDTH-20), H_Option);
+				changed |= EditorGUILayoutUtil.IntField(null, ref table.columnWidth[c], GUILayout.Width(WIDTH-20), H_Option);
 				EditorGUILayout.LabelField(c.ToString(), EditorStyles.boldLabel, W_Option, H_Option);
 				int row = table.rowCount;
 				if (c < contentSize) {
@@ -201,7 +200,7 @@ namespace ngui.ex {
 		private bool DrawCell(int r, int c) {
 			bool changed = false;
             UITableCell cell = table.GetCell(r, c);
-            if (EditorGUIUtil.ObjectField<UITableCell>(ref cell, true, W_Option, GUILayout.Height(HEIGHT-1))) {
+            if (EditorGUILayoutUtil.ObjectField<UITableCell>(ref cell, true, W_Option, GUILayout.Height(HEIGHT-1))) {
 				table.SetCell(r, c, cell);
 				changed = true;
 			}

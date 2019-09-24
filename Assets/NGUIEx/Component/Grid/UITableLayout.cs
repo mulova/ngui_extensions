@@ -1,7 +1,7 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using UnityEngine;
@@ -10,8 +10,10 @@ using System.Collections.Generic;
 using System;
 using Object = UnityEngine.Object;
 
-using commons;
-using comunity;
+using mulova.commons;
+using mulova.comunity;
+using System.Ex;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -498,14 +500,14 @@ namespace ngui.ex
             }
             if (Application.isEditor&&!Application.isPlaying)
             {
-                c.go.SetActive(false);
+                c.gameObject.SetActive(false);
             } else if (reuseCell)
             {
                 c.Clear();
-                c.go.SetActive(false);
+                c.gameObject.SetActive(false);
             } else
             {
-                c.go.DestroyEx();
+                c.gameObject.DestroyEx();
             }
         }
 
@@ -674,7 +676,7 @@ namespace ngui.ex
                 for (int c = 0; c < col && !filled; c++)
                 {
                     var cell = GetCell(r, c);
-                    if (cell != null && cell.go.activeSelf)
+                    if (cell != null && cell.gameObject.activeSelf)
                     {
                         filled = true;
                     }
@@ -709,7 +711,7 @@ namespace ngui.ex
                 for (int r = 0; r < row && !filled; r++)
                 {
                     var cell = GetCell(r, c);
-                    if (cell != null && cell.go.activeSelf)
+                    if (cell != null && cell.gameObject.activeSelf)
                     {
                         filled = true;
                     }
@@ -774,7 +776,7 @@ namespace ngui.ex
                 for (int c = 0; c < col; c++)
                 {
                     UITableCell cell = GetCell(r, c);
-                    if (cell != null&&cell.go.activeInHierarchy)
+                    if (cell != null&&cell.gameObject.activeInHierarchy)
                     {
                         Transform t = cell.transform;
                         if (!t.IsChildOf(transform))
@@ -914,7 +916,7 @@ namespace ngui.ex
                     bounds[r, c].center = new Vector2(pixelx+extent.x, pixely-extent.y);
 
                     cellPos[r, c] = new Vector2(pixelx, pixely);
-                    activeRow |= cell == null||cell.go.activeInHierarchy;
+                    activeRow |= cell == null||cell.gameObject.activeInHierarchy;
                     pixelx += maxWidths[c]+padding.x;
                 }
                 if (activeRow)
@@ -942,7 +944,7 @@ namespace ngui.ex
             if (c != null)
             {
                 Transform t = c.transform;
-                GameObject o = c.go;
+                GameObject o = c.gameObject;
                 if (!o.activeInHierarchy)
                 {
                     return new Bounds();
@@ -1091,7 +1093,7 @@ namespace ngui.ex
                 {
                     if (r != null)
                     {
-                        r.go.SetActive(false);
+                        r.gameObject.SetActive(false);
                         int index = GetIndex(r);
                         if (index >= 0)
                         {
@@ -1120,7 +1122,7 @@ namespace ngui.ex
         {
             foreach (var c in components)
             {
-                if (c != null&&(includeInactive||c.go.activeSelf))
+                if (c != null&&(includeInactive||c.gameObject.activeSelf))
                 {
                     if (c != null)
                     {
@@ -1135,7 +1137,7 @@ namespace ngui.ex
             int count = 0;
             foreach (var c in components)
             {
-                if (c != null&&c.go.activeSelf)
+                if (c != null&&c.gameObject.activeSelf)
                 {
                     if (predicate(c as C))
                     {
@@ -1203,7 +1205,7 @@ namespace ngui.ex
             {
                 if (c != null&&c.gameObject.activeSelf)
                 {
-                    if (c.go.activeSelf&&c.toggle != null&&c.toggle.value)
+                    if (c.gameObject.activeSelf&&c.toggle != null&&c.toggle.value)
                     {
                         return c as C;
                     }
@@ -1294,7 +1296,7 @@ namespace ngui.ex
         public void SelectCell(int row, int col)
         { 
             UITableCell cell = GetCell(row, col);
-            if (cell != null&&cell.toggle != null&&cell.go.activeSelf)
+            if (cell != null&&cell.toggle != null&&cell.gameObject.activeSelf)
             {
                 cell.SetSelected(true);
             }
@@ -1334,7 +1336,7 @@ namespace ngui.ex
         {
             foreach (var c in components)
             {
-                if (c != null&&c.go.activeSelf)
+                if (c != null&&c.gameObject.activeSelf)
                 {
                     yield return c;
                 }

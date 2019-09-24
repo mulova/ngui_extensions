@@ -1,17 +1,14 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 using UnityEngine;
-
-using System.Collections;
-using System.Collections.Generic;
-using comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	public abstract class UILayout : MonoBehaviour
+    public abstract class UILayout : MonoBehaviour
 	{
 		protected bool invalid = true;
 

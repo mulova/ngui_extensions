@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using mulova.unicore;
 using UnityEditor;
-
-using System.Collections.Generic;
-using comunity;
+using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -22,9 +20,9 @@ namespace ngui.ex
             } else {
                 zone = receiverTrans.gameObject;
             }
-            UIDragScrollView drag = zone.GetComponentEx<UIDragScrollView>();
+            UIDragScrollView drag = zone.FindComponent<UIDragScrollView>();
             drag.scrollView = panel.GetComponent<UIScrollView>();
-            zone.GetComponentEx<ScrollZone>();
+            zone.FindComponent<ScrollZone>();
             EditorUtil.SetDirty(zone);
             AddDragScrollView();
         }
@@ -51,13 +49,13 @@ namespace ngui.ex
         public static void AddDragScrollView() {
             UIScrollView view = Selection.activeGameObject.GetComponent <UIScrollView>();
             foreach (BoxCollider2D box in view.GetComponentsInChildren<BoxCollider2D>(true)) {
-                UIDragScrollView drag = box.gameObject.GetComponentEx<UIDragScrollView>();
+                UIDragScrollView drag = box.gameObject.FindComponent<UIDragScrollView>();
                 drag.scrollView = view;
                 EditorUtil.SetDirty(drag);
                 Debug.Log("Add DragScrollView for "+box.transform.GetScenePath(), box.gameObject);
             }
 			foreach (BoxCollider box in view.GetComponentsInChildren<BoxCollider>(true)) {
-				UIDragScrollView drag = box.gameObject.GetComponentEx<UIDragScrollView>();
+				UIDragScrollView drag = box.gameObject.FindComponent<UIDragScrollView>();
 				drag.scrollView = view;
 				EditorUtil.SetDirty(drag);
 				Debug.Log("Add DragScrollView for "+box.transform.GetScenePath(), box.gameObject);

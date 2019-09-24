@@ -1,17 +1,18 @@
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.Generic.Ex;
+using System.Linq;
+using System.Text.Ex;
+using mulova.build;
+using mulova.commons;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using System;
-using System.Text;
-using System.Linq;
-using comunity;
-using commons;
-using build;
 
 namespace ngui.ex
 {
-	public class UITextTab : EditorTab
+    public class UITextTab : EditorTab
 	{
         public LexiconRegistry lexReg;
 		private static bool locked = false;
@@ -78,13 +79,13 @@ namespace ngui.ex
 
 		public override void OnHeaderGUI()
 		{
-            EditorGUIUtil.ObjectField<LexiconRegistry>("Lexicon Registry", ref lexReg, false);
+            EditorGUILayoutUtil.ObjectField<LexiconRegistry>("Lexicon Registry", ref lexReg, false);
             if (lexReg == null)
             {
                 return;
             }
-			EditorGUIUtil.PopupEnum<SystemLanguage>("Mother language", ref motherLang);
-			EditorGUIUtil.PopupEnum<SystemLanguage>("Language", ref lang);
+			EditorGUILayoutUtil.PopupEnum<SystemLanguage>("Mother language", ref motherLang);
+			EditorGUILayoutUtil.PopupEnum<SystemLanguage>("Language", ref lang);
 			fold = EditorGUILayout.Foldout(fold, "Translate All");
 			if (fold)
 			{
@@ -95,8 +96,8 @@ namespace ngui.ex
 					TranslateLanguage();
 				}
 			}
-			EditorGUIUtil.Toggle("Lock", ref locked);
-			if (EditorGUIUtil.Toggle("Visible Only", ref visibleOnly))
+			EditorGUILayoutUtil.Toggle("Lock", ref locked);
+			if (EditorGUILayoutUtil.Toggle("Visible Only", ref visibleOnly))
 			{
 				roots = null;
 			}
@@ -123,8 +124,8 @@ namespace ngui.ex
 		private void DrawFindLexiconGUI()
 		{
 			EditorGUILayout.BeginHorizontal();
-			EditorGUIUtil.TextField("Lexicon Keys", ref lexiconKeys);
-			if (GUILayout.Button("Find")&&lexiconKeys.IsNotEmpty())
+			EditorGUILayoutUtil.TextField("Lexicon Keys", ref lexiconKeys);
+			if (GUILayout.Button("Find")&&!lexiconKeys.IsEmpty())
 			{
 				Debug.Log(UIBuildScript.FindTextKey(lexiconKeys));
 			}
@@ -163,7 +164,7 @@ namespace ngui.ex
 				if (l.textKey != null)
 				{
 					string trans = Lexicon.Get(l.textKey);
-					if (trans.IsNotEmpty())
+					if (!trans.IsEmpty())
 					{
 						l.SetText(trans);
                         EditorUtil.SetDirty(l);
@@ -182,7 +183,7 @@ namespace ngui.ex
 
 		private void DrawTextList()
 		{
-			EditorGUIUtil.DrawSeparator();
+			EditorGUILayoutUtil.DrawSeparator();
 
 			if (!locked&&Selection.gameObjects.IsNotEmpty()&&(roots == null||!Enumerable.SequenceEqual(roots, Selection.gameObjects)))
 			{
@@ -308,7 +309,7 @@ namespace ngui.ex
                     #if UNITY_2018_1_OR_LATER
                     PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
                     #else
-					PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
+                    PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
                     #endif
 				}
 				AssetDatabase.SaveAssets();
@@ -319,10 +320,10 @@ namespace ngui.ex
 		public static void FindKey(UIText l)
 		{
 			string text = l.text;
-			if (l.textKey.IsEmpty()&&text.IsNotEmpty())
+			if (l.textKey.IsEmpty()&&!text.IsEmpty())
 			{
                 string key = Lexicon.FindAltKey(text);
-				if (key.IsNotEmpty())
+				if (!key.IsEmpty())
 				{
 					l.textKey = key;
                     EditorUtil.SetDirty(l.gameObject);
@@ -359,7 +360,7 @@ namespace ngui.ex
 		private static void TranslateLabel(UIText l)
 		{
             string t = Lexicon.Translate(l.text);
-			if (t.IsNotEmpty())
+			if (!t.IsEmpty())
 			{
 				l.SetText(t);
                 EditorUtil.SetDirty(l);

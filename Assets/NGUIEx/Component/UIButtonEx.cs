@@ -3,7 +3,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
 using ngui.ex;
-using comunity;
+using mulova.comunity;
 
 namespace ngui.ex
 {
@@ -75,7 +75,7 @@ namespace ngui.ex
 		public static void SetButtonTextColor(this UIButton button, Color activeTxtColor, Color inactiveTxtColor)
 		{
 			UIButtonColor[] colors = button.GetComponents<UIButtonColor>();
-			UILabel label = button.GetComponentInChildrenEx<UILabel>();
+			UILabel label = button.GetComponentInChildren<UILabel>();
 			if (label == null)
 			{
 				return;

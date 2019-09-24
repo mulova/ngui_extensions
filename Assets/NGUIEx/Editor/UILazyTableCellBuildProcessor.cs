@@ -2,7 +2,7 @@
 
 using UnityEditor;
 using ngui.ex;
-using build;
+using mulova.build;
 
 public class UILazyTableCellBuildProcessor : ComponentBuildProcess
 {

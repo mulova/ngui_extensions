@@ -1,11 +1,11 @@
-using UnityEngine;
-using System.Collections;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEditor;
-using comunity;
+using UnityEngine;
 
-
-namespace ngui.ex {
-	[CustomEditor(typeof(UIBorderLayout))]
+namespace ngui.ex
+{
+    [CustomEditor(typeof(UIBorderLayout))]
 	public class UIBorderLayoutInspector : Editor {
 		private SerializedInspector varInspector;
 		private UIBorderLayout layout;

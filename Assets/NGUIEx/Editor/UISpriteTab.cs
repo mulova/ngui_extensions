@@ -1,13 +1,15 @@
-using System.Collections.Generic;
-using commons;
-
+﻿using System.Collections.Generic;
+using System.Collections.Generic.Ex;
+using System.IO;
+using System.Text.Ex;
+using mulova.build;
+using mulova.commons;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Ex;
 using Object = UnityEngine.Object;
-using System.IO;
-using System.Text;
-using comunity;
-using build;
 
 namespace ngui.ex
 {
@@ -91,13 +93,14 @@ namespace ngui.ex
             {
                 EditorUI.BeginContents();
                 EditorGUILayout.BeginHorizontal();
-                EditorGUIUtil.ObjectField<Object>("Folder", ref texFolder, false);
+                EditorGUILayoutUtil.ObjectField<Object>("Folder", ref texFolder, false);
                 if (GUILayout.Button("Sprite -> Texture")&&EditorUtility.DisplayDialog("Warning", "BackUp?", "OK", "Cancel"))
                 {
                     ConvertToTexture(texFolder);
                 }
                 EditorGUILayout.EndHorizontal();
-                EditorGUIUtil.ObjectFieldReorderList(texList);
+                var drawer = new ListDrawer<UITexture>(texList, new ObjListItemDrawer<UITexture>());
+                drawer.Draw();
                 EditorUI.EndContents();
             }
             if (EditorUI.DrawHeader("Texture -> Sprite"))
@@ -116,8 +119,8 @@ namespace ngui.ex
                     }
                 }
                 EditorGUILayout.EndHorizontal();
-                EditorGUIUtil.TextField("Search sprite", ref searchSpriteName);
-                if (searchSpriteName.IsNotEmpty())
+                EditorGUILayoutUtil.TextField("Search sprite", ref searchSpriteName);
+                if (!searchSpriteName.IsEmpty())
                 {
                     List<UIAtlas> filtered = new List<UIAtlas>();
                     foreach (UIAtlas a in atlasRefs)
@@ -127,9 +130,10 @@ namespace ngui.ex
                             filtered.Add(a);
                         }
                     }
-                    EditorGUIUtil.ObjectFieldReorderList(filtered);
+                    var drawer = new ListDrawer<UIAtlas>(filtered, new ObjListItemDrawer<UIAtlas>());
+                    drawer.Draw();
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUIUtil.Popup("Change to", ref changeAtlas, filtered);
+                    EditorGUILayoutUtil.Popup("Change to", ref changeAtlas, filtered);
                     if (GUILayout.Button("Apply"))
                     {
                         BuildScript.ForEachPrefab((path, prefab) => {
@@ -145,10 +149,12 @@ namespace ngui.ex
                         });
                     }
                     EditorGUILayout.EndHorizontal();
-                    EditorGUIUtil.ObjectFieldReorderList(spriteList);
+                    var spriteDrawer = new ListDrawer<UISprite>(spriteList, new ObjListItemDrawer<UISprite>());
+                    spriteDrawer.Draw();
                 } else
                 {
-                    if (EditorGUIUtil.ObjectFieldReorderList(atlasRefs))
+                    var drawer = new ListDrawer<UIAtlas>(atlasRefs, new ObjListItemDrawer<UIAtlas>());
+                    if (drawer.Draw())
                     {
                         SaveAtlasRefs();
                     }
@@ -187,7 +193,7 @@ namespace ngui.ex
                     }
                 }
                 EditorGUILayout.BeginHorizontal();
-                EditorGUIUtil.ObjectField("Target", ref targetObj, true);
+                EditorGUILayoutUtil.ObjectField("Target", ref targetObj, true);
                 GUI.enabled = targetObj != null;
                 if (GUILayout.Button("Convert to Sprite")&&EditorUtility.DisplayDialog("Warning", "BackUp?", "OK"))
                 {

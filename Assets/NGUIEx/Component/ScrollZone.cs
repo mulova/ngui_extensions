@@ -1,13 +1,14 @@
 ﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using UnityEngine;
 using System.Collections.Generic;
 using ngui.ex;
-using comunity;
+using mulova.comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -24,7 +25,7 @@ namespace ngui.ex
 		{
 			if (scroll == null)
 			{
-				scroll = gameObject.GetComponentEx<UIDragScrollView>();
+				scroll = gameObject.FindComponent<UIDragScrollView>();
 				transform.localScale = Vector3.one;
 			}
             if (resetPosition)
@@ -67,9 +68,9 @@ namespace ngui.ex
 
 		static void AddScrollZone(GameObject zoneObj, UIScrollView scroll)
 		{
-			UIDragScrollView drag = zoneObj.GetComponentEx<UIDragScrollView>();
+			UIDragScrollView drag = zoneObj.FindComponent<UIDragScrollView>();
 			drag.scrollView = scroll;
-			zoneObj.GetComponentEx<ScrollZone>();
+			zoneObj.FindComponent<ScrollZone>();
 		}
 	}
     

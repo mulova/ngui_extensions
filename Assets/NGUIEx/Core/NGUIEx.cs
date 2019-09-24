@@ -1,17 +1,13 @@
-using System.Collections.Generic;
 using System;
+using System.Ex;
+using mulova.effect;
 using UnityEngine;
-using Object = UnityEngine.Object;
-
-using UnityEngine.Assertions;
-using effect;
-using commons;
-using comunity;
-using Assert = commons.Assert;
+using UnityEngine.Ex;
+using Assert = mulova.commons.Assert;
 
 namespace ngui.ex
 {
-	public static class NGUIEx
+    public static class NGUIEx
 	{
 		public static void SetCallback(this UIToggle button, EventDelegate.Callback callback)
 		{

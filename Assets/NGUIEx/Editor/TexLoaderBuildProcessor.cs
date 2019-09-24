@@ -1,8 +1,9 @@
 
 using UnityEngine;
 using UnityEditor;
-using build;
-using commons;
+using mulova.build;
+using mulova.commons;
+using System.Text.Ex;
 
 namespace ngui.ex
 {
@@ -51,7 +52,7 @@ namespace ngui.ex
         
         public static void RestoreTexture(TexLoader l)
         {
-            if (l.Target != null && l.editorTexPath.IsNotEmpty())
+            if (l.Target != null && !l.editorTexPath.IsEmpty())
             {
                 l.Target.mainTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(l.editorTexPath, typeof(Texture)) as Texture;
                 BuildScript.SetDirty(l.gameObject);

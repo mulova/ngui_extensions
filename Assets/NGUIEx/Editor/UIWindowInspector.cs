@@ -1,9 +1,5 @@
+using mulova.unicore;
 using UnityEditor;
-using UnityEngine;
-using Object = UnityEngine.Object;
-
-using System.Collections.Generic;
-using comunity;
 
 namespace ngui.ex
 {
@@ -17,7 +13,7 @@ namespace ngui.ex
             UIWindow win = target as UIWindow;
             PopupBase popup = win.GetComponent<PopupBase>();
             if (popup != null) {
-                UITabHandler tab = popup.GetComponentInChildrenEx<UITabHandler>();
+                UITabHandler tab = popup.GetComponentInChildren<UITabHandler>();
                 if (tab != null) {
                     popup.tabs = tab;
                     EditorUtil.SetDirty(popup);

@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
-using comunity;
+using mulova.comunity;
+using mulova.ui;
 
 
 namespace ngui.ex
 {
 	public class UISwitchOnTouch : MonoBehaviour
 	{
-		public ObjSwitch objSwitch;
+		public UISwitch objSwitch;
 
 		private void OnPress(bool pressed)
 		{

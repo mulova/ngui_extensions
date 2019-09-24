@@ -1,12 +1,13 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Text;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Text;
+using System.Text.Ex;
+using mulova.build;
+using mulova.commons;
+using mulova.unicore;
 using ngui.ex;
-using build;
-using commons;
-using comunity;
+using UnityEngine;
+using UnityEngine.Ex;
 
 public static class UIBuildScript {
 
@@ -16,7 +17,7 @@ public static class UIBuildScript {
 		result.Append("[From Resource]\n");
 		BuildScript.ForEachPrefab((path,popup)=> {
 			foreach (UIText l in popup.GetComponentsInChildren<UIText>(true)) {
-				if (l.textKey.IsNotEmpty() && keySet.Contains(l.textKey))
+                if (!l.textKey.IsEmpty() && keySet.Contains(l.textKey))
 				{
 					result.AppendFormat("{0}: {1}\n", l.textKey, l.transform.GetScenePath());
 				}
@@ -27,7 +28,7 @@ public static class UIBuildScript {
 			result.AppendFormat("[Scene {0}]\n", EditorSceneBridge.currentScene);
 			foreach (Transform r in roots) {
 				foreach (UIText l in r.GetComponentsInChildren<UIText>(true)) {
-					if (l.textKey.IsNotEmpty() && keySet.Contains(l.textKey))
+					if (!l.textKey.IsEmpty() && keySet.Contains(l.textKey))
 					{
 						result.AppendFormat("{0}: {1}\n", l.textKey, l.transform.GetScenePath());
 					}

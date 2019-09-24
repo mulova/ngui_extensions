@@ -1,9 +1,9 @@
 using UnityEngine;
-using comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	[RequireComponent(typeof(UILabel))]
+    [RequireComponent(typeof(UILabel))]
 	public class UILabelShadow : MonoBehaviour {
 		
 		public int x = 5;

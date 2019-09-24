@@ -1,19 +1,17 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using System;
+using mulova.comunity;
 using UnityEngine;
-using System.Collections.Generic;
-using commons;
-using Nullable = commons.Nullable;
-using Object = UnityEngine.Object;
+using Nullable = mulova.commons.Nullable;
 
-
-namespace ngui.ex {
-    public abstract class UITableCell : comunity.Script
+namespace ngui.ex
+{
+    public abstract class UITableCell : LogBehaviour
 	{
 		[Nullable] public UIWidget bound;
 		[Nullable] public UIToggle toggle;
@@ -54,7 +52,7 @@ namespace ngui.ex {
 				c.column = column;
                 c.SetCell(val, initFunc);
 			} else {
-                c.go.SetActive(val != null);
+                c.gameObject.SetActive(val != null);
 			}
 		}
 

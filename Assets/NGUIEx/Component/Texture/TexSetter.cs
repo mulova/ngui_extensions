@@ -1,18 +1,20 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
-using System;
-using UnityEngine;
 using System.Collections.Generic;
-using commons;
-using comunity;
+using System.Collections.Generic.Ex;
+using mulova.commons;
+using mulova.comunity;
+using mulova.unicore;
+using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	[RequireComponent(typeof(TexLoader))]
+    [RequireComponent(typeof(TexLoader))]
 	public class TexSetter : MonoBehaviour
 	{
 		public List<AssetRef> textures = new List<AssetRef>();
@@ -65,7 +67,7 @@ namespace ngui.ex
 			} else
 			{
 #if UNITY_EDITOR
-				i = MathUtil.Clamp(i, 0, textures.Count);
+				i = i.Clamp(0, textures.Count);
 				if (GetLoader().Target != null)
 				{
 					AssetRef r = textures[i];

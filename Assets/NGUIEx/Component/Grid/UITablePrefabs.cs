@@ -1,7 +1,7 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using System;
@@ -9,7 +9,8 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
 using System.Text;
-using comunity;
+using mulova.comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -80,7 +81,7 @@ namespace ngui.ex
 		{
 			UITableCell prefab = GetPrefab(row, col);
             UITableCell instance = prefab.InstantiateEx(prefab.transform.parent, false);
-			instance.go.SetActive(true);
+			instance.gameObject.SetActive(true);
 			StringBuilder str = new StringBuilder(prefab.name.Length+8);
 			str.Append(prefab.name);
 			str.Append("_").Append(row);

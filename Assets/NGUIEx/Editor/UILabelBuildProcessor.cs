@@ -1,10 +1,11 @@
 ﻿
 using UnityEngine;
 using UnityEditor;
-using build;
-using comunity;
-using commons;
-
+using mulova.build;
+using mulova.comunity;
+using mulova.commons;
+using UnityEngine.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -28,13 +29,13 @@ namespace ngui.ex
                 {
                     // get singleton prefab
                     GameObject singleton = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Reskin/singletons.prefab");
-                    FontLoader loader = singleton.GetComponentEx<FontLoader>();
+                    FontLoader loader = singleton.FindComponent<FontLoader>();
                     AddFont(loader, font);
                     label.bitmapFont = null;
                     BuildScript.SetDirty(label);
                 }
                 // add font marker to restore
-                FontMarker marker = label.GetComponentEx<FontMarker>();
+                FontMarker marker = label.FindComponent<FontMarker>();
                 marker.label = label;
                 marker.fontName = font.name;
                 BuildScript.SetDirty(marker);

@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
-using comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	[RequireComponent(typeof(UIToggle))]
+    [RequireComponent(typeof(UIToggle))]
 	public class UIToggleTexture : MonoBehaviour
 	{
 		public UITexture tex;

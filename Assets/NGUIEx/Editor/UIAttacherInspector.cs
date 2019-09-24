@@ -1,20 +1,18 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 using System.Collections.Generic;
-
-
-
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Ex;
 using Object = UnityEngine.Object;
-using comunity;
 
 namespace ngui.ex
 {
-	[CustomEditor(typeof(UIAttacher))]
+    [CustomEditor(typeof(UIAttacher))]
 	public class UIAttacherInspector : Editor
 	{
 
@@ -33,8 +31,8 @@ namespace ngui.ex
 
 		private void Init()
 		{
-			attach.anchor = anchorObj.GetComponentEx<UIAnchor>();
-			attach.pivot = pivotObj.GetComponentEx<UIPivot>();
+			attach.anchor = anchorObj.FindComponent<UIAnchor>();
+			attach.pivot = pivotObj.FindComponent<UIPivot>();
 		}
 		
 		private GameObject anchorObj;

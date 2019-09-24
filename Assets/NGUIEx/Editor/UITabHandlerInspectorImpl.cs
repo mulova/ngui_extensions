@@ -1,9 +1,10 @@
+using System.Collections.Generic;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using System.Collections.Generic;
-using comunity;
-using commons;
 
 namespace ngui.ex
 {
@@ -12,15 +13,16 @@ namespace ngui.ex
         private UITabHandler tabHandler;
         private UITabArrInspector tabArrInspector;
         private UITabArrInspector tabPrefabArrInspector;
-		private ObjReorderList<UIButton> tabButtonArrInspector;
+		private ReorderableList tabButtonArrInspector;
         
         public UITabHandlerInspectorImpl(UITabHandler handler)
         {
+            var sObj = new SerializedObject(handler);
             this.tabHandler = handler;
             tabArrInspector = new UITabArrInspector(tabHandler, "tabs", true);
             tabPrefabArrInspector = new UITabArrInspector(tabHandler, "tabPrefabs", false);
             tabPrefabArrInspector.selectTab = false;
-			tabButtonArrInspector = new ObjReorderList<UIButton>(tabHandler, "tabButtons");
+			tabButtonArrInspector = new ReorderableList(sObj, sObj.FindProperty("tabButtons"));
             bool auto = false;
 //            if (auto) {
 //				tabButtonArrInspector.drawer.onAddCallback += 
@@ -55,12 +57,12 @@ namespace ngui.ex
             changed |= tabPrefabArrInspector.OnInspectorGUI();
             if (tabPrefabArrInspector.Length > 0)
             {
-                changed |= tabButtonArrInspector.Draw();
+                tabButtonArrInspector.DoLayoutList();
             }
             if (GUILayout.Button("Reallocate")) {
-                tabHandler.tabs = new UITab[0];
+                tabHandler.tabs = new List<UITab>();
                 foreach (UITab t in tabHandler.GetComponentsInChildren<UITab>(true)) {
-                    tabHandler.tabs = tabHandler.tabs.Add(t);
+                    tabHandler.tabs.Add(t);
                     OnTabChanged(t, 0);
                 }
                 EditorUtil.SetDirty(tabHandler);
@@ -112,7 +114,7 @@ namespace ngui.ex
                 return;
             }
             UISprite sprite = tabButton.GetComponent<UISprite>();
-            UILabel label = tabButton.GetComponentInChildrenEx<UILabel>();
+            UILabel label = tabButton.GetComponentInChildren<UILabel>();
             if (label != null)
             {
                 Undo.RecordObjects(new Object[] {tabButton.gameObject, label.gameObject}, "TabColor");
@@ -194,7 +196,7 @@ namespace ngui.ex
             bool changed = base.OnInspectorGUI(tab, i);
             if (tab != null && selectTab) {
                 bool visible = tab.IsVisible();
-                if (EditorGUIUtil.Toggle(null, ref visible, GUILayout.Width(30))) {
+                if (EditorGUILayoutUtil.Toggle(null, ref visible, GUILayout.Width(30))) {
                     changed = true;
                     for (int j=0; j<Length; ++j) {
                         UITab t = this[j] as UITab;

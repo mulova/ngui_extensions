@@ -1,9 +1,9 @@
 ﻿
+using mulova.build;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEngine;
-using UnityEditor;
-using ngui.ex;
-using build;
-using comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -16,7 +16,7 @@ namespace ngui.ex
             if (tex.mainTexture != null && AssetBundlePath.inst.IsCdnAsset(tex.mainTexture)
                 && (l == null || IsTextureMismatch(tex)))
             {
-                TexSetter setter = tex.GetComponentEx<TexSetter>();
+                TexSetter setter = tex.FindComponent<TexSetter>();
                 var aref = new AssetRef();
                 aref.cdn = true;
                 aref.SetPath(tex.mainTexture);

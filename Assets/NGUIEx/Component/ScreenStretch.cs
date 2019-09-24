@@ -1,15 +1,13 @@
 using System;
+using System.Text.Ex;
+using mulova.commons;
+using mulova.unicore;
 using UnityEngine;
-using System.Collections.Generic;
-
-using ngui.ex;
-using commons;
-using comunity;
-
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	[RequireComponent(typeof(UIWidget)), ExecuteInEditMode]
+    [RequireComponent(typeof(UIWidget)), ExecuteInEditMode]
 	public class ScreenStretch : MonoBehaviour
 	{
 		public enum ResizeType

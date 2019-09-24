@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-using commons;
-using comunity;
+﻿using System.Text.Ex;
+using mulova.commons;
+using mulova.comunity;
+using UnityEngine;
 
 namespace ngui.ex
 {
@@ -11,7 +11,7 @@ namespace ngui.ex
 
         public void Translate()
         {
-            if (textKey.IsNotEmpty() && Application.isPlaying) {
+            if (!textKey.IsEmpty() && Application.isPlaying) {
                 text = Lexicon.Get(textKey);
             }
         }

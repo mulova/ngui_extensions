@@ -2,8 +2,10 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using System.Collections.Generic;
-using commons;
-using comunity;
+using mulova.commons;
+using mulova.comunity;
+using UnityEngine.Ex;
+using mulova.unicore;
 
 namespace ngui.ex
 {
@@ -65,8 +67,8 @@ namespace ngui.ex
             EditorUtil.SetDirty(handler);
             foreach (GameObject b in handler.toggleObj) {
                 if (b != null) {
-                    SetDirty(b.GetComponentEx<UIToggle>());
-                    b.GetComponentEx<BoxCollider2D>();
+                    SetDirty(b.FindComponent<UIToggle>());
+                    b.FindComponent<BoxCollider2D>();
                 }
             }
         }

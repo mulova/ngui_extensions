@@ -1,14 +1,14 @@
+using System.Ex;
+using System.Text.Ex;
+using mulova.comunity;
+using mulova.unicore;
+using Rotorz.Games.Collections;
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
-using System;
-using comunity;
-using commons;
-using Rotorz.Games.Collections;
 
-
-namespace ngui.ex {
-	[CustomEditor(typeof(UISpriteAnim))]
+namespace ngui.ex
+{
+    [CustomEditor(typeof(UISpriteAnim))]
 	public class UISpriteAnimInspector : Editor {
 		
 		private UISpriteAnim sprite;
@@ -27,7 +27,7 @@ namespace ngui.ex {
             if (arrDrawer == null && sprite.sprite != null&&sprite.sprite.atlas != null)
             {
                 string[] sprList = sprite.sprite.atlas.GetListOfSprites().ToArray();
-                arrDrawer = new ArrayDrawer<SpriteAnimInfo>(sprite, sprite, "anim", new SpriteAnimInfoItemDrawer(sprList));
+                arrDrawer = new ArrayDrawer<SpriteAnimInfo>(sprite, "anim", new SpriteAnimInfoItemDrawer(sprList));
                 arrDrawer.createDefaultValue = () => new SpriteAnimInfo();
                 arrDrawer.addSelected = false;
             }

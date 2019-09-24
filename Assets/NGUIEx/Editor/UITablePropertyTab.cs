@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-
+using mulova.commons;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using System.Text;
-using commons;
-using comunity;
 
-namespace ngui.ex {
+namespace ngui.ex
+{
     public class UITablePropertyTab : EditorTab {
 		private UITableLayoutInspectorImpl inspector;
 		private UITableLayout grid;
@@ -91,8 +89,8 @@ namespace ngui.ex {
 					EditorGUILayout.HelpBox("Currently only Horizontal grid type is supported", MessageType.Warning);
 					return false;
 				}
-				EditorGUIUtil.ObjectField<UILabel>("Title Label(Prefab)", ref titleLabelPrefab, true, GUILayout.ExpandWidth(false));
-				if (EditorGUIUtil.PopupNullable<GridStyle>(null, ref currentStyle, gridStyles)) {
+				EditorGUILayoutUtil.ObjectField<UILabel>("Title Label(Prefab)", ref titleLabelPrefab, true, GUILayout.ExpandWidth(false));
+				if (EditorGUILayoutUtil.PopupNullable<GridStyle>(null, ref currentStyle, gridStyles)) {
 					selectedColumn = null;
 					return true;
 				}
@@ -103,7 +101,7 @@ namespace ngui.ex {
 					grid.cellMinSize = minSize;
 				}
 				if (currentStyle != null) {
-					EditorGUIUtil.PopupNullable<ColumnWidth>(null, ref selectedColumn, currentStyle.columnWidth);
+					EditorGUILayoutUtil.PopupNullable<ColumnWidth>(null, ref selectedColumn, currentStyle.columnWidth);
 					GUI.enabled = titleLabelPrefab != null && selectedColumn != null;
 					if (GUILayout.Button("Add")) {
 						int lastCol = GetLastColumn();
@@ -143,10 +141,10 @@ namespace ngui.ex {
 			bool changed = false;
 			if (showTest) {
 				EditorGUI.indentLevel += 2;
-				EditorGUIUtil.ObjectField<UIFont>("Font", ref testFont, true);
+				EditorGUILayoutUtil.ObjectField<UIFont>("Font", ref testFont, true);
 				int row = grid.rowCount;
 				int col = grid.columnCount;
-				if (EditorGUIUtil.IntField("Font Size", ref fontSize, GUILayout.ExpandWidth(false))) {
+				if (EditorGUILayoutUtil.IntField("Font Size", ref fontSize, GUILayout.ExpandWidth(false))) {
 					for (int r=0; r<row; r++) {
 						for (int c=0; c<col; c++) {
                             UILabel label = grid.GetCell(r, c).GetComponent<UILabel>();
@@ -156,7 +154,7 @@ namespace ngui.ex {
 						}
 					}
 				}
-				if (EditorGUIUtil.ColorField("Font Color", ref fontColor, GUILayout.ExpandWidth(false))) {
+				if (EditorGUILayoutUtil.ColorField("Font Color", ref fontColor, GUILayout.ExpandWidth(false))) {
 					for (int r=grid.rowHeader; r<row; r++) {
 						for (int c=grid.columnHeader; c<col; c++) {
                             UILabel label = grid.GetCell(r, c).GetComponent<UILabel>();
@@ -169,7 +167,7 @@ namespace ngui.ex {
 				}
 				Array.Resize(ref testStrings, grid.maxPerLine);
 				for (int i=0; i<grid.maxPerLine; i++) {
-					EditorGUIUtil.TextField(i.ToString(), ref testStrings[i], GUILayout.ExpandWidth(false));
+					EditorGUILayoutUtil.TextField(i.ToString(), ref testStrings[i], GUILayout.ExpandWidth(false));
 				}
 				GUI.enabled = testFont != null;
 				if (GUILayout.Button("Fill Data")) {
@@ -212,7 +210,7 @@ namespace ngui.ex {
                         UITableCell cell = grid.GetCell(r, c);
 						UILabel l = cell!=null? cell.GetComponentInChildren<UILabel>(): null;
 						string s = l!=null? l.text: "";
-						if (EditorGUIUtil.TextField(null, ref s, GUILayout.Width(70)) && l!=null) {
+						if (EditorGUILayoutUtil.TextField(null, ref s, GUILayout.Width(70)) && l!=null) {
 							l.SetText(s);
 							changed = true;
 						}

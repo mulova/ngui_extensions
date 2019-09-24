@@ -1,24 +1,24 @@
 ﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
-using UnityEngine;
-using System.Collections;
-using commons;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using comunity;
-
+using System.Collections.Generic.Ex;
+using System.Ex;
+using mulova.commons;
+using mulova.comunity;
+using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
     /// <summary>
     /// Set Callback for UIButtons according to the UIButton.name
     /// </summary>
-    public class ToggleHandler : comunity.Script
+    public class ToggleHandler : LogBehaviour
 	{
 		public GameObject[] toggleObj = new GameObject[0];
 		private MultiMap<UIToggle, Action<UIToggle>> callbackMap = new MultiMap<UIToggle, Action<UIToggle>>();
@@ -105,7 +105,7 @@ namespace ngui.ex
 			{
 				if (b != null)
 				{
-					UIToggle t = b.GetComponentEx<UIToggle>();
+					UIToggle t = b.FindComponent<UIToggle>();
 					if (t.GetComponent<BoxCollider2D>() == null)
 					{
 						NGUITools.AddWidgetCollider(t.gameObject);

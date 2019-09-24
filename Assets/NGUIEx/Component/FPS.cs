@@ -1,9 +1,7 @@
+using mulova.unicore;
 using UnityEngine;
-using System.Collections;
-
 using UnityEngine.SceneManagement;
-using comunity;
- 
+
 namespace ngui.ex
 {
     public class FPS : MonoBehaviour

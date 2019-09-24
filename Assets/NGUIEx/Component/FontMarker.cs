@@ -1,8 +1,6 @@
-﻿using System;
+﻿using System.Text.Ex;
+using mulova.commons;
 using UnityEngine;
-
-using System.Collections.Generic;
-using commons;
 
 namespace ngui.ex
 {
@@ -13,7 +11,7 @@ namespace ngui.ex
         
         void Start()
         {
-            if (label != null && label.bitmapFont == null && fontName.IsNotEmpty())
+            if (label != null && label.bitmapFont == null && !fontName.IsEmpty())
             {
                 FontLoader.ApplyFont(this);
             }

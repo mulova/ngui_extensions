@@ -1,13 +1,15 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using commons;
+using mulova.commons;
+using System.Text.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -83,7 +85,7 @@ namespace ngui.ex
 
 		private void Init()
 		{
-			if (label != null&&label.text.IsNotEmpty())
+			if (label != null&&!label.text.IsEmpty())
 			{
 				finalText = label.text;
 				time = 0;

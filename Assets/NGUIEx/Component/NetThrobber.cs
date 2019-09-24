@@ -1,7 +1,7 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using System;
@@ -9,12 +9,12 @@ using UnityEngine;
 
 using System.Collections.Generic;
 using System.Collections;
-using commons;
-using comunity;
+using mulova.commons;
+using mulova.comunity;
 
 namespace ngui.ex
 {
-	public class NetThrobber : comunity.Script
+	public class NetThrobber : LogBehaviour
 	{
         
 		public static readonly Color DP = Color.green;

@@ -1,14 +1,12 @@
-using UnityEngine;
-using System.Text;
 using System;
-using System.Collections.Generic;
-using commons;
-using comunity;
-using ngui.ex;
+using System.Text;
+using System.Text.Ex;
+using mulova.commons;
+using mulova.comunity;
 
 namespace ngui.ex
 {
-	public static class UILabelEx
+    public static class UILabelEx
 	{
 		public static Loggerx log = LogManager.GetLogger(typeof(UILabel));
 		
@@ -73,7 +71,7 @@ namespace ngui.ex
 			}
 			string text = label.text;
 			long l = 0;
-			if (text.IsNotEmpty())
+			if (!text.IsEmpty())
 			{
 				long.TryParse(text, out l);
 			}
@@ -127,7 +125,7 @@ namespace ngui.ex
 						str.Append("+");
 					}
 				}
-				if (numberFormat.IsNotEmpty())
+				if (!numberFormat.IsEmpty())
 				{
 					str.Append(n.ToString(numberFormat));
 				} else

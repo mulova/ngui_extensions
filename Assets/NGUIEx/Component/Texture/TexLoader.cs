@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using commons;
+using mulova.commons;
 
 using UnityEngine;
-using Nullable = commons.Nullable;
+using Nullable = mulova.commons.Nullable;
 using System.IO;
 using Object = UnityEngine.Object;
 using System.ComponentModel;
 using UnityEngine.Serialization;
-using comunity;
+using mulova.comunity;
+using System.Text.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -19,7 +21,7 @@ namespace ngui.ex
     /// 
     /// </summary>
     [RequireComponent(typeof(UITexture))]
-    public class TexLoader : comunity.Script, IReleasable
+    public class TexLoader : LogBehaviour, IReleasable
     {
         public bool pixelPerfect;
         public string exclusiveId;
@@ -111,7 +113,7 @@ namespace ngui.ex
         {
             log.Info("Download for {0} INTERRUPTED", newUrl);
             // remove pending if exists
-            if (newUrl.IsNotEmpty())
+            if (!newUrl.IsEmpty())
             {
                 loadedCallback = null;
             }
@@ -173,7 +175,7 @@ namespace ngui.ex
             if (recoverOnEnable)
             {
                 // reload texture when enabled again
-                if (curUrl.IsNotEmpty())
+                if (!curUrl.IsEmpty())
                 {
                     newUrl = curUrl;
                     status = TexLoaderStatus.Idle;

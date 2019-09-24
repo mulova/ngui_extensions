@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
-using comunity;
+using mulova.comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {

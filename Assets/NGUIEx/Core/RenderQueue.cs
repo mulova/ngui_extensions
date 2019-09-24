@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using commons;
+using mulova.commons;
+using System.Text.Ex;
 
 namespace ngui.ex
 {
@@ -40,7 +41,7 @@ namespace ngui.ex
 				map.Clear();
 			}
 			for (int i=0; i<row.Length; i++) {
-				if (row[i].name.IsNotEmpty()) {
+				if (!row[i].name.IsEmpty()) {
 					map[row[i].name] = i;
 				}
 			}

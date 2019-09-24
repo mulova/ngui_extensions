@@ -3,9 +3,10 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 using System.Collections.Generic;
-using commons;
-using comunity;
-
+using mulova.commons;
+using mulova.comunity;
+using UnityEngine.Ex;
+using mulova.unicore;
 
 namespace ngui.ex
 {
@@ -26,7 +27,7 @@ namespace ngui.ex
             foreach (string varName in clipVars) {
                 AnimationClip val = ReflectionUtil.GetFieldValue<AnimationClip>(script, varName);
                 if (anim != null) {
-                    if (EditorGUIUtil.PopupNullable<AnimationClip>(varName, ref val, anim.GetAllClips().ToArray())) {
+                    if (EditorGUILayoutUtil.PopupNullable(varName, ref val, anim.GetAllClips().ToArray())) {
                         ReflectionUtil.SetFieldValue(script, varName, val);
                         changed = true;
                     }

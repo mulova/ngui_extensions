@@ -1,10 +1,11 @@
+using System;
+using System.Collections.Generic;
+using mulova.commons;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Ex;
 using Object = UnityEngine.Object;
-using System.Collections.Generic;
-using System;
-using commons;
-using comunity;
 
 namespace ngui.ex
 {
@@ -12,21 +13,21 @@ namespace ngui.ex
     public class ButtonHandlerInspector : Editor
     {
         private ButtonHandler handler;
-        private ArrayDrawer<GameObject> drawer;
-        
+        private ObjPropertyReorder<GameObject> drawer;
+
         void OnEnable()
         {
             this.handler = target as ButtonHandler;
-            this.drawer = new ArrayDrawer<GameObject>(handler, "buttons");
-            drawer.onInsert += OnInsert;
-            drawer.allowSceneObject = true;
-            drawer.allowSelection = false;
+            var obj = new SerializedObject(handler);
+            drawer = new ObjPropertyReorder<GameObject>(obj, "buttons");
+            drawer.onAdd += OnAdd;
+            drawer.allowSceneObjects = true;
             
             // check validation
             Action<GameObject> callback = handler.OnButtonClick;
             string callbackName = callback.Method.Name;
             bool changed = false;
-            foreach (GameObject o in handler.buttons)
+            foreach (var o in handler.buttons)
             {
                 if (o == null)
                 {
@@ -52,14 +53,16 @@ namespace ngui.ex
                 AssetDatabase.SaveAssets();
             }
         }
-        
+
         private Transform searchRoot;
 
         public override void OnInspectorGUI()
         {
+            serializedObject.Update();
             drawer.Draw();
+            serializedObject.ApplyModifiedProperties();
             EditorGUILayout.BeginHorizontal();
-            EditorGUIUtil.ObjectField<Transform>(ref searchRoot, true);
+            EditorGUIUtil.ObjectField(ref searchRoot, true);
             GUI.enabled = searchRoot != null;
             if (!Application.isPlaying&&GUILayout.Button("Search"))
             {
@@ -68,7 +71,7 @@ namespace ngui.ex
                 {
                     if (!set.Contains(b.gameObject))
                     {
-                        ArrayUtil.Add(ref handler.buttons, b.gameObject);
+                        handler.buttons.Add(b.gameObject);
                     }
                 }
                 InvalidateArray();
@@ -118,14 +121,15 @@ namespace ngui.ex
                 }
             }
         }
-        
-        private void OnInsert(int i, GameObject o)
+
+        private void OnAdd(int i)
         {
+            var o = drawer[i];
             if (o == null)
             {
                 return;
             }
-            UIButton btn = o.GetComponentEx<UIButton>();
+            UIButton btn = o.FindComponent<UIButton>();
             EventDelegate d = GetCallback(btn.onClick, handler, handler.OnButtonClick);
             if (d == null)
             {
@@ -143,6 +147,7 @@ namespace ngui.ex
                 }
             }
             EditorUtil.SetDirty(o);
+            EditorUtil.SetDirty(handler);
         }
 
         private void OnItemAdd(Object o, int i)
@@ -152,7 +157,7 @@ namespace ngui.ex
                 return;
             }
             GameObject obj = o as GameObject;
-            UIButton btn = obj.GetComponentEx<UIButton>();
+            UIButton btn = obj.FindComponent<UIButton>();
             EventDelegate d = GetCallback(btn.onClick, handler, handler.OnButtonClick);
             if (d == null)
             {

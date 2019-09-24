@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System;
 using Object = UnityEngine.Object;
 
-using commons;
-using comunity;
+using mulova.commons;
+using mulova.comunity;
 
 
 namespace ngui.ex
@@ -17,7 +17,7 @@ namespace ngui.ex
     /// Requirement: ButtonHandler needs 'close' button
     /// </summary>
     [RequireComponent(typeof(UIWindow))]
-    public abstract class PopupBase : comunity.Script, InputListener, IReleasablePool
+    public abstract class PopupBase : LogBehaviour, InputListener, IReleasablePool
     {
         public UITabHandler tabs;
         public ScreenStretch screenCover;
@@ -281,7 +281,7 @@ namespace ngui.ex
             }
             if (!shared)
             {
-                Object.Destroy(go);
+                Object.Destroy(gameObject);
             }
         }
         

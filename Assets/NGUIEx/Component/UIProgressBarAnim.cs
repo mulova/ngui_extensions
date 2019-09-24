@@ -1,10 +1,10 @@
-using UnityEngine;
 using System;
-using commons;
+using System.Ex;
+using UnityEngine;
 
 namespace ngui.ex
 {
-	[RequireComponent(typeof(UIProgressBar))]
+    [RequireComponent(typeof(UIProgressBar))]
 	public class UIProgressBarAnim : MonoBehaviour
 	{
 		public float duration = 0.5f;

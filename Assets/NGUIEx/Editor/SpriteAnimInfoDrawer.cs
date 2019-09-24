@@ -1,25 +1,23 @@
-﻿using System;
-using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Ex;
+using mulova.unicore;
 using UnityEditor;
-using Object = UnityEngine.Object;
-using UnityEngine.Assertions;
-using commons;
-using comunity;
+using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
     [CustomPropertyDrawer(typeof(SpriteAnimInfo))]
     public class SpriteAnimInfoDrawer : PropertyDrawerBase
     {
-        protected override int GetLineCount()
+
+        protected override int GetLineCount(SerializedProperty p)
         {
             return 1;
         }
 
-        protected override void DrawGUI(GUIContent label)
+        protected override void OnGUI(SerializedProperty p, Rect bound)
         {
-            UISpriteAnim sprAnim = prop.serializedObject.targetObject as UISpriteAnim;
+            UISpriteAnim sprAnim = p.serializedObject.targetObject as UISpriteAnim;
             UISprite spr = sprAnim.sprite;
             string[] sprList = new string[0];
             if (spr != null && spr.atlas != null)
@@ -29,8 +27,7 @@ namespace ngui.ex
             SerializedProperty name = GetProperty("name");
             SerializedProperty delay = GetProperty("delay");
 
-            Rect lineRect = GetLineRect(0);
-            var r = HorizontalSplitRect(lineRect, 0.7f);
+            var r = bound.SplitByWidthsRatio(0.7f, 0.3f);
 
             int nameIndex = sprList.FindIndex(name.stringValue);
             var nameIndex2 = EditorGUI.Popup(r[0], nameIndex, sprList);

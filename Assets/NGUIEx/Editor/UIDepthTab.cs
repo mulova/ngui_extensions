@@ -1,13 +1,11 @@
+using System;
 using System.Collections.Generic;
-
-
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using System;
-using comunity;
 
-namespace ngui.ex {
+namespace ngui.ex
+{
     public class UIDepthTab : EditorTab {
         private GameObject root;
         private UIWidget[] widgets = new UIWidget[0];
@@ -28,7 +26,7 @@ namespace ngui.ex {
         public override void OnHeaderGUI() {
             Validate();
             EditorGUILayout.BeginHorizontal();
-            if (EditorGUIUtil.ObjectField<GameObject>("Root", ref root, true)) {
+            if (EditorGUILayoutUtil.ObjectField<GameObject>("Root", ref root, true)) {
                 Refresh();
             }
             GUI.enabled = root != null;
@@ -39,23 +37,23 @@ namespace ngui.ex {
             EditorGUILayout.EndHorizontal();
             UIPanel[] panels = root != null? root.GetComponentsInChildren<UIPanel>(true): new UIPanel[0];
             EditorGUILayout.BeginHorizontal ();
-            if (EditorGUIUtil.PopupNullable ("Panel", ref panelSel, panels, ObjToString.DefaultToString)) {
+            if (EditorGUILayoutUtil.PopupNullable ("Panel", ref panelSel, panels, ObjToString.DefaultToString)) {
                 Refresh();
                 if (panelSel != null) {
                     EditorGUIUtility.PingObject(panelSel);
                     Selection.activeGameObject = panelSel.gameObject;
                 }
             }
-            EditorGUIUtil.Toggle("Show Active Only", ref showActiveOnly);
+            EditorGUILayoutUtil.Toggle("Show Active Only", ref showActiveOnly);
             EditorGUILayout.EndHorizontal ();
             UIAtlas[] atlases = GetAtlases (widgets);
             UIFont[] fonts = GetFonts (widgets);
-            if (EditorGUIUtil.PopupNullable("Select Atlas", ref atlasSel, atlases, ObjToString.DefaultToString)) {
+            if (EditorGUILayoutUtil.PopupNullable("Select Atlas", ref atlasSel, atlases, ObjToString.DefaultToString)) {
                 if (atlasSel != null) {
                     fontSel = null;
                 }
             }
-            if (EditorGUIUtil.PopupNullable("Select Font", ref fontSel, fonts, ObjToString.DefaultToString)) {
+            if (EditorGUILayoutUtil.PopupNullable("Select Font", ref fontSel, fonts, ObjToString.DefaultToString)) {
                 if (fontSel != null) {
                     atlasSel = null;
                 }
@@ -226,7 +224,7 @@ namespace ngui.ex {
                     if (GUILayout.Button(widgetName, EditorStyles.objectField)) {
                         Select(w);
                     }
-                    if (EditorGUIUtil.IntField(null, ref depth, GUILayout.Width(40))) {
+                    if (EditorGUILayoutUtil.IntField(null, ref depth, GUILayout.Width(40))) {
                         w.depth = depth;
                         EditorUtil.SetDirty(w);
                     }

@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using effect;
+using mulova.effect;
 
 
 namespace ngui.ex

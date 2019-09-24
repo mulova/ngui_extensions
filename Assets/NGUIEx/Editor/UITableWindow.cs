@@ -1,10 +1,10 @@
 
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using comunity;
 
-
-namespace ngui.ex {
+namespace ngui.ex
+{
     public class UITableWindow : TabbedEditorWindow {
 		
 		[MenuItem("NGUI/ex/TableLayout")]

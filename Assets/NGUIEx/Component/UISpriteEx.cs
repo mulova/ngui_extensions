@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Assertions;
-using commons;
-using Assert = commons.Assert;
-using comunity;
+using mulova.commons;
+using Assert = mulova.commons.Assert;
+using mulova.comunity;
+using System.Collections.Generic.Ex;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -118,7 +120,7 @@ namespace ngui.ex
 			GameObject obj = s.gameObject;
 
 			s.DestroyEx();
-			UITexture tex = obj.GetComponentEx<UITexture>();
+			UITexture tex = obj.FindComponent<UITexture>();
 			tex.depth = depth;
 			tex.width = width;
 			tex.height = height;

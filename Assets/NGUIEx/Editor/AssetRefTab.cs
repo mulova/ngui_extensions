@@ -1,19 +1,20 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.Generic.Ex;
 using System.Reflection;
-
+using System.Text.Ex;
+using System.Text.RegularExpressions;
+using convinity;
+using mulova.commons;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using System;
-using System.Text.RegularExpressions;
-using commons;
-using UnityEditor.SceneManagement;
-using convinity;
-using comunity;
 
 namespace ngui.ex
 {
-	class AssetRefTab : SearchTab<Object>
+    class AssetRefTab : SearchTab<Object>
 	{
 		private Object refObj;
 		private MemberInfoRegistry registry = new MemberInfoRegistry(MemberInfoRegistryEx.ObjectRefFilter);
@@ -29,9 +30,9 @@ Assets/Legionz/Sprite/.*\.prefab$");
 		private void SetExclude(string e) {
 			exclude = e;
 			excludes.Clear();
-			if (e.IsNotEmpty()) {
+			if (!e.IsEmpty()) {
 				foreach (string s in e.Split(new char[] { '\n' })) {
-					if (s.IsNotEmpty()) {
+					if (!s.IsEmpty()) {
 						excludes.Add(new Regex(s));
 					}
 				}
@@ -44,10 +45,10 @@ Assets/Legionz/Sprite/.*\.prefab$");
 		private bool excludeTexLoader = true;
 		public override void OnHeaderGUI(List<Object> found)
 		{
-			EditorGUIUtil.TextArea ("Exclude", ref exclude);
-			EditorGUIUtil.Toggle("Exclude TexLoader", ref excludeTexLoader);
+			EditorGUILayoutUtil.TextArea ("Exclude", ref exclude);
+			EditorGUILayoutUtil.Toggle("Exclude TexLoader", ref excludeTexLoader);
 			EditorGUILayout.BeginHorizontal();
-			EditorGUIUtil.TextField(null, ref filter);
+			EditorGUILayoutUtil.TextField(null, ref filter);
 			if (GUILayout.Button("Search")) {
 				SetExclude(exclude);
 				Search();
@@ -114,7 +115,7 @@ Assets/Legionz/Sprite/.*\.prefab$");
 				}
 				if (val != null) {
 					string assetPath = AssetDatabase.GetAssetPath(val);
-					if (assetPath.IsNotEmpty() && (filter.IsEmpty() || assetPath.Contains(filter))) {
+					if (!assetPath.IsEmpty() && (filter.IsEmpty() || assetPath.Contains(filter))) {
 						foreach (Regex regex in excludes) {
 							if (regex.IsMatch(assetPath)) {
 								return false;
@@ -152,7 +153,8 @@ Assets/Legionz/Sprite/.*\.prefab$");
 		protected override void OnInspectorGUI(List<Object> found)
 		{
 			GUI.enabled = true;
-			EditorGUIUtil.ObjectFieldReorderList(found);
+            throw new Exception("reimplement");
+			//EditorGUILayoutUtil.ObjectFieldReorderList(found);
 		}
 		
 		public override void OnChangePlayMode(PlayModeStateChange stateChange) {}

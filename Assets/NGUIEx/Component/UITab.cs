@@ -1,15 +1,15 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using UnityEngine;
-using commons;
+using mulova.commons;
 using System;
 using ngui.ex;
-using comunity;
-
+using mulova.comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -21,9 +21,9 @@ namespace ngui.ex
 		public GameObject newMark;
 		public UIWidget widgetBg;
 		
-		[commons.Nullable]
+		[mulova.commons.Nullable]
 		protected ButtonHandler buttons;
-		[commons.Nullable]
+		[mulova.commons.Nullable]
         public MonoBehaviour container { get; private set; }
 		private GameObject blocker;
 		// block click through when tab is disabled
@@ -41,7 +41,7 @@ namespace ngui.ex
 			BoxCollider2D srcCol = tabButton.GetComponent<BoxCollider2D>();
 			blocker = tabButton.gameObject.CreateChild("block");
 			UIWidget w = blocker.AddComponent<UIWidget>();
-			w.depth = tabButton.GetComponentInChildrenEx<UIWidget>().depth-1;
+			w.depth = tabButton.GetComponentInChildren<UIWidget>().depth-1;
 			w.width = (int)srcCol.size.x;
 			w.height = (int)srcCol.size.y;
 			BoxCollider2D col = blocker.AddComponent<BoxCollider2D>();
@@ -212,7 +212,7 @@ namespace ngui.ex
 					{
 						tabButton.transform.SetLocalPositionY(localY);
 						tabButton.GetComponent<UIWidget>().depth = widgetBg.depth+1;
-						UILabel label = tabButton.GetComponentInChildrenEx<UILabel>();
+						UILabel label = tabButton.GetComponentInChildren<UILabel>();
 						if (label != null)
 						{
 							label.color = new Color(210f / 250f, 1f, 0f);
@@ -229,7 +229,7 @@ namespace ngui.ex
 					{
 						tabButton.transform.SetLocalPositionY((localY-10f));
 						tabButton.GetComponent<UIWidget>().depth = depth;
-						UILabel label = tabButton.GetComponentInChildrenEx<UILabel>();
+						UILabel label = tabButton.GetComponentInChildren<UILabel>();
 						if (label != null)
 						{
 							label.color = new Color(193f / 250f, 205f / 250f, 213f / 250f);

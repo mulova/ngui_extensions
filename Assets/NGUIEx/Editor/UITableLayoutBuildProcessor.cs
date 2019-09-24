@@ -2,7 +2,7 @@
 
 using UnityEditor;
 using ngui.ex;
-using build;
+using mulova.build;
 
 namespace ngui.ex
 {
@@ -40,7 +40,7 @@ namespace ngui.ex
                 {
                     if (o != null)
                     {
-                        o.go.SetActive(false);
+                        o.gameObject.SetActive(false);
                     }
                 }
             }

@@ -2,8 +2,10 @@
 using System.Collections;
 using ngui.ex;
 using System;
-using comunity;
-using commons;
+using mulova.comunity;
+using mulova.commons;
+using UnityEngine.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -75,7 +77,7 @@ namespace ngui.ex
 			// This func for only scroll that focus center
 			GameObject go = gameObject.CreateChild("restrictObj");
 			restrictObj = go.transform;
-			UIWidget widget = go.GetComponentEx<UIWidget>();
+			UIWidget widget = go.FindComponent<UIWidget>();
 			UIPanel panel = scroll.GetComponent<UIPanel>();
 			restrictObj.position = focusCenter.position;
 			if (scroll.movement == UIScrollView.Movement.Horizontal)

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Text;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
-using comunity;
 
-
-namespace ngui.ex {
+namespace ngui.ex
+{
     public class AtlasSwitcherTab : EditorTab
 	{
 		private UIAtlas atlasFrom = null;
@@ -126,9 +126,9 @@ namespace ngui.ex {
 		public override void OnSelected(bool sel) { }
 		
 		public override void OnHeaderGUI() {
-			bool changed = EditorGUIUtil.ObjectField<GameObject>("Scene Root", ref sceneRoot, true);
-			changed |= EditorGUIUtil.ObjectField<UIAtlas>("From", ref atlasFrom, false);
-			changed |= EditorGUIUtil.ObjectField<UIAtlas>("To", ref atlasTo, false);
+			bool changed = EditorGUILayoutUtil.ObjectField<GameObject>("Scene Root", ref sceneRoot, true);
+			changed |= EditorGUILayoutUtil.ObjectField<UIAtlas>("From", ref atlasFrom, false);
+			changed |= EditorGUILayoutUtil.ObjectField<UIAtlas>("To", ref atlasTo, false);
 			NGUIEditorTools.DrawSeparator();
 			
 			if (changed && atlasFrom!=null && atlasTo!=null) {
@@ -159,8 +159,8 @@ namespace ngui.ex {
 				NGUIEditorTools.DrawSeparator();
 				EditorGUILayout.BeginHorizontal();
 				EditorGUILayout.BeginVertical();
-				EditorGUIUtil.Popup<string>("Sprite From", ref spriteName1, atlasFrom.GetListOfSprites().ToArray());
-				EditorGUIUtil.Popup<string>("Sprite To", ref spriteName2, atlasTo.GetListOfSprites().ToArray());
+				EditorGUILayoutUtil.Popup<string>("Sprite From", ref spriteName1, atlasFrom.GetListOfSprites().ToArray());
+				EditorGUILayoutUtil.Popup<string>("Sprite To", ref spriteName2, atlasTo.GetListOfSprites().ToArray());
 				EditorGUILayout.EndVertical();
 				if (GUILayout.Button("Replace", GUILayout.ExpandWidth(false), GUILayout.Height(30))) {
 					SwitchSprite(spriteName1, spriteName2);

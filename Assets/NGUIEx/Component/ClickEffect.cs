@@ -1,11 +1,11 @@
-﻿using System;
+﻿using mulova.comunity;
+using mulova.effect;
 using UnityEngine;
-using effect;
-using comunity;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	public class ClickEffect : Script
+    public class ClickEffect : LogBehaviour
 	{
 		public ParticlePool particlePool;
 		

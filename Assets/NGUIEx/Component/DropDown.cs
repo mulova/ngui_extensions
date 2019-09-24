@@ -5,8 +5,10 @@ using System;
 
 using ngui.ex;
 
-using commons;
-using comunity;
+using mulova.commons;
+using mulova.comunity;
+using System.Text.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -57,8 +59,8 @@ namespace ngui.ex
 			sortGrid.SetContents(items);
             
             int index = 0;
-            if (prefId.IsNotEmpty()) {
-				index = MathUtil.Clamp(pref.GetInt(prefId, 0), 0, items.Count-1);
+            if (!prefId.IsEmpty()) {
+				index = pref.GetInt(prefId, 0).Clamp(0, items.Count-1);
             }
             Select(items[index]);
         }
@@ -98,7 +100,7 @@ namespace ngui.ex
         public void Select (DropDownCellData data)
         {
             this.sel = data;
-            UIText title = trigger.GetComponentInChildrenEx<UIText>();
+            UIText title = trigger.GetComponentInChildren<UIText>();
             title.textKey = null;
             if (preStrKey != null)
             {
@@ -110,7 +112,7 @@ namespace ngui.ex
             if (ui.activeSelf) {
                 sortGrid.SelectCell(data);
             }
-            if (prefId.IsNotEmpty()) {
+            if (!prefId.IsEmpty()) {
                 UITableCell c = sortGrid.GetSelectedCell<UITableCell>();
                 if (c != null) {
                     int index = sortGrid.GetIndex(c);

@@ -1,12 +1,12 @@
-#if NGUI_AUDIO
+﻿#if NGUI_AUDIO
 //----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using UnityEngine;
-using commons;
+using mulova.commons;
 using audio;
 
 

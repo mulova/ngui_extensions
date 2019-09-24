@@ -1,17 +1,19 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using UnityEngine;
 using System.Collections;
-using commons;
+using mulova.commons;
 
 using System.Collections.Generic;
 using System;
-using Nullable = commons.Nullable;
-using comunity;
+using Nullable = mulova.commons.Nullable;
+using mulova.comunity;
+using UnityEngine.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {

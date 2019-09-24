@@ -1,25 +1,26 @@
 ﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
 using UnityEngine;
 using System.Collections;
-using commons;
+using mulova.commons;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using comunity;
+using mulova.comunity;
+using System.Collections.Generic.Ex;
+using System.Ex;
 
 namespace ngui.ex
 {
     /// <summary>
     /// Set Callback for UIButtons according to the UIButton.name
     /// </summary>
-    public class ButtonHandler : comunity.Script, IEnumerable<UIButton>
+    public class ButtonHandler : LogBehaviour, IEnumerable<UIButton>
     {
-        public GameObject[] buttons = new GameObject[0];
+        public List<GameObject> buttons = new List<GameObject>();
         private MultiMap<GameObject, Action> callbackMap = new MultiMap<GameObject, Action>();
         // int param: buttonIndex,  string param: buttonName
         private Dictionary<string, GameObject> _buttonMap;
@@ -36,7 +37,7 @@ namespace ngui.ex
                         if (o != null)
                         {
                             _buttonMap[o.name] = o;
-                            UIButton btn = o.GetComponentEx<UIButton>();
+                            UIButton btn = o.AddMissingComponent<UIButton>();
                             
                             Collider2D collider = btn.GetComponent<Collider2D>();
                             if (collider == null)
@@ -96,7 +97,7 @@ namespace ngui.ex
 
         private void RegisterCallback(object buttonId, Action callback, bool clear)
         {
-            string buttonName = buttonId.ToText();
+            string buttonName = buttonId.ToString();
             GameObject obj = buttonMap.Get(buttonName);
             if (obj == null)
             {
@@ -124,7 +125,7 @@ namespace ngui.ex
         public void AddButton(GameObject btn, Action callback)
         {
             _buttonMap = null;
-            buttons = buttons.Add(btn);
+            buttons.Add(btn);
             SetCallback(btn.name, callback);
         }
 
@@ -193,12 +194,12 @@ namespace ngui.ex
 
         public bool IsButton(int index)
         {
-            return buttons != null&&index < buttons.Length&&Selected == buttons[index];
+            return buttons != null&&index < buttons.Count&&Selected == buttons[index];
         }
 
         private int GetIndex()
         {
-            for (int i = 0; i < buttons.Length; ++i)
+            for (int i = 0; i < buttons.Count; ++i)
             {
                 if (IsButton(i))
                 {

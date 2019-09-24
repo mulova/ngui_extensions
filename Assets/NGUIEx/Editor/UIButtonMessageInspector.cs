@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using comunity;
+using mulova.comunity;
 
 
 namespace ngui.ex

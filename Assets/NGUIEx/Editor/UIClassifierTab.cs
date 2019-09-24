@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using commons;
-
+using mulova.commons;
+using mulova.comunity;
+using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using comunity;
 
-namespace ngui.ex {
+namespace ngui.ex
+{
     public class UIClassifierTab : EditorTab {
 		
 		private Vector2 scroll;
@@ -34,7 +35,7 @@ namespace ngui.ex {
 		{
 			GUI.enabled = true;
 			EditorGUILayout.BeginHorizontal();
-			if (EditorGUIUtil.ObjectField<UIRoot>("Root", ref root, true)) {
+			if (EditorGUILayoutUtil.ObjectField<UIRoot>("Root", ref root, true)) {
 				Classify(ref root);
 			}
 			if (GUILayout.Button("Refresh", GUILayout.ExpandWidth(false)) || root == null) {
@@ -48,7 +49,7 @@ namespace ngui.ex {
 			EditorGUILayout.EndHorizontal();
 			scroll = EditorGUILayout.BeginScrollView(scroll);
 			VisualizeGroup();
-			EditorGUIUtil.DrawSeparator();
+			EditorGUILayoutUtil.DrawSeparator();
 			VisualizeDups();
 			EditorGUILayout.EndScrollView();
 		}
@@ -67,7 +68,7 @@ namespace ngui.ex {
 					EditorGUILayout.LabelField(widgetType.ToString(), EditorStyles.boldLabel);
 					EditorGUI.indentLevel += 2;
 					foreach (KeyValuePair<string, List<DupEntry>> slot in map) {
-						ObjWrapperReorderList drawer = new ObjWrapperReorderList(null, slot.Value);
+						ListDrawer<DupEntry> drawer = new ListDrawer<DupEntry>(slot.Value, new NamedObjDrawer<DupEntry>());
 						drawer.Draw();
 						EditorGUILayout.Space();
 					}
@@ -83,11 +84,13 @@ namespace ngui.ex {
 				List<GameObject> list = classifier[widgetType];
 				if (list.Count == 0) continue;
 				EditorGUILayout.LabelField(widgetType.ToString(), EditorStyles.boldLabel);
-				EditorGUIUtil.ObjectFieldReorderList(list);
+                var drawer = new ListDrawer<GameObject>(list, new ObjListItemDrawer<GameObject>());
+                drawer.Draw();
 			}
 			
 			EditorGUILayout.LabelField("Panel", EditorStyles.boldLabel);
-            EditorGUIUtil.ObjectFieldReorderList(panels);
+            var panelDrawer = new ListDrawer<GameObject>(panels, new ObjListItemDrawer<GameObject>());
+            panelDrawer.Draw();
 			EditorGUI.indentLevel -= 2;
 		}
 		
@@ -165,7 +168,7 @@ namespace ngui.ex {
 			}
 		}
 		
-		class DupEntry : ObjWrapper {
+		class DupEntry : NamedObj {
 			public GameObject obj;
 			public string name;
 			

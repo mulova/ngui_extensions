@@ -1,20 +1,24 @@
-//----------------------------------------------
+﻿//----------------------------------------------
 // NGUI extensions
 // License: The MIT License ( http://opensource.org/licenses/MIT )
-// Copyright © 2013-2018 mulova@gmail.com
+// Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 using UnityEngine;
 using ngui.ex;
-using commons;
+using mulova.commons;
 using System;
-using comunity;
+using mulova.comunity;
+using System.Ex;
+using UnityEngine.Ex;
+using System.Collections.Generic.Ex;
+using System.Collections.Generic;
 
 namespace ngui.ex
 {
 	public class UITabHandler : MonoBehaviour
 	{
 		
-		public UITab[] tabs = new UITab[0];
+		public List<UITab> tabs = new List<UITab>();
 		public UITab[] tabPrefabs = new UITab[0];
 		public UIButton[] tabButtons = new UIButton[0];
 		private MonoBehaviour container;
@@ -31,13 +35,13 @@ namespace ngui.ex
 		{
 			this.container = container;
 			// resize tabs if not initialized
-			if (tabs.Length < tabPrefabs.Length)
+			if (tabs.Count < tabPrefabs.Length)
 			{
-				UITab[] newTabs = new UITab[tabPrefabs.Length];
-				Array.Copy(tabs, newTabs, tabs.Length);
+                var newTabs = new List<UITab>(tabPrefabs.Length);
+                newTabs.AddRange(tabs);
 				tabs = newTabs;
 			}
-			for (int i=0; i<tabs.Length; ++i)
+			for (int i=0; i<tabs.Count; ++i)
 			{
 				if (tabs[i] != null)
 				{
@@ -98,7 +102,7 @@ namespace ngui.ex
 		public UITab GetTab(int i)
 		{
 			UITab t = null;
-			if (i < tabs.Length && tabs[i] != null)
+			if (i < tabs.Count && tabs[i] != null)
 			{
 				t = tabs[i];
 			} else if (i < tabPrefabs.Length)
@@ -176,13 +180,13 @@ namespace ngui.ex
 				OnClickTab(t);
 			} else
 			{
-				UITab.log.Error("Tab index out of range {0} >= {1}", index, tabs.Length);
+				UITab.log.Error("Tab index out of range {0} >= {1}", index, tabs.Count);
 			}
 		}
 		
 		public void SetActiveTab(string name)
 		{
-			for (int i=0; i<tabs.Length; ++i)
+			for (int i=0; i<tabs.Count; ++i)
 			{
 				if (tabs[i] != null && tabs[i].name == name)
 				{
@@ -218,7 +222,7 @@ namespace ngui.ex
 		
 		public void CloseAndResetTab()
 		{
-			for (int i=0; i<tabs.Length; ++i)
+			for (int i=0; i<tabs.Count; ++i)
 			{
 				if (tabs[i] != null)
 				{
