@@ -14,6 +14,7 @@ using mulova.commons;
 using mulova.comunity;
 using System.Ex;
 using UnityEngine.Ex;
+using System.Collections.Generic.Ex;
 
 namespace ngui.ex
 {
@@ -1312,7 +1313,7 @@ namespace ngui.ex
         {
             D select = default(D);
             List<D> list = FilterCellData<D>(predicate);
-            if (list.IsNotEmpty())
+            if (!list.IsEmpty())
             {
                 select = list[0];
             } else

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using mulova.commons;
 using Assert  = mulova.commons.Assert;
+using System.Collections.Generic.Ex;
 
 namespace ngui.ex
 {
@@ -103,7 +104,7 @@ namespace ngui.ex
 				maxOrder = Math.Max(maxOrder, p.sortingOrder);
 			}
 			// get non-NGUI renderer
-			if (belowPanels.IsNotEmpty()) {
+			if (!belowPanels.IsEmpty()) {
 				foreach (Renderer r in belowPanels[0].GetComponentsInChildren<Renderer>(true)) {
 					maxOrder = Math.Max(maxOrder, r.sortingOrder);
 				}

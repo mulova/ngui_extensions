@@ -6,6 +6,7 @@ using mulova.commons;
 using mulova.comunity;
 using UnityEngine.Ex;
 using mulova.unicore;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -80,7 +81,7 @@ namespace ngui.ex
             EditorUtil.SetDirty(btn);
             if (btn.onChange != null) {
                 foreach (EventDelegate d in btn.onChange) {
-                    if (d.parameters.IsNotEmpty() && d.parameters[0].obj != null) {
+                    if (!d.parameters.IsEmpty() && d.parameters[0].obj != null) {
                         EditorUtil.SetDirty(d.parameters[0].obj);
                     }
                 }

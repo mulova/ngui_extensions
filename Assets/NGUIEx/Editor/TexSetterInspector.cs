@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using mulova.commons;
+using System.Collections.Generic.Ex;
 using mulova.comunity;
 using mulova.unicore;
 using ngui.ex;
@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Ex;
+using UnityEngine.SceneManagement;
 
 [CustomEditor (typeof(TexSetter))]
 public class TexSetterInspector : Editor
@@ -124,12 +125,12 @@ public class TexSetterInspector : Editor
     {
         int size = int.MaxValue;
         List<TexSetter> setters = new List<TexSetter>();
-        foreach (var o in EditorSceneManager.GetActiveScene().GetRootGameObjects())
+        foreach (var o in SceneManager.GetActiveScene().GetRootGameObjects())
         {
             Transform root = o.transform;
             foreach (TexSetter s in root.GetComponentsInChildren<TexSetter>(true))
             {
-                if (s.textures.IsNotEmpty())
+                if (!s.textures.IsEmpty())
                 {
                     setters.Add(s);
                     size = Mathf.Min(size, s.textures.Count);

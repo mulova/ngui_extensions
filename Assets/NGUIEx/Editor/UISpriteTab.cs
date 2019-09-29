@@ -136,11 +136,11 @@ namespace ngui.ex
                     EditorGUILayoutUtil.Popup("Change to", ref changeAtlas, filtered);
                     if (GUILayout.Button("Apply"))
                     {
-                        BuildScript.ForEachPrefab((path, prefab) => {
+                        EditorTraversal.ForEachPrefab((path, prefab) => {
                             ChangeAtlas(prefab, filtered, changeAtlas);
                             return null;
                         });
-                        BuildScript.ForEachScene(list => {
+                        EditorTraversal.ForEachScene(list => {
                             foreach (Transform t in list)
                             {
                                 ChangeAtlas(t.gameObject, filtered, changeAtlas);
@@ -159,7 +159,7 @@ namespace ngui.ex
                         SaveAtlasRefs();
                     }
                 }
-                if (dupSprites.IsNotEmpty())
+                if (!dupSprites.IsEmpty())
                 {
                     if (EditorUI.DrawHeader("Duplicate sprites"))
                     {

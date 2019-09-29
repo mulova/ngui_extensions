@@ -89,7 +89,7 @@ namespace ngui.ex
             get
             {
                 bool empty = true;
-                if (textures.IsNotEmpty())
+                if (!textures.IsEmpty())
                 {
                     foreach (AssetRef r in textures)
                     {

@@ -1,11 +1,7 @@
-﻿
-using UnityEngine;
-using UnityEditor;
+﻿using System.Collections.Generic.Ex;
 using mulova.build;
-using mulova.commons;
-using mulova.comunity;
+using UnityEngine;
 using UnityEngine.Ex;
-
 
 namespace ngui.ex
 {
@@ -23,7 +19,7 @@ namespace ngui.ex
         protected override void PreprocessComponent(Component comp)
         {
             UITabHandler h = comp as UITabHandler;
-            if (h.tabs.IsNotEmpty())
+            if (!h.tabs.IsEmpty())
             {
                 foreach (var t in h.tabs)
                 {

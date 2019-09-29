@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic.Ex;
 using System.Text;
 using System.Text.Ex;
 using mulova.commons;
@@ -162,7 +163,7 @@ namespace ngui.ex
 			}
 			if (format != null)
 			{
-				if (param.IsNotEmpty())
+				if (!param.IsEmpty())
 				{
 					try
 					{

@@ -185,7 +185,7 @@ namespace ngui.ex
 		{
 			EditorGUILayoutUtil.DrawSeparator();
 
-			if (!locked&&Selection.gameObjects.IsNotEmpty()&&(roots == null||!Enumerable.SequenceEqual(roots, Selection.gameObjects)))
+			if (!locked&&!Selection.gameObjects.IsEmpty()&&(roots == null||!Enumerable.SequenceEqual(roots, Selection.gameObjects)))
 			{
 				Clear();
 				// search labels
@@ -301,7 +301,7 @@ namespace ngui.ex
 				}
 			}
 			mod.Clear();
-			if (prefabs.IsNotEmpty())
+			if (!prefabs.IsEmpty())
 			{
 				foreach (GameObject p in prefabs)
 				{
@@ -336,7 +336,7 @@ namespace ngui.ex
 		private void TranslateLanguage()
 		{
 			ReloadTable();
-			BuildScript.ForEachScene(roots =>
+            EditorTraversal.ForEachScene(roots =>
 			{
 				foreach (Transform root in roots)
 				{
@@ -347,7 +347,7 @@ namespace ngui.ex
 				}
 				return null;
 			});
-			BuildScript.ForEachPrefab((path, popup) =>
+            EditorTraversal.ForEachPrefab((path, popup) =>
 			{
 				foreach (UIText l in popup.GetComponentsInChildren<UIText>(true))
 				{

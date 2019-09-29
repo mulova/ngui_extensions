@@ -15,7 +15,7 @@ public static class UIBuildScript {
 		HashSet<string> keySet = new HashSet<string>(keys.Split(new char[] {',', ' '}, StringSplitOptions.RemoveEmptyEntries));
 		StringBuilder result = new StringBuilder();
 		result.Append("[From Resource]\n");
-		BuildScript.ForEachPrefab((path,popup)=> {
+		EditorTraversal.ForEachPrefab((path,popup)=> {
 			foreach (UIText l in popup.GetComponentsInChildren<UIText>(true)) {
                 if (!l.textKey.IsEmpty() && keySet.Contains(l.textKey))
 				{
@@ -24,7 +24,7 @@ public static class UIBuildScript {
 			}
 			return null;
 		});
-		BuildScript.ForEachScene(roots=> {
+        EditorTraversal.ForEachScene(roots=> {
 			result.AppendFormat("[Scene {0}]\n", EditorSceneBridge.currentScene);
 			foreach (Transform r in roots) {
 				foreach (UIText l in r.GetComponentsInChildren<UIText>(true)) {
@@ -41,7 +41,7 @@ public static class UIBuildScript {
 
 	public static void ChangeTexture (Texture srcTex, Texture dstTex)
 	{
-		BuildScript.ForEachPrefab((path,popup)=> {
+        EditorTraversal.ForEachPrefab((path,popup)=> {
 			foreach (UITexture t in popup.GetComponentsInChildren<UITexture>(true)) {
 				if (t.mainTexture == srcTex) {
 					t.mainTexture = dstTex;
@@ -50,7 +50,7 @@ public static class UIBuildScript {
 			}
 			return null;
 		});
-		BuildScript.ForEachScene(roots=> {
+        EditorTraversal.ForEachScene(roots=> {
 			foreach (Transform r in roots) {
 				foreach (UITexture t in r.GetComponentsInChildren<UITexture>(true)) {
 					if (t.mainTexture == srcTex) {

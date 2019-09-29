@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-using UnityEditor;
+﻿using mulova.build;
 using ngui.ex;
-using mulova.build;
+using UnityEngine;
 
 public class UILazyTableCellBuildProcessor : ComponentBuildProcess
 {

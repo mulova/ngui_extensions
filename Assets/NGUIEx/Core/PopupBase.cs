@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 
 using mulova.commons;
 using mulova.comunity;
-
+using System.Collections.Generic.Ex;
 
 namespace ngui.ex
 {
@@ -115,7 +115,7 @@ namespace ngui.ex
             Init(window);
             #if UNITY_EDITOR
             List<GameObject> unregistered = GetComponent<ButtonHandler>().GetUnregistered();
-            if (unregistered.IsNotEmpty()) 
+            if (!unregistered.IsEmpty()) 
             {
                 string msg = name + " Missing Callbacks\n";
                 foreach (GameObject o in unregistered) 
