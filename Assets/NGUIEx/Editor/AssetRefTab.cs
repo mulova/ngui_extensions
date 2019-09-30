@@ -17,7 +17,7 @@ namespace ngui.ex
     class AssetRefTab : SearchTab<Object>
 	{
 		private Object refObj;
-		private MemberInfoRegistry registry = new MemberInfoRegistry(MemberInfoRegistryEx.ObjectRefFilter);
+		private UnityMemberInfoRegistry registry = new UnityMemberInfoRegistry();
 		
 		public AssetRefTab(TabbedEditorWindow window) : base("AssetRef", window) {
 			SetExclude (@"Legionz/Font/
