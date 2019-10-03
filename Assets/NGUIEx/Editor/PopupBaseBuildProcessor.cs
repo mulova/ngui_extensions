@@ -1,10 +1,12 @@
-﻿using mulova.build;
+﻿using mulova.preprocess;
 using UnityEngine;
 
 namespace ngui.ex
 {
     public class PopupBaseBuildProcessor : ComponentBuildProcess
     {
+        public override System.Type compType => typeof(PopupBase);
+
         protected override void VerifyComponent(Component comp)
         {
             PopupBase p = comp as PopupBase;
@@ -17,14 +19,6 @@ namespace ngui.ex
         
         protected override void PreprocessOver(Component c)
         {
-        }
-        
-        public override System.Type compType
-        {
-            get
-            {
-                return typeof(PopupBase);
-            }
         }
     }
 

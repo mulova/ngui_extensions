@@ -1,5 +1,6 @@
 ﻿using mulova.build;
 using mulova.comunity;
+using mulova.preprocess;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace ngui.ex
 {
     public class AtlasLoaderBuildProcessor : ComponentBuildProcess
     {
+        public override System.Type compType => typeof(AtlasLoader);
+
         protected override void VerifyComponent(Component comp)
         {
             AtlasLoader l = comp as AtlasLoader;
@@ -20,7 +23,7 @@ namespace ngui.ex
                         BuildScript.SetDirty(a.dst);
                     } else
                     {
-                        AddErrorFormat("The reference of {0} is not CDN asset", AssetDatabase.GetAssetPath(a.dst.replacement.gameObject));
+                        log.LogFormat("The reference of {0} is not CDN asset", AssetDatabase.GetAssetPath(a.dst.replacement.gameObject));
                     }
                 }
             }
@@ -32,14 +35,6 @@ namespace ngui.ex
         
         protected override void PreprocessOver(Component c)
         {
-        }
-        
-        public override System.Type compType
-        {
-            get
-            {
-                return typeof(AtlasLoader);
-            }
         }
     }
 

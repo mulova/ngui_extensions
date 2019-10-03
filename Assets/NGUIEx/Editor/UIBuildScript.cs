@@ -8,6 +8,7 @@ using mulova.unicore;
 using ngui.ex;
 using UnityEngine;
 using UnityEngine.Ex;
+using UnityEngine.SceneManagement;
 
 public static class UIBuildScript {
 
@@ -25,7 +26,7 @@ public static class UIBuildScript {
 			return null;
 		});
         EditorTraversal.ForEachScene(roots=> {
-			result.AppendFormat("[Scene {0}]\n", EditorSceneBridge.currentScene);
+			result.AppendFormat("[Scene {0}]\n", SceneManager.GetActiveScene().path);
 			foreach (Transform r in roots) {
 				foreach (UIText l in r.GetComponentsInChildren<UIText>(true)) {
 					if (!l.textKey.IsEmpty() && keySet.Contains(l.textKey))

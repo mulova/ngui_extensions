@@ -4,23 +4,20 @@
 // Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
-using UnityEngine;
-using System.Collections;
-using mulova.commons;
-
-using System.Collections.Generic;
 using System;
-using Nullable = mulova.commons.Nullable;
-using mulova.comunity;
-using UnityEngine.Ex;
+using System.Collections.Generic;
 using System.Ex;
+using mulova.commons;
+using mulova.unicore;
+using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	/// <summary>
-	/// Add alpha, move funtionality to UIPanel
-	/// </summary>
-	[AddComponentMenu("NGUI/Ex/Window")]
+    /// <summary>
+    /// Add alpha, move funtionality to UIPanel
+    /// </summary>
+    [AddComponentMenu("NGUI/Ex/Window")]
 	[RequireComponent(typeof(ButtonHandler))]
 	[ExecuteInEditMode]
 	public class UIWindow : MonoBehaviour, IComparable<UIWindow>
@@ -32,8 +29,8 @@ namespace ngui.ex
 		private Transform trans;
 		private UIPanelStatus status = UIPanelStatus.Init;
 		public GameObject ui;
-		[Nullable] public AnimationClip showClip;
-		[Nullable] public AnimationClip hideClip;
+		[NullableField] public AnimationClip showClip;
+		[NullableField] public AnimationClip hideClip;
 		
 		private Vector3 initialPos;
 		private Quaternion initialRot;

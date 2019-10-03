@@ -1,9 +1,7 @@
-
-using UnityEngine;
-using UnityEditor;
-using mulova.build;
-using mulova.commons;
 using System.Text.Ex;
+using mulova.build;
+using mulova.preprocess;
+using UnityEngine;
 
 namespace ngui.ex
 {
@@ -13,6 +11,8 @@ namespace ngui.ex
     /// </summary>
     public class TexLoaderBuildProcessor : ComponentBuildProcess
     {
+        public override System.Type compType => typeof(TexLoader);
+
         protected override void VerifyComponent(Component comp)
         {
         }
@@ -26,17 +26,10 @@ namespace ngui.ex
             }
         }
 
-		protected override void PreprocessOver(Component c)
-		{
-		}
-
-        public override System.Type compType
+        protected override void PreprocessOver(Component c)
         {
-            get
-            {
-                return typeof(TexLoader);
-            }
         }
+
 
         public static bool ClearTexture(TexLoader l)
         {

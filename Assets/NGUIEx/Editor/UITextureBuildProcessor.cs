@@ -1,6 +1,7 @@
 ﻿
 using mulova.build;
 using mulova.comunity;
+using mulova.preprocess;
 using mulova.unicore;
 using UnityEngine;
 using UnityEngine.Ex;
@@ -9,6 +10,8 @@ namespace ngui.ex
 {
     public class UITextureBuildProcessor : ComponentBuildProcess
     {
+        public override System.Type compType => typeof(UITexture);
+
         protected override void VerifyComponent(Component comp)
         {
             UITexture tex = comp as UITexture;
@@ -44,14 +47,6 @@ namespace ngui.ex
         
         protected override void PreprocessOver(Component c)
         {
-        }
-        
-        public override System.Type compType
-        {
-            get
-            {
-                return typeof(UITexture);
-            }
         }
     }
 }

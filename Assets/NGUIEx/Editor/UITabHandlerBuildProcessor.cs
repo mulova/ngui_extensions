@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic.Ex;
-using mulova.build;
+using mulova.preprocess;
 using UnityEngine;
 using UnityEngine.Ex;
 
@@ -12,6 +12,8 @@ namespace ngui.ex
     /// </summary>
     public class UITabHandlerBuildProcessor : ComponentBuildProcess
     {
+        public override System.Type compType => typeof(UITabHandler);
+
         protected override void VerifyComponent(Component comp)
         {
         }
@@ -30,14 +32,6 @@ namespace ngui.ex
         
         protected override void PreprocessOver(Component c)
         {
-        }
-        
-        public override System.Type compType
-        {
-            get
-            {
-                return typeof(UITabHandler);
-            }
         }
     }
     

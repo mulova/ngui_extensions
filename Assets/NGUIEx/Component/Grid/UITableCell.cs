@@ -6,15 +6,15 @@
 
 using System;
 using mulova.comunity;
+using mulova.unicore;
 using UnityEngine;
-using Nullable = mulova.commons.Nullable;
 
 namespace ngui.ex
 {
     public abstract class UITableCell : LogBehaviour
 	{
-		[Nullable] public UIWidget bound;
-		[Nullable] public UIToggle toggle;
+		[NullableField] public UIWidget bound;
+		[NullableField] public UIToggle toggle;
         [HideInInspector] public int row;
         [HideInInspector] public int column;
 

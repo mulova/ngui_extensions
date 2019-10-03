@@ -8,6 +8,7 @@ using mulova.commons;
 using mulova.comunity;
 using mulova.unicore;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace ngui.ex
@@ -305,15 +306,10 @@ namespace ngui.ex
 			{
 				foreach (GameObject p in prefabs)
 				{
-					// apply prefab change
-                    #if UNITY_2018_1_OR_LATER
                     PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
-                    #else
-                    PrefabUtility.ReplacePrefab(p, PrefabUtility.GetCorrespondingObjectFromSource(p), ReplacePrefabOptions.ConnectToPrefab);
-                    #endif
 				}
 				AssetDatabase.SaveAssets();
-				EditorSceneBridge.SaveScene();
+				EditorSceneManager.SaveOpenScenes();
 			}
 		}
 

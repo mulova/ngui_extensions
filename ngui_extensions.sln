@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.prebuild", "mulova.p
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shortcut", "shortcut.csproj", "{904A95F5-4B14-9419-39B7-6229D0EA1105}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.build.Editor.Tests", "mulova.build.Editor.Tests.csproj", "{567A9B53-869F-D9F5-8614-64DE1216D33E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{231EDEC0-0090-5DF6-91EB-1C30FD02685B}"
 EndProject
 Global
@@ -123,6 +125,10 @@ Global
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{231EDEC0-0090-5DF6-91EB-1C30FD02685B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{231EDEC0-0090-5DF6-91EB-1C30FD02685B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{231EDEC0-0090-5DF6-91EB-1C30FD02685B}.Release|Any CPU.ActiveCfg = Release|Any CPU

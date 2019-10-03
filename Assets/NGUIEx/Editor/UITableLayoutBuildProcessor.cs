@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-
-using UnityEditor;
-using ngui.ex;
-using mulova.build;
+﻿using mulova.preprocess;
+using UnityEngine;
 
 namespace ngui.ex
 {
     public class UITableLayoutBuildProcessor : ComponentBuildProcess
     {
+        public override System.Type compType => typeof(UITableLayout);
+
         protected override void VerifyComponent(Component comp)
         {
         }
@@ -23,15 +22,7 @@ namespace ngui.ex
         protected override void PreprocessOver(Component c)
         {
         }
-        
-        public override System.Type compType
-        {
-            get
-            {
-                return typeof(UITableLayout);
-            }
-        }
-        
+
         static void Deactivate(params UITableCell[] objs)
         {
             if (objs != null)

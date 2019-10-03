@@ -1,5 +1,6 @@
-using mulova.build;
+using System;
 using mulova.commons;
+using mulova.preprocess;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -8,8 +9,11 @@ namespace ngui.ex
     public class MaterialBuildProcess : AssetBuildProcess
     {
         private RegexMgr excludeShader = new RegexMgr();
-        
-        public MaterialBuildProcess() : base("Missing texture", typeof(Material))
+
+        public override Type assetType => typeof(Material);
+        public override string title => "Missing texture";
+
+        public MaterialBuildProcess()
         {
             excludeShader.SetPattern("ShurikenMagic|Standard");
         }

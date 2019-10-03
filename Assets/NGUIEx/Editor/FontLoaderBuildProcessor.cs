@@ -1,4 +1,5 @@
 ﻿using mulova.build;
+using mulova.preprocess;
 using UnityEngine;
 
 
@@ -6,7 +7,8 @@ namespace ngui.ex
 {
     public class FontLoaderBuildProcessor : ComponentBuildProcess
     {
-        
+        public override System.Type compType => typeof(FontLoader);
+
         protected override void VerifyComponent(Component comp)
         {
         }
@@ -27,14 +29,6 @@ namespace ngui.ex
         
         protected override void PreprocessOver(Component c)
         {
-        }
-        
-        public override System.Type compType
-        {
-            get
-            {
-                return typeof(FontLoader);
-            }
         }
     }
 }

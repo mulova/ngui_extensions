@@ -1,35 +1,30 @@
-﻿using mulova.build;
+﻿using mulova.preprocess;
 using ngui.ex;
 using UnityEngine;
 
 public class UILazyTableCellBuildProcessor : ComponentBuildProcess
 {
-	protected override void VerifyComponent(Component comp)
-	{
-	}
+    public override System.Type compType => typeof(UILazyTableCell);
 
-	protected override void PreprocessComponent(Component comp)
-	{
-		UILazyTableCell cell = comp as UILazyTableCell;
-		if (cell.ui != null)
-		{
-			cell.ui.SetActive(false);
-		}
-		if (cell.uiPrefab != null)
-		{
-			cell.uiPrefab.SetActive(false);
-		}
-	}
+    protected override void VerifyComponent(Component comp)
+    {
+    }
 
-	protected override void PreprocessOver(Component c)
-	{
-	}
+    protected override void PreprocessComponent(Component comp)
+    {
+        UILazyTableCell cell = comp as UILazyTableCell;
+        if (cell.ui != null)
+        {
+            cell.ui.SetActive(false);
+        }
+        if (cell.uiPrefab != null)
+        {
+            cell.uiPrefab.SetActive(false);
+        }
+    }
 
-	public override System.Type compType
-	{
-		get
-		{
-			return typeof(UILazyTableCell);
-		}
-	}
+    protected override void PreprocessOver(Component c)
+    {
+    }
+
 }

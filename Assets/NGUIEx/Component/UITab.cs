@@ -4,16 +4,16 @@
 // Copyright © 2013- mulova@gmail.com
 //----------------------------------------------
 
-using UnityEngine;
-using mulova.commons;
 using System;
-using ngui.ex;
+using mulova.commons;
 using mulova.comunity;
+using mulova.unicore;
+using UnityEngine;
 using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-	public abstract class UITab : MonoBehaviour
+    public abstract class UITab : MonoBehaviour
 	{
 		public static readonly Loggerx log = LogManager.GetLogger(typeof(UITab));
 		public UIButton tabButton;
@@ -21,9 +21,7 @@ namespace ngui.ex
 		public GameObject newMark;
 		public UIWidget widgetBg;
 		
-		[mulova.commons.Nullable]
-		protected ButtonHandler buttons;
-		[mulova.commons.Nullable]
+        [NullableField] protected ButtonHandler buttons;
         public MonoBehaviour container { get; private set; }
 		private GameObject blocker;
 		// block click through when tab is disabled
