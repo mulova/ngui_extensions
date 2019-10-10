@@ -1,6 +1,6 @@
-using System.Text.Ex;
-using mulova.build;
+﻿using System.Text.Ex;
 using mulova.preprocess;
+using mulova.unicore;
 using UnityEngine;
 
 namespace ngui.ex
@@ -13,11 +13,11 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(TexLoader);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
         }
 
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
             TexLoader l = comp as TexLoader;
             if (l.Target != null && l.Target.mainTexture != null)
@@ -26,7 +26,7 @@ namespace ngui.ex
             }
         }
 
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
 
@@ -37,7 +37,7 @@ namespace ngui.ex
             {
                 l.editorTexPath = UnityEditor.AssetDatabase.GetAssetPath(l.Target.mainTexture);
                 l.Target.mainTexture = null;
-                BuildScript.SetDirty(l.Target);
+                EditorUtil.SetDirty(l.Target);
                 return true;
             }
             return false;
@@ -48,7 +48,7 @@ namespace ngui.ex
             if (l.Target != null && !l.editorTexPath.IsEmpty())
             {
                 l.Target.mainTexture = UnityEditor.AssetDatabase.LoadAssetAtPath(l.editorTexPath, typeof(Texture)) as Texture;
-                BuildScript.SetDirty(l.gameObject);
+                EditorUtil.SetDirty(l.gameObject);
             }
         }
     }

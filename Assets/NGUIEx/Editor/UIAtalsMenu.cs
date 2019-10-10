@@ -53,7 +53,7 @@ namespace ngui.ex
 //                atlas.height = atlas.spriteMaterial.mainTexture.height;
             }
             SplitChannelETC(atlas.spriteMaterial);
-            BuildScript.SetDirty(atlas);
+            EditorUtil.SetDirty(atlas);
         }
         
         public static void SplitChannelETC(Material mat)
@@ -78,7 +78,7 @@ namespace ngui.ex
                 mat.SetTexture("_MainTex", AssetDatabase.LoadAssetAtPath<Texture>(appendPath));
             }
 
-            BuildScript.SetDirty(mat);
+            EditorUtil.SetDirty(mat);
             AssetDatabase.SaveAssets();
         }
         

@@ -140,10 +140,10 @@ namespace ngui.ex
                             ChangeAtlas(prefab, filtered, changeAtlas);
                             return null;
                         });
-                        EditorTraversal.ForEachScene(list => {
-                            foreach (Transform t in list)
+                        EditorTraversal.ForEachScene(s => {
+                            foreach (var r in s.GetRootGameObjects())
                             {
-                                ChangeAtlas(t.gameObject, filtered, changeAtlas);
+                                ChangeAtlas(r.gameObject, filtered, changeAtlas);
                             }
                             return null;
                         });
@@ -292,7 +292,7 @@ namespace ngui.ex
                 {
                     Debug.LogFormat("{0} ({1}): {2} -> {3}", s.transform.GetScenePath(), s.spriteName, s.atlas.name, changeAtlas.name);
                     s.atlas = changeAtlas;
-                    BuildScript.SetDirty(s);
+                    EditorUtil.SetDirty(s);
                 }
             }
         }

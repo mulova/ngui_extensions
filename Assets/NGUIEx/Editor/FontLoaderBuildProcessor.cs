@@ -1,5 +1,6 @@
 ﻿using mulova.build;
 using mulova.preprocess;
+using mulova.unicore;
 using UnityEngine;
 
 
@@ -9,11 +10,11 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(FontLoader);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
         }
         
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
             FontLoader l = comp as FontLoader;
             if  (!l.isActiveAndEnabled)
@@ -23,11 +24,11 @@ namespace ngui.ex
             foreach (FontLoader.FontPair f in l.fonts)
             {
                 f.dst.replacement = null;
-                BuildScript.SetDirty(f.dst);
+                EditorUtil.SetDirty(f.dst);
             }
         }
         
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
     }

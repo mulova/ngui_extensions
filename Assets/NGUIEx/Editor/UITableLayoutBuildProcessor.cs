@@ -7,11 +7,11 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(UITableLayout);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
         }
         
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
             UITableLayout layout = comp as UITableLayout;
             Deactivate(layout.rowPrefab);
@@ -19,7 +19,7 @@ namespace ngui.ex
             Deactivate(layout.defaultPrefab);
         }
         
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
 

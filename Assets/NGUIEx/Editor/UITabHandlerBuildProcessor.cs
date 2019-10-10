@@ -14,11 +14,11 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(UITabHandler);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
         }
         
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
             UITabHandler h = comp as UITabHandler;
             if (!h.tabs.IsEmpty())
@@ -30,7 +30,7 @@ namespace ngui.ex
             }
         }
         
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
     }

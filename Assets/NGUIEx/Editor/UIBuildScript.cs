@@ -25,10 +25,11 @@ public static class UIBuildScript {
 			}
 			return null;
 		});
-        EditorTraversal.ForEachScene(roots=> {
+        EditorTraversal.ForEachScene(s=> {
 			result.AppendFormat("[Scene {0}]\n", SceneManager.GetActiveScene().path);
-			foreach (Transform r in roots) {
-				foreach (UIText l in r.GetComponentsInChildren<UIText>(true)) {
+			foreach (var r in s.GetRootGameObjects()) {
+                var root = r.transform;
+				foreach (UIText l in root.GetComponentsInChildren<UIText>(true)) {
 					if (!l.textKey.IsEmpty() && keySet.Contains(l.textKey))
 					{
 						result.AppendFormat("{0}: {1}\n", l.textKey, l.transform.GetScenePath());
@@ -51,9 +52,10 @@ public static class UIBuildScript {
 			}
 			return null;
 		});
-        EditorTraversal.ForEachScene(roots=> {
-			foreach (Transform r in roots) {
-				foreach (UITexture t in r.GetComponentsInChildren<UITexture>(true)) {
+        EditorTraversal.ForEachScene(s=> {
+			foreach (var r in s.GetRootGameObjects()) {
+                var root = r.transform;
+				foreach (UITexture t in root.GetComponentsInChildren<UITexture>(true)) {
 					if (t.mainTexture == srcTex) {
 						t.mainTexture = dstTex;
                         EditorUtil.SetDirty(t);

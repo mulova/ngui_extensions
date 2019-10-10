@@ -18,11 +18,11 @@ namespace ngui.ex
             excludeShader.SetPattern("ShurikenMagic|Standard");
         }
         
-        protected override void PreprocessAsset(string path, Object obj)
+        protected override void Preprocess(string path, Object obj)
         {
         }
         
-        protected override void VerifyAsset(string path, Object obj)
+        protected override void Verify(string path, Object obj)
         {
             // TODOM
             //            Material m = obj as Material;
@@ -33,6 +33,10 @@ namespace ngui.ex
             //                    AddErrorFormat("{0}({1})", path, m.name);
             //                }
             //            }
+        }
+
+        protected override void Postprocess(string path, Object obj)
+        {
         }
     }
 }

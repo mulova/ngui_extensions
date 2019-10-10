@@ -6,11 +6,11 @@ public class UILazyTableCellBuildProcessor : ComponentBuildProcess
 {
     public override System.Type compType => typeof(UILazyTableCell);
 
-    protected override void VerifyComponent(Component comp)
+    protected override void Verify(Component comp)
     {
     }
 
-    protected override void PreprocessComponent(Component comp)
+    protected override void Preprocess(Component comp)
     {
         UILazyTableCell cell = comp as UILazyTableCell;
         if (cell.ui != null)
@@ -23,7 +23,7 @@ public class UILazyTableCellBuildProcessor : ComponentBuildProcess
         }
     }
 
-    protected override void PreprocessOver(Component c)
+    protected override void Postprocess(Component c)
     {
     }
 

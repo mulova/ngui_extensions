@@ -12,7 +12,7 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(UITexture);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
             UITexture tex = comp as UITexture;
             TexLoader l = tex.GetComponent<TexLoader>();
@@ -25,8 +25,8 @@ namespace ngui.ex
                 aref.SetPath(tex.mainTexture);
                 setter.textures.Clear();
                 setter.textures.Add(aref);
-                BuildScript.SetDirty(comp.gameObject);
-                BuildScript.SetDirty(setter);
+                EditorUtil.SetDirty(comp.gameObject);
+                EditorUtil.SetDirty(setter);
             }
         }
 
@@ -41,11 +41,11 @@ namespace ngui.ex
             return s.textures.Count == 1 && s.textures[0].path != EditorAssetUtil.GetAssetRelativePath(tex.mainTexture);
         }
         
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
         }
         
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
     }

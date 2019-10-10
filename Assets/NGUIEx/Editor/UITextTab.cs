@@ -332,10 +332,11 @@ namespace ngui.ex
 		private void TranslateLanguage()
 		{
 			ReloadTable();
-            EditorTraversal.ForEachScene(roots =>
+            EditorTraversal.ForEachScene(s =>
 			{
-				foreach (Transform root in roots)
+				foreach (var r in s.GetRootGameObjects())
 				{
+                    var root = r.transform;
 					foreach (UIText l in root.GetComponentsInChildren<UIText>(true))
 					{
 						TranslateLabel(l);

@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetBundleManager", "Asset
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{84EBC015-7B0A-65CB-DC09-C192A6CCFAE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossSceneReference-Editor", "CrossSceneReference-Editor.csproj", "{2F14C2C5-DE7F-3107-1AE6-FD74E6D2FEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossSceneReference", "CrossSceneReference.csproj", "{21285B38-FCBC-52F1-2B8A-2BFAF5EA3D93}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetBundleManagerEditor", "AssetBundleManagerEditor.csproj", "{CA8544C5-9ABD-FA8D-10A0-227CD70CA542}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.comunity.editor", "mulova.comunity.editor.csproj", "{B3C551F2-10D3-0977-2978-D809DA26EAD5}"
@@ -29,17 +33,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.builder", "mulova.bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.unicore.editor", "mulova.unicore.editor.csproj", "{596E2A4B-83D0-257D-D732-4F42CAF0B73A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.prebuild", "mulova.prebuild.csproj", "{74026149-228B-C2D9-C987-DB9C41A000EA}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.ui.editor", "mulova.ui.editor.csproj", "{43333FE3-9C6C-9741-CAD9-08F20D654DA9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.legacy.editor", "mulova.legacy.editor.csproj", "{2AD95430-961B-D786-8FEA-3F34054837E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scenehistorian", "scenehistorian.csproj", "{DDC3EF7F-A0A7-866A-075C-51657D005412}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.prebuild", "mulova.prebuild.csproj", "{74026149-228B-C2D9-C987-DB9C41A000EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shortcut", "shortcut.csproj", "{904A95F5-4B14-9419-39B7-6229D0EA1105}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.build.Editor.Tests", "mulova.build.Editor.Tests.csproj", "{567A9B53-869F-D9F5-8614-64DE1216D33E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{231EDEC0-0090-5DF6-91EB-1C30FD02685B}"
 EndProject
@@ -81,6 +83,14 @@ Global
 		{84EBC015-7B0A-65CB-DC09-C192A6CCFAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84EBC015-7B0A-65CB-DC09-C192A6CCFAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84EBC015-7B0A-65CB-DC09-C192A6CCFAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F14C2C5-DE7F-3107-1AE6-FD74E6D2FEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F14C2C5-DE7F-3107-1AE6-FD74E6D2FEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F14C2C5-DE7F-3107-1AE6-FD74E6D2FEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F14C2C5-DE7F-3107-1AE6-FD74E6D2FEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21285B38-FCBC-52F1-2B8A-2BFAF5EA3D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21285B38-FCBC-52F1-2B8A-2BFAF5EA3D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21285B38-FCBC-52F1-2B8A-2BFAF5EA3D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21285B38-FCBC-52F1-2B8A-2BFAF5EA3D93}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA8544C5-9ABD-FA8D-10A0-227CD70CA542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA8544C5-9ABD-FA8D-10A0-227CD70CA542}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA8544C5-9ABD-FA8D-10A0-227CD70CA542}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,6 +115,10 @@ Global
 		{596E2A4B-83D0-257D-D732-4F42CAF0B73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{596E2A4B-83D0-257D-D732-4F42CAF0B73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{596E2A4B-83D0-257D-D732-4F42CAF0B73A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74026149-228B-C2D9-C987-DB9C41A000EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74026149-228B-C2D9-C987-DB9C41A000EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74026149-228B-C2D9-C987-DB9C41A000EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74026149-228B-C2D9-C987-DB9C41A000EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43333FE3-9C6C-9741-CAD9-08F20D654DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43333FE3-9C6C-9741-CAD9-08F20D654DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43333FE3-9C6C-9741-CAD9-08F20D654DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,18 +131,10 @@ Global
 		{DDC3EF7F-A0A7-866A-075C-51657D005412}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDC3EF7F-A0A7-866A-075C-51657D005412}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDC3EF7F-A0A7-866A-075C-51657D005412}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74026149-228B-C2D9-C987-DB9C41A000EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74026149-228B-C2D9-C987-DB9C41A000EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74026149-228B-C2D9-C987-DB9C41A000EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74026149-228B-C2D9-C987-DB9C41A000EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{904A95F5-4B14-9419-39B7-6229D0EA1105}.Release|Any CPU.Build.0 = Release|Any CPU
-		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{567A9B53-869F-D9F5-8614-64DE1216D33E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{231EDEC0-0090-5DF6-91EB-1C30FD02685B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{231EDEC0-0090-5DF6-91EB-1C30FD02685B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{231EDEC0-0090-5DF6-91EB-1C30FD02685B}.Release|Any CPU.ActiveCfg = Release|Any CPU

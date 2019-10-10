@@ -1,4 +1,4 @@
-using mulova.comunity;
+﻿using mulova.comunity;
 using mulova.preprocess;
 using UnityEngine;
 
@@ -8,11 +8,11 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(UIAtlas);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
         }
         
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
             UIAtlas atlas = comp as UIAtlas;
             if (atlas.spriteMaterial == null)
@@ -29,7 +29,7 @@ namespace ngui.ex
             }
         }
         
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
     }

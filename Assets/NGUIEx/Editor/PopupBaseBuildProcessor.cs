@@ -7,17 +7,17 @@ namespace ngui.ex
     {
         public override System.Type compType => typeof(PopupBase);
 
-        protected override void VerifyComponent(Component comp)
+        protected override void Verify(Component comp)
         {
             PopupBase p = comp as PopupBase;
             p.window.ui.SetActive(false);
         }
         
-        protected override void PreprocessComponent(Component comp)
+        protected override void Preprocess(Component comp)
         {
         }
         
-        protected override void PreprocessOver(Component c)
+        protected override void Postprocess(Component c)
         {
         }
     }
