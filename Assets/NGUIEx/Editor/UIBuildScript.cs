@@ -16,14 +16,13 @@ public static class UIBuildScript {
 		HashSet<string> keySet = new HashSet<string>(keys.Split(new char[] {',', ' '}, StringSplitOptions.RemoveEmptyEntries));
 		StringBuilder result = new StringBuilder();
 		result.Append("[From Resource]\n");
-		EditorTraversal.ForEachPrefab((path,popup)=> {
+		EditorTraversal.ForEachAsset<GameObject>(FileType.Prefab, (path,popup)=> {
 			foreach (UIText l in popup.GetComponentsInChildren<UIText>(true)) {
                 if (!l.textKey.IsEmpty() && keySet.Contains(l.textKey))
 				{
 					result.AppendFormat("{0}: {1}\n", l.textKey, l.transform.GetScenePath());
 				}
 			}
-			return null;
 		});
         EditorTraversal.ForEachScene(s=> {
 			result.AppendFormat("[Scene {0}]\n", SceneManager.GetActiveScene().path);
@@ -43,14 +42,13 @@ public static class UIBuildScript {
 
 	public static void ChangeTexture (Texture srcTex, Texture dstTex)
 	{
-        EditorTraversal.ForEachPrefab((path,popup)=> {
+        EditorTraversal.ForEachAsset<GameObject>(FileType.Prefab, (path,popup)=> {
 			foreach (UITexture t in popup.GetComponentsInChildren<UITexture>(true)) {
 				if (t.mainTexture == srcTex) {
 					t.mainTexture = dstTex;
                     EditorUtil.SetDirty(t);
 				}
 			}
-			return null;
 		});
         EditorTraversal.ForEachScene(s=> {
 			foreach (var r in s.GetRootGameObjects()) {

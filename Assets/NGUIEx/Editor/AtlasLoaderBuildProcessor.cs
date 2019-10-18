@@ -3,6 +3,7 @@ using mulova.preprocess;
 using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
+using System.Text.Ex;
 
 namespace ngui.ex
 {
@@ -23,7 +24,7 @@ namespace ngui.ex
                         EditorUtil.SetDirty(a.dst);
                     } else
                     {
-                        log.LogFormat("The reference of {0} is not CDN asset", AssetDatabase.GetAssetPath(a.dst.replacement.gameObject));
+                        log.Log("The reference of {0} is not CDN asset".Format(AssetDatabase.GetAssetPath(a.dst.replacement.gameObject)));
                     }
                 }
             }

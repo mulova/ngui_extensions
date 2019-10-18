@@ -136,9 +136,8 @@ namespace ngui.ex
                     EditorGUILayoutUtil.Popup("Change to", ref changeAtlas, filtered);
                     if (GUILayout.Button("Apply"))
                     {
-                        EditorTraversal.ForEachPrefab((path, prefab) => {
+                        EditorTraversal.ForEachAsset<GameObject>(FileType.Prefab, (path, prefab) => {
                             ChangeAtlas(prefab, filtered, changeAtlas);
-                            return null;
                         });
                         EditorTraversal.ForEachScene(s => {
                             foreach (var r in s.GetRootGameObjects())

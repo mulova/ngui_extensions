@@ -344,13 +344,12 @@ namespace ngui.ex
 				}
 				return null;
 			});
-            EditorTraversal.ForEachPrefab((path, popup) =>
+            EditorTraversal.ForEachAsset<GameObject>(FileType.Prefab, (path, popup) =>
 			{
 				foreach (UIText l in popup.GetComponentsInChildren<UIText>(true))
 				{
 					TranslateLabel(l);
 				}
-				return null;
 			});
 		}
 
