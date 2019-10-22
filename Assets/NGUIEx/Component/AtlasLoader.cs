@@ -43,7 +43,7 @@ namespace ngui.ex
                     var atlas = o.GetComponent<UIAtlas>();
                     a.dst.replacement = atlas;
                     count++;
-                    log.Info("Set atlas {0} to {1}", atlas, a.dst);
+                    log.Debug("Set atlas {0} to {1}", atlas, a.dst);
                     if (count == atlases.Length)
                     {
                         callback.Call();

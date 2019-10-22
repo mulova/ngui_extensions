@@ -6,6 +6,7 @@ using System.Text.Ex;
 using mulova.build;
 using mulova.commons;
 using mulova.comunity;
+using mulova.i18n;
 using mulova.unicore;
 using UnityEditor;
 using UnityEditor.SceneManagement;

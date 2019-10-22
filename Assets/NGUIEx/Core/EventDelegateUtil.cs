@@ -1,14 +1,15 @@
-using UnityEngine;
-using Object = UnityEngine.Object;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using mulova.commons;
+using UnityEngine;
+using ILogger = mulova.commons.ILogger;
+using Object = UnityEngine.Object;
 
 
 namespace ngui.ex
 {
-	public static class EventDelegateUtil {
-		public static readonly Loggerx log = LogManager.GetLogger(typeof(EventDelegateUtil));
+    public static class EventDelegateUtil {
+		public static readonly ILogger log = LogManager.GetLogger(typeof(EventDelegateUtil));
 		
 		public static EventDelegate GetEventDelegate(List<EventDelegate> list, MonoBehaviour script, Action<object> method) {
 			return GetEventDelegate(list, script, method.Method.Name);
@@ -69,7 +70,7 @@ namespace ngui.ex
 			if (del != null)
 			{
 				EventDelegate.Remove(callbackList, del);
-				log.Info("Callback '{0}()' is overrided", methodName);
+				log.Debug("Callback '{0}()' is overrided", methodName);
 			} else 
 			{
 				del = CreateDelegate(target, methodName, src, param);

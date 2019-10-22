@@ -1,14 +1,12 @@
-using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
-
-using ngui.ex;
-
+using System.Ex;
+using System.Text.Ex;
 using mulova.commons;
 using mulova.comunity;
-using System.Text.Ex;
-using System.Ex;
+using mulova.i18n;
+using UnityEngine;
+using ILogger = mulova.commons.ILogger;
 
 namespace ngui.ex
 {
@@ -34,7 +32,7 @@ namespace ngui.ex
             }
         }
         
-        public static readonly Loggerx log = LogManager.GetLogger(typeof(DropDown));
+        public static readonly ILogger log = LogManager.GetLogger(typeof(DropDown));
         
         private Action<DropDownCellData> callback;
         

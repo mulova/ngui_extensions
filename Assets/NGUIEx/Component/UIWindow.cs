@@ -11,6 +11,7 @@ using mulova.commons;
 using mulova.unicore;
 using UnityEngine;
 using UnityEngine.Ex;
+using ILogger = mulova.commons.ILogger;
 
 namespace ngui.ex
 {
@@ -22,7 +23,7 @@ namespace ngui.ex
 	[ExecuteInEditMode]
 	public class UIWindow : MonoBehaviour, IComparable<UIWindow>
 	{
-		public static readonly Loggerx log = LogManager.GetLogger(typeof(UIWindow));
+		public static readonly ILogger log = LogManager.GetLogger(typeof(UIWindow));
 		[Range(0, 1)]public float alpha = 1;
 		private UIPanel[] panels;
 		private Vector3 scale;

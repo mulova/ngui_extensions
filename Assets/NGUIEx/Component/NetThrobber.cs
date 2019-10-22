@@ -76,7 +76,7 @@ namespace ngui.ex
 #endif
                 }
 				ui.SetActive(false);
-				log.Info("NetSync Off");
+				log.Debug("NetSync Off");
 			}
 		}
 

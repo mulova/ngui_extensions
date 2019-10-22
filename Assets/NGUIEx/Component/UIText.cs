@@ -1,6 +1,7 @@
 ﻿using System.Text.Ex;
 using mulova.commons;
 using mulova.comunity;
+using mulova.i18n;
 using UnityEngine;
 
 namespace ngui.ex

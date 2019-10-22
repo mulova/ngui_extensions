@@ -1,15 +1,16 @@
-using System;
+﻿using System;
 using System.Collections.Generic.Ex;
 using System.Text;
 using System.Text.Ex;
 using mulova.commons;
 using mulova.comunity;
+using mulova.i18n;
 
 namespace ngui.ex
 {
     public static class UILabelEx
 	{
-		public static Loggerx log = LogManager.GetLogger(typeof(UILabel));
+		public static ILogger log = LogManager.GetLogger(typeof(UILabel));
 		
 		public static void SetSimpleTimeAgo(this UILabel label, TimeSpan t)
 		{

@@ -10,12 +10,13 @@ using mulova.comunity;
 using mulova.unicore;
 using UnityEngine;
 using UnityEngine.Ex;
+using ILogger = mulova.commons.ILogger;
 
 namespace ngui.ex
 {
     public abstract class UITab : MonoBehaviour
 	{
-		public static readonly Loggerx log = LogManager.GetLogger(typeof(UITab));
+		public static readonly ILogger log = LogManager.GetLogger(typeof(UITab));
 		public UIButton tabButton;
 		public GameObject uiRoot;
 		public GameObject newMark;

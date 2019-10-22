@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Ex;
 using System.Text.Ex;
 using mulova.comunity;
@@ -102,7 +102,7 @@ namespace ngui.ex
 
         private void Interrupt()
         {
-            log.Info("Download for {0} INTERRUPTED", newUrl);
+            log.Debug("Download for {0} INTERRUPTED", newUrl);
             // remove pending if exists
             if (!newUrl.IsEmpty())
             {
@@ -133,7 +133,7 @@ namespace ngui.ex
                         SetTexture(tex);
                     } else
                     {
-                        log.Info("Can't access {0}", url);
+                        log.Debug("Can't access {0}", url);
                         Clear();
                     }
                 }

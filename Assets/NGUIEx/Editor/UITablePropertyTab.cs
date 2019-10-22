@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using mulova.commons;
+using mulova.i18n;
 using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
