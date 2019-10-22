@@ -10,7 +10,7 @@ namespace ngui.ex
 {
     public static class UILabelEx
 	{
-		public static ILogger log = LogManager.GetLogger(typeof(UILabel));
+		public static ILog log = LogManager.GetLogger(typeof(UILabel));
 		
 		public static void SetSimpleTimeAgo(this UILabel label, TimeSpan t)
 		{

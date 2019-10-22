@@ -7,13 +7,13 @@
 using UnityEngine;
 using System.Text;
 using mulova.commons;
-using ILogger = mulova.commons.ILogger;
+
 
 namespace ngui.ex
 {
 	public static class UI2DSpriteEx {
 		
-		private static ILogger log = LogManager.GetLogger(typeof(UI2DSprite));
+		private static ILog log = LogManager.GetLogger(typeof(UI2DSprite));
 		
 		public static void SetSprite(this UI2DSprite sprite, string id, params Sprite[] sprites) {
 			foreach (Sprite s in sprites) {

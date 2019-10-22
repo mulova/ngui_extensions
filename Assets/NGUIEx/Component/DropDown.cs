@@ -6,7 +6,7 @@ using mulova.commons;
 using mulova.comunity;
 using mulova.i18n;
 using UnityEngine;
-using ILogger = mulova.commons.ILogger;
+
 
 namespace ngui.ex
 {
@@ -32,7 +32,7 @@ namespace ngui.ex
             }
         }
         
-        public static readonly ILogger log = LogManager.GetLogger(typeof(DropDown));
+        public static readonly ILog log = LogManager.GetLogger(typeof(DropDown));
         
         private Action<DropDownCellData> callback;
         

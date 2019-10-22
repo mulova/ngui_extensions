@@ -4,7 +4,7 @@ using mulova.commons;
 using mulova.unicore;
 using UnityEngine;
 using UnityEngine.Ex;
-using ILogger = mulova.commons.ILogger;
+
 
 namespace ngui.ex
 {
@@ -24,7 +24,7 @@ namespace ngui.ex
 		private Transform trans;
 		private WeakQueue<Camera> invisibleCams;
 		private UIWidget widget;
-		public static readonly ILogger log = LogManager.GetLogger(typeof(ScreenStretch));
+		public static readonly ILog log = LogManager.GetLogger(typeof(ScreenStretch));
 
 		void Start()
 		{

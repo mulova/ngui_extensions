@@ -11,7 +11,7 @@ using mulova.comunity;
 using mulova.unicore;
 using UnityEngine;
 using UnityEngine.Ex;
-using ILogger = mulova.commons.ILogger;
+
 
 namespace ngui.ex
 {
@@ -21,7 +21,7 @@ namespace ngui.ex
 		public List<AssetRef> textures = new List<AssetRef>();
 		private TexLoader texLoader;
 
-		public static readonly ILogger log = LogManager.GetLogger(typeof(TexSetter));
+		public static readonly ILog log = LogManager.GetLogger(typeof(TexSetter));
 
 		public TexLoader GetLoader()
 		{

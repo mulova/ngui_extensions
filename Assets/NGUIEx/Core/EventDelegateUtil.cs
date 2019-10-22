@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using mulova.commons;
 using UnityEngine;
-using ILogger = mulova.commons.ILogger;
+
 using Object = UnityEngine.Object;
 
 
 namespace ngui.ex
 {
     public static class EventDelegateUtil {
-		public static readonly ILogger log = LogManager.GetLogger(typeof(EventDelegateUtil));
+		public static readonly ILog log = LogManager.GetLogger(typeof(EventDelegateUtil));
 		
 		public static EventDelegate GetEventDelegate(List<EventDelegate> list, MonoBehaviour script, Action<object> method) {
 			return GetEventDelegate(list, script, method.Method.Name);
