@@ -13,7 +13,7 @@ namespace ngui.ex
 		private GameObject shadow;
 		
 		void Start() {
-			shadow = gameObject.InstantiateEx(transform.parent);
+			shadow = Object.Instantiate(gameObject, transform.parent);
 			shadow.GetComponent<UILabelShadow>().DestroyEx();
 			UILabel shadowLabel = shadow.GetComponent<UILabel>();
 			shadowLabel.depth--;

@@ -7,6 +7,7 @@ using mulova.commons;
 using System.Ex;
 using UnityEngine.Ex;
 using System.Collections.Generic.Ex;
+using Object = UnityEngine.Object;
 
 namespace ngui.ex
 {
@@ -97,7 +98,7 @@ namespace ngui.ex
             GameObject prefab = req.asset as GameObject;
             if (prefab != null)
             {
-                GameObject inst = prefab.InstantiateEx();
+                GameObject inst = Object.Instantiate(prefab);
                 inst.SetActive(true);
                 PopupBase p = inst.GetComponent<PopupBase>();
                 p.shared = loadData.shared;

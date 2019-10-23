@@ -150,7 +150,7 @@ namespace ngui.ex
 
 		public static Transform InstantiateWidget(Transform parent, GameObject prefab)
 		{
-			Transform instance = prefab.InstantiateEx().transform;
+			Transform instance = Object.Instantiate(prefab).transform;
 			parent.SetParent(instance, false);
 			instance.gameObject.SetActive(true);
 			return instance;

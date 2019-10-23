@@ -80,7 +80,7 @@ namespace ngui.ex
 		public UITableCell Instantiate(int row, int col)
 		{
 			UITableCell prefab = GetPrefab(row, col);
-            UITableCell instance = prefab.InstantiateEx(prefab.transform.parent, false);
+            UITableCell instance = Object.Instantiate(prefab, prefab.transform.parent, false);
 			instance.gameObject.SetActive(true);
 			StringBuilder str = new StringBuilder(prefab.name.Length+8);
 			str.Append(prefab.name);

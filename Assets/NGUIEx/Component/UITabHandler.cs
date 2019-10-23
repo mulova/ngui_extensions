@@ -12,6 +12,7 @@ using System.Ex;
 using UnityEngine.Ex;
 using System.Collections.Generic.Ex;
 using System.Collections.Generic;
+using Object = UnityEngine.Object;
 
 namespace ngui.ex
 {
@@ -108,7 +109,7 @@ namespace ngui.ex
 			} else if (i < tabPrefabs.Length)
 			{
 				Transform parent = container is PopupBase? (container as PopupBase).window.ui.transform: transform;
-				t = tabs[i] = tabPrefabs[i].InstantiateEx(parent);
+				t = tabs[i] = Object.Instantiate(tabPrefabs[i], parent);
 				t.tabButton = tabButtons[i];
 				t.tabButton.SetCallback(OnClickTab, t);
 				UIWindow win = popupWindow;

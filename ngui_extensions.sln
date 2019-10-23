@@ -31,9 +31,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reorderablelist", "reorderablelist.csproj", "{DB171E7D-6492-BEC6-DA9A-518985579A5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.unicore.editor", "mulova.unicore.editor.csproj", "{BE1B138C-1198-0AC3-8FC3-316251F91572}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.prebuild", "mulova.prebuild.csproj", "{D27E9D95-9EAF-0DE9-6E9E-ECC97F426B6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.unicore.editor", "mulova.unicore.editor.csproj", "{BE1B138C-1198-0AC3-8FC3-316251F91572}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mulova.builder", "mulova.builder.csproj", "{11CC49B2-D9CE-F0E6-CB4D-16B63066F65B}"
 EndProject
@@ -115,14 +115,14 @@ Global
 		{DB171E7D-6492-BEC6-DA9A-518985579A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB171E7D-6492-BEC6-DA9A-518985579A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB171E7D-6492-BEC6-DA9A-518985579A5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D27E9D95-9EAF-0DE9-6E9E-ECC97F426B6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D27E9D95-9EAF-0DE9-6E9E-ECC97F426B6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D27E9D95-9EAF-0DE9-6E9E-ECC97F426B6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D27E9D95-9EAF-0DE9-6E9E-ECC97F426B6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE1B138C-1198-0AC3-8FC3-316251F91572}.Release|Any CPU.Build.0 = Release|Any CPU
 		{11CC49B2-D9CE-F0E6-CB4D-16B63066F65B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11CC49B2-D9CE-F0E6-CB4D-16B63066F65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11CC49B2-D9CE-F0E6-CB4D-16B63066F65B}.Release|Any CPU.ActiveCfg = Release|Any CPU

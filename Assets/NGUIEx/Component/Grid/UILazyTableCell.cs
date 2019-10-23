@@ -60,7 +60,7 @@ namespace ngui.ex
             initialized = true;
             if (ui == null&&uiPrefab != null)
             {
-                ui = uiPrefab.InstantiateEx(transform);
+                ui = Instantiate(uiPrefab, transform);
             }
             if (ui != null)
             {
