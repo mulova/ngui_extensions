@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using ngui.ex;
 using Flip = UIBasicSprite.Flip;
@@ -6,7 +6,7 @@ using System;
 
 namespace ngui.ex
 {
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	[RequireComponent(typeof(UIBasicSprite))]
 	public class UIBorderExtender : MonoBehaviour
 	{

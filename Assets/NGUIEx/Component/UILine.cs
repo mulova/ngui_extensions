@@ -1,10 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 namespace ngui.ex
 {
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class UILine : MonoBehaviour
 	{
 		public UIWidget widget;

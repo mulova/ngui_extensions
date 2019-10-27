@@ -20,7 +20,7 @@ namespace ngui.ex
     /// </summary>
     [AddComponentMenu("NGUI/Ex/Window")]
 	[RequireComponent(typeof(ButtonHandler))]
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class UIWindow : MonoBehaviour, IComparable<UIWindow>
 	{
 		public static readonly ILog log = LogManager.GetLogger(typeof(UIWindow));

@@ -9,7 +9,7 @@ using UnityEngine;
 using AnchorUpdate = UIRect.AnchorUpdate;
 
 namespace ngui.ex {
-	[ExecuteInEditMode, RequireComponent(typeof(EnvelopContent))]
+	[ExecuteAlways, RequireComponent(typeof(EnvelopContent))]
 	public class UIBound : UILayout {
 		public AnchorUpdate update = AnchorUpdate.OnUpdate;
 		private EnvelopContent content;

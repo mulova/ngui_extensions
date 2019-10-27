@@ -1,8 +1,8 @@
-#if TEXTMESH_PRO 
+﻿#if TEXTMESH_PRO 
 using System;
 using UnityEngine;
 using TMPro;
-[ExecuteInEditMode, RequireComponent(typeof(TextMeshPro))]
+[ExecuteAlways, RequireComponent(typeof(TextMeshPro))]
 public class TextLayerSync : MonoBehaviour
 {
 	public UIWidget widget;

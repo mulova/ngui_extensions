@@ -10,7 +10,7 @@ using Assert = mulova.commons.Assert;
 
 namespace ngui.ex
 {
-    [ExecuteInEditMode]
+    [ExecuteAlways]
 	public class UIPivot : UILayout
 	{
 		public UIWidget.Pivot pivot = UIWidget.Pivot.Center;

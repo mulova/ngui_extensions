@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ngui.ex
 {
 	[RequireComponent(typeof(UIPanel))]
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class UIPanelResizeClipping : MonoBehaviour
 	{
 		public UIDrawCall.Clipping editorClippingType = UIDrawCall.Clipping.ConstrainButDontClip;

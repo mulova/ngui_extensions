@@ -8,7 +8,7 @@ using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-    [RequireComponent(typeof(UIWidget)), ExecuteInEditMode]
+    [RequireComponent(typeof(UIWidget)), ExecuteAlways]
 	public class ScreenStretch : MonoBehaviour
 	{
 		public enum ResizeType

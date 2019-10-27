@@ -2,7 +2,7 @@
 
 namespace ngui.ex
 {
-	[RequireComponent(typeof(UITexture)), ExecuteInEditMode]
+	[RequireComponent(typeof(UITexture)), ExecuteAlways]
 	public class UITextureSpriteAnim : MonoBehaviour
 	{
 		public int columns = 5;

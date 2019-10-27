@@ -10,7 +10,7 @@ using System;
 
 namespace ngui.ex
 {
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class SpriteBoxAlignment : MonoBehaviour
 	{
 		public Transform leftTop;

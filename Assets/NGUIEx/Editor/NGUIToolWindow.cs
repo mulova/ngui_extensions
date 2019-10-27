@@ -1,4 +1,4 @@
-using mulova.unicore;
+﻿using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace ngui.ex
     public class NGUIToolWindow : TabbedEditorWindow
     {
 		
-        [ExecuteInEditMode]
+        [ExecuteAlways]
         [MenuItem ("NGUI/Tools")]
         public static void ShowWindow ()
         {

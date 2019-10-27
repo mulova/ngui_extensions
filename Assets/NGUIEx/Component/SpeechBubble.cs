@@ -14,7 +14,7 @@ namespace ngui.ex
 	/**
 	 * Resize Background SpeechBubble texture according to the text size
 	 */
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class SpeechBubble : MonoBehaviour
 	{
 		public UILabel label;

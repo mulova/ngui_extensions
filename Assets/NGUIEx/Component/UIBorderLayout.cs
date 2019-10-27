@@ -10,7 +10,7 @@ using UnityEngine.Ex;
 
 namespace ngui.ex
 {
-    [ExecuteInEditMode]
+    [ExecuteAlways]
 	public class UIBorderLayout : UIPivot
 	{
 		public Transform center;

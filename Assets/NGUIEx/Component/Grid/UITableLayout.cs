@@ -18,7 +18,7 @@ using System.Collections.Generic.Ex;
 
 namespace ngui.ex
 {
-    [ExecuteInEditMode]
+    [ExecuteAlways]
     [AddComponentMenu("NGUI/Ex/TableLayout")]
     public class UITableLayout : UILayout, IEnumerable<UITableCell>
     {

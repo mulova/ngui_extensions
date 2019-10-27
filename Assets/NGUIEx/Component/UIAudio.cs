@@ -15,7 +15,7 @@ namespace ngui.ex
 	/// <summary>
 	/// Attach UI at the corner of the target object
 	/// </summary>
-	[ExecuteInEditMode]
+	[ExecuteAlways]
 	public class UIAudio : MonoBehaviour
 	{
 		public string hoverOver;
