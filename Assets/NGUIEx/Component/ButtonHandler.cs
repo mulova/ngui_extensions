@@ -73,7 +73,7 @@ namespace ngui.ex
 
         public GameObject GetButtonObject(object key)
         {
-            return buttonMap.Get(key.ToText());
+            return buttonMap.Get(key.ToString());
         }
 
         public UIButton GetButton(string key)
@@ -144,7 +144,7 @@ namespace ngui.ex
 
         public void Call(object buttonId)
         {
-            List<Action> callbacks = callbackMap.GetSlot(buttonMap.Get(buttonId.ToText()));
+            List<Action> callbacks = callbackMap.GetSlot(buttonMap.Get(buttonId.ToString()));
             if (callbacks != null)
             {
                 foreach (Action a in callbacks)

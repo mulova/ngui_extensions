@@ -66,7 +66,7 @@ namespace ngui.ex
 		{
 			get
 			{
-				if (Panels.IsNotEmpty())
+				if (!Panels.IsEmpty())
 				{
 					return Panels[0];
 				} else
@@ -83,7 +83,7 @@ namespace ngui.ex
 				if (panels == null)
 				{
 					panels = this.GetComponentsInChildren<UIPanel>(true);
-					if (panels.IsNotEmpty())
+					if (!panels.IsEmpty())
 					{
 						alpha = panels[0].alpha;
 					}

@@ -115,7 +115,7 @@ namespace ngui.ex
             {
                 foreach (EventDelegate d in btn.onClick)
                 {
-                    if (d.parameters.IsNotEmpty()&&d.parameters[0].obj != null)
+                    if (!d.parameters.IsEmpty()&&d.parameters[0].obj != null)
                     {
                         EditorUtil.SetDirty(d.parameters[0].obj);
                     }

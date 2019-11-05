@@ -76,7 +76,7 @@ namespace ngui.ex
 		public void AddCallback(object toggleId, Action<UIToggle> callback)
 		{
 			InitToggles();
-			string buttonName = toggleId.ToText();
+			string buttonName = toggleId.ToString();
 			UIToggle t = toggleMap.Get(buttonName);
 			if (t == null)
 			{
