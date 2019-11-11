@@ -1,0 +1,30 @@
+{
+    "name": "mulova.nguiex.editor",
+    "references": [
+        "GUID:e164376f767de43648d77dce3b23cb76",
+        "GUID:82a1ad91d0a8d4e15affabccc0261842",
+        "GUID:c3abe1e473234401e86066b44f7c40b7",
+        "GUID:fb9b47fc427184aa2951643a25217cf0",
+        "GUID:5fce8f2e37ab14281a313f78da6424d6",
+        "GUID:1ef82591df2184372b7bb4b29430104b",
+        "GUID:9de43a2071f414998b1629194abe35e8",
+        "GUID:1ce10fde9a896428fad72dc0f1a15478",
+        "GUID:b0357747cabdb44f0860d59f3d08253a",
+        "GUID:145ffcd73b88b44ba8b712dc97d1e6b3",
+        "GUID:9967b4b1efd8a4841960d8f02eb432a4",
+        "GUID:98fd4a7fe4d434fce8b1daa87aa23c36",
+        "GUID:bece5b877ca5348c083e967856398dd8",
+        "GUID:340a034ca811c47098746db4dc875f70"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

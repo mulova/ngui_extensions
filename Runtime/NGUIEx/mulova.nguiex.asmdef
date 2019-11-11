@@ -1,0 +1,21 @@
+{
+    "name": "mulova.nguiex",
+    "references": [
+        "GUID:fb9b47fc427184aa2951643a25217cf0",
+        "GUID:5fce8f2e37ab14281a313f78da6424d6",
+        "GUID:e164376f767de43648d77dce3b23cb76",
+        "GUID:b0357747cabdb44f0860d59f3d08253a",
+        "GUID:9de43a2071f414998b1629194abe35e8",
+        "GUID:bece5b877ca5348c083e967856398dd8",
+        "GUID:3294ed9e9b4ae4445b07118d0da8f52e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
