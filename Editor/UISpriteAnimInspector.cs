@@ -5,6 +5,7 @@ using mulova.unicore;
 using Rotorz.Games.Collections;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Ex;
 
 namespace ngui.ex
 {
@@ -75,7 +76,7 @@ namespace ngui.ex
             public override bool DrawItem(Rect rect, int index, SpriteAnimInfo obj, out SpriteAnimInfo newObj)
             {
                 bool changed = false;
-                var r = EditorGUIUtil.SplitRectHorizontally(rect, 0.7f);
+                var r = rect.SplitByWidthsRatio(0.7f, 0.3f);
 
                 int nameIndex = sprList.FindIndex(obj.name);
                 var nameIndex2 = EditorGUI.Popup(r[0], nameIndex, sprList);
