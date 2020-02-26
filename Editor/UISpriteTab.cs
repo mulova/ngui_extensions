@@ -48,7 +48,7 @@ namespace ngui.ex
         {
             if (sel)
             {
-                atlasRefs = EditorAssetUtil.LoadReferencesFromFile<UIAtlas>(ATLAS_PATH);
+                atlasRefs = EditorAssetUtil.LoadReferencesFromFile<NGUIAtlas>(ATLAS_PATH);
                 CreateAtlasMap();
             }
         }
@@ -72,19 +72,19 @@ namespace ngui.ex
         {
         }
 
-        private List<UIAtlas> atlasRefs;
-        private HashSet<UIAtlas> folding = new HashSet<UIAtlas>();
+        private List<NGUIAtlas> atlasRefs;
+        private HashSet<NGUIAtlas> folding = new HashSet<NGUIAtlas>();
 
         public override void OnHeaderGUI()
         {
         }
 
-        private UIAtlas atlasToAdd;
-        private UIAtlas atlas4Sprite;
+        private NGUIAtlas atlasToAdd;
+        private NGUIAtlas atlas4Sprite;
         private List<string> dupSprites = new List<string>();
         private string searchSpriteName;
         private GameObject targetObj;
-        private UIAtlas changeAtlas;
+        private NGUIAtlas changeAtlas;
         private List<UISprite> s4a = new List<UISprite>();
 
         public override void OnInspectorGUI()
@@ -107,14 +107,14 @@ namespace ngui.ex
             {
                 EditorUI.BeginContents();
                 EditorGUILayout.BeginHorizontal();
-                ComponentSelector.Draw<UIAtlas>("Atlas", atlasToAdd, OnSelectAtlas, true, GUILayout.MinWidth(80f));
+                ComponentSelector.Draw<NGUIAtlas>("Atlas", atlasToAdd, OnSelectAtlas, true, GUILayout.MinWidth(80f));
                 if (GUILayout.Button("Add Selected"))
                 {
                     foreach (Object o in Selection.objects)
                     {
                         if (o is GameObject)
                         {
-                            OnSelectAtlas((o as GameObject).GetComponent<UIAtlas>());
+                            OnSelectAtlas((o as GameObject).GetComponent<NGUIAtlas>());
                         }
                     }
                 }
@@ -122,15 +122,15 @@ namespace ngui.ex
                 EditorGUILayoutUtil.TextField("Search sprite", ref searchSpriteName);
                 if (!searchSpriteName.IsEmpty())
                 {
-                    List<UIAtlas> filtered = new List<UIAtlas>();
-                    foreach (UIAtlas a in atlasRefs)
+                    List<NGUIAtlas> filtered = new List<NGUIAtlas>();
+                    foreach (NGUIAtlas a in atlasRefs)
                     {
                         if (a.GetSprite(searchSpriteName) != null)
                         {
                             filtered.Add(a);
                         }
                     }
-                    var drawer = new ListDrawer<UIAtlas>(filtered, new ObjListItemDrawer<UIAtlas>());
+                    var drawer = new ListDrawer<NGUIAtlas>(filtered, new ObjListItemDrawer<NGUIAtlas>());
                     drawer.Draw();
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayoutUtil.Popup("Change to", ref changeAtlas, filtered);
@@ -152,7 +152,7 @@ namespace ngui.ex
                     spriteDrawer.Draw();
                 } else
                 {
-                    var drawer = new ListDrawer<UIAtlas>(atlasRefs, new ObjListItemDrawer<UIAtlas>());
+                    var drawer = new ListDrawer<NGUIAtlas>(atlasRefs, new ObjListItemDrawer<NGUIAtlas>());
                     if (drawer.Draw())
                     {
                         SaveAtlasRefs();
@@ -214,14 +214,14 @@ namespace ngui.ex
                     EditorUI.BeginContents();
                     if (targetObj != null)
                     {
-                        MultiMap<UIAtlas, UISprite> collect = new MultiMap<UIAtlas, UISprite>();
+                        MultiMap<NGUIAtlas, UISprite> collect = new MultiMap<NGUIAtlas, UISprite>();
                         foreach (UISprite s in targetObj.GetComponentsInChildren<UISprite>(true))
                         {
-                            collect.Add(s.atlas, s);
+                            collect.Add(s.atlas as NGUIAtlas, s);
                         }
-                        foreach (KeyValuePair<UIAtlas, List<UISprite>> pair in collect)
+                        foreach (KeyValuePair<NGUIAtlas, List<UISprite>> pair in collect)
                         {
-                            if (EditorGUILayout.Foldout(folding.Contains(pair.Key), pair.Key.name))
+                            if (EditorGUILayout.Foldout(folding.Contains(pair.Key), pair.Key.name()))
                             {
                                 folding.Add(pair.Key);
                                 EditorGUI.indentLevel++;
@@ -264,7 +264,7 @@ namespace ngui.ex
             {
                 EditorUI.BeginContents();
                 EditorGUILayout.BeginHorizontal();
-                ComponentSelector.Draw<UIAtlas>("Atlas", atlas4Sprite, OnSelectAtlasForSprite, true, GUILayout.MinWidth(80f));
+                ComponentSelector.Draw<NGUIAtlas>("Atlas", atlas4Sprite, OnSelectAtlasForSprite, true, GUILayout.MinWidth(80f));
                 if (GUILayout.Button("Find"))
                 {
                     var list = Resources.FindObjectsOfTypeAll<UISprite>().ToList(i => i as UISprite);
@@ -283,13 +283,13 @@ namespace ngui.ex
             GUI.enabled = true;
         }
 
-        private void ChangeAtlas(GameObject obj, List<UIAtlas> filtered, UIAtlas changeAtlas)
+        private void ChangeAtlas(GameObject obj, List<NGUIAtlas> filtered, NGUIAtlas changeAtlas)
         {
             foreach (UISprite s in obj.GetComponentsInChildren<UISprite>(true))
             {
-                if (s.spriteName == searchSpriteName&&changeAtlas != s.atlas&&filtered.Contains(s.atlas))
+                if (s.spriteName == searchSpriteName&&changeAtlas != s.atlas&&filtered.Contains(s.atlas as NGUIAtlas))
                 {
-                    Debug.LogFormat("{0} ({1}): {2} -> {3}", s.transform.GetScenePath(), s.spriteName, s.atlas.name, changeAtlas.name);
+                    Debug.LogFormat("{0} ({1}): {2} -> {3}", s.transform.GetScenePath(), s.spriteName, s.atlas.name(), changeAtlas.name());
                     s.atlas = changeAtlas;
                     EditorUtil.SetDirty(s);
                 }
@@ -348,17 +348,17 @@ namespace ngui.ex
             return map;
         }
 
-        private Dictionary<string, UIAtlas> atlasMap;
+        private Dictionary<string, NGUIAtlas> atlasMap;
 
         private void CreateAtlasMap()
         {
             HashSet<string> dup = new HashSet<string>();
-            atlasMap = new Dictionary<string, UIAtlas>();
-            foreach (UIAtlas a in atlasRefs)
+            atlasMap = new Dictionary<string, NGUIAtlas>();
+            foreach (NGUIAtlas a in atlasRefs)
             {
                 foreach (UISpriteData sprite in a.spriteList)
                 {
-                    UIAtlas dupAtlas = atlasMap.Get(sprite.name);
+                    NGUIAtlas dupAtlas = atlasMap.Get(sprite.name);
                     if (dupAtlas != null)
                     {
                         dup.Add(sprite.name);
@@ -395,12 +395,12 @@ namespace ngui.ex
                 {
                     continue;
                 }
-                UIAtlas atlas = atlasMap.Get(tex.mainTexture.name);
+                NGUIAtlas atlas = atlasMap.Get(tex.mainTexture.name);
                 if (atlas != null)
                 {
                     var s = tex.ConvertToSprite();
                     s.atlas = atlas;
-                    EditorUtil.SetDirty(s.atlas);
+                    EditorUtil.SetDirty(s.atlas as Object);
                     spriteList.Add(s);
                 }
             }
@@ -412,8 +412,8 @@ namespace ngui.ex
             {
                 return;
             }
-            UIAtlas old = atlasToAdd;
-            atlasToAdd = obj as UIAtlas;
+            NGUIAtlas old = atlasToAdd;
+            atlasToAdd = obj as NGUIAtlas;
             if (atlasToAdd != old)
             {
                 if (atlasToAdd != null)
@@ -434,10 +434,10 @@ namespace ngui.ex
             {
                 return;
             }
-            atlas4Sprite = obj as UIAtlas;
+            atlas4Sprite = obj as NGUIAtlas;
         }
 
-        private void OnSelectAtlas(Object obj, ref UIAtlas a)
+        private void OnSelectAtlas(Object obj, ref NGUIAtlas a)
         {
             
         }

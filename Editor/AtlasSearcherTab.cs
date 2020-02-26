@@ -4,13 +4,14 @@ using mulova.commons;
 using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace ngui.ex
 {
     public class AtlasSearcherTab : EditorTab
     {
         private GameObject sceneRoot;
-        private UIAtlas atlas;
+        private INGUIAtlas atlas;
         
         public AtlasSearcherTab(TabbedEditorWindow window): base("AtalsSearch", window) {
         }
@@ -27,7 +28,7 @@ namespace ngui.ex
         public override void OnHeaderGUI() {
             EditorGUILayoutUtil.ObjectField<GameObject>("Scene Root", ref sceneRoot, true);
             GUI.enabled = sceneRoot != null;
-            ComponentSelector.Draw<UIAtlas>("Select", NGUISettings.atlas, OnSelectAtlas, true);
+            ComponentSelector.Draw("Select", NGUISettings.atlas, OnSelectAtlas, true);
             EditorGUILayoutUtil.TextField("Filter", ref filter);
             if (EditorGUILayoutUtil.Toggle("Expand", ref expand)) {
                 foreach (string s in spriteMap.Keys) {
@@ -41,7 +42,7 @@ namespace ngui.ex
         private MultiMap<string, UISprite> spriteMap = new MultiMap<string, UISprite>();
         private void OnSelectAtlas (Object obj)
         {
-            atlas = NGUISettings.atlas = obj as UIAtlas;
+            atlas = NGUISettings.atlas = obj as INGUIAtlas;
             
             UISprite[] sprites = sceneRoot.GetComponentsInChildren<UISprite>(true);
             spriteMap = new MultiMap<string, UISprite>();

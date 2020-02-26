@@ -46,8 +46,8 @@ namespace ngui.ex
             }
             EditorGUILayoutUtil.Toggle("Show Active Only", ref showActiveOnly);
             EditorGUILayout.EndHorizontal ();
-            UIAtlas[] atlases = GetAtlases (widgets);
-            UIFont[] fonts = GetFonts (widgets);
+            INGUIAtlas[] atlases = GetAtlases (widgets);
+            INGUIFont[] fonts = GetFonts (widgets);
             if (EditorGUILayoutUtil.PopupNullable("Select Atlas", ref atlasSel, atlases, ObjToString.DefaultToString)) {
                 if (atlasSel != null) {
                     fontSel = null;
@@ -122,8 +122,8 @@ namespace ngui.ex
         private Color INACTIVE_TXT_COLOR = Color.gray;
 
         private bool showActiveOnly;
-        private UIAtlas atlasSel;
-        private UIFont fontSel;
+        private INGUIAtlas atlasSel;
+        private INGUIFont fontSel;
         private UIPanel panelSel;
         public override void OnInspectorGUI()
         {
@@ -197,13 +197,13 @@ namespace ngui.ex
                 string widgetName = w.name;
                 if (s != null) {
                     if (s.atlas != null) {
-                        widgetName = string.Format("[ATLAS {0}] {2} ({1})", s.atlas.name, s.spriteName, w.name);
+                        widgetName = string.Format("[ATLAS {0}] {2} ({1})", s.atlas.ToString(), s.spriteName, w.name);
                     }
                 } else if (l != null) {
                     if (l.trueTypeFont != null) {
                         widgetName = string.Format("[TTF {0}] {1}", l.trueTypeFont.name, w.name);
                     } else if (l.bitmapFont != null) {
-						widgetName = string.Format("[BMF {0}] {1}", l.bitmapFont.name, w.name);
+						widgetName = string.Format("[BMF {0}] {1}", l.bitmapFont.ToString(), w.name);
                     } else {
                         widgetName = string.Format("FNT {0}", w.name);
                     }
@@ -246,28 +246,28 @@ namespace ngui.ex
             }
         }
 
-        private UIAtlas[] GetAtlases (UIWidget[] widgets)
+        private INGUIAtlas[] GetAtlases (UIWidget[] widgets)
         {
-            HashSet<UIAtlas> set = new HashSet<UIAtlas>();
+            HashSet<INGUIAtlas> set = new HashSet<INGUIAtlas>();
             foreach (UIWidget w in widgets) {
                 UISprite s = w as UISprite;
                 if (s != null && s.atlas != null) {
                     set.Add(s.atlas);
                 }
             }
-            return new List<UIAtlas> (set).ToArray ();
+            return new List<INGUIAtlas> (set).ToArray ();
         }
 
-        private UIFont[] GetFonts (UIWidget[] widgets)
+        private INGUIFont[] GetFonts (UIWidget[] widgets)
         {
-            HashSet<UIFont> set = new HashSet<UIFont>();
+            HashSet<INGUIFont> set = new HashSet<INGUIFont>();
             foreach (UIWidget w in widgets) {
                 UILabel l = w as UILabel;
                 if (l != null && l.bitmapFont != null) {
                     set.Add(l.bitmapFont);
                 }
             }
-            return new List<UIFont> (set).ToArray ();
+            return new List<INGUIFont> (set).ToArray ();
         }
 
         public override void OnFooterGUI() {}
@@ -315,11 +315,11 @@ namespace ngui.ex
         {
             UISprite s = w as UISprite;
             if (s != null && s.atlas != null) {
-                return s.atlas.name;
+                return s.atlas.name();
             }
             UILabel l = w as UILabel;
             if (l != null && l.bitmapFont != null) {
-                return l.bitmapFont.name;
+                return l.bitmapFont.ToString();
             }
             if (l != null && l.trueTypeFont != null) {
                 return l.trueTypeFont.name;

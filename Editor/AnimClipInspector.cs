@@ -1,12 +1,8 @@
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
-
-using System.Collections.Generic;
-using mulova.commons;
-using mulova.comunity;
 using UnityEngine.Ex;
 using mulova.unicore;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -25,17 +21,17 @@ namespace ngui.ex
             bool changed = false;
             EditorGUI.indentLevel++;
             foreach (string varName in clipVars) {
-                AnimationClip val = ReflectionUtil.GetFieldValue<AnimationClip>(script, varName);
+                AnimationClip val = script.GetFieldValue<AnimationClip>(varName);
                 if (anim != null) {
                     if (EditorGUILayoutUtil.PopupNullable(varName, ref val, anim.GetAllClips().ToArray())) {
-                        ReflectionUtil.SetFieldValue(script, varName, val);
+                        script.SetFieldValue(varName, val);
                         changed = true;
                     }
                 } else 
                 {
                     if (val != null)
                     {
-                        ReflectionUtil.SetFieldValue<AnimationClip>(script, varName, null);
+                        script.SetFieldValue<AnimationClip>(varName, null);
                         changed = true;
                     }
                 }

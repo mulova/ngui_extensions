@@ -13,7 +13,7 @@ namespace ngui.ex
         [MenuItem("Assets/NGUI/Split Alpha(ETC)", false, 0)]
         public static void SplitChannelETC()
         {
-            List<UIAtlas> atlases = new List<UIAtlas>();
+            List<INGUIAtlas> atlases = new List<INGUIAtlas>();
             foreach (Object o in Selection.objects)
             {
                 if (o is Material)
@@ -34,13 +34,13 @@ namespace ngui.ex
             }
             for (int i=0; i<atlases.Count; ++i)
             {
-                EditorUtility.DisplayProgressBar("Split Alpha Channel", atlases[i].name, (float)((i+1) / atlases.Count));
+                EditorUtility.DisplayProgressBar("Split Alpha Channel", atlases[i].ToString(), (float)((i+1) / atlases.Count));
                 SplitChannelETC(atlases[i]);
             }
             EditorUtility.ClearProgressBar();
         }
         
-        public static void SplitChannelETC(UIAtlas atlas)
+        public static void SplitChannelETC(INGUIAtlas atlas)
         {
             while (atlas.replacement != null)
             {
@@ -53,7 +53,7 @@ namespace ngui.ex
 //                atlas.height = atlas.spriteMaterial.mainTexture.height;
             }
             SplitChannelETC(atlas.spriteMaterial);
-            EditorUtil.SetDirty(atlas);
+            EditorUtil.SetDirty(atlas as Object);
         }
         
         public static void SplitChannelETC(Material mat)

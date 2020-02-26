@@ -20,12 +20,12 @@ namespace ngui.ex
 				return;
 			}
 			if (gray) {
-				GrayAtlas a = GrayAtlasPool.GetGrayAtlas(s.atlas);
+				GrayAtlas a = GrayAtlasPool.GetGrayAtlas(s.atlas.origin());
 				s.atlas = a.gray;
 			} else {
-				if (GrayAtlasPool.HasGrayAtlas(s.atlas))
+				if (GrayAtlasPool.HasGrayAtlas(s.atlas.origin()))
 				{
-					GrayAtlas a = GrayAtlasPool.GetGrayAtlas(s.atlas);
+					GrayAtlas a = GrayAtlasPool.GetGrayAtlas(s.atlas.origin());
 					s.atlas = a.src;
 				}
 			}
@@ -38,7 +38,7 @@ namespace ngui.ex
 				Assert.IsTrue(false);
 				return;
 			}
-			GrayAtlas a = grayAtlas.Get(s.atlas.name);
+			GrayAtlas a = grayAtlas.Get(s.atlas.name());
 			if (a != null)
 			{
 				s.atlas = a.src;
@@ -47,10 +47,10 @@ namespace ngui.ex
 		
 		public class GrayAtlas
 		{
-			public UIAtlas src;
-			public UIAtlas gray;
+			public NGUIAtlas src;
+			public NGUIAtlas gray;
 			
-			public GrayAtlas(UIAtlas a)
+			public GrayAtlas(NGUIAtlas a)
 			{
 				this.src = a;
 				this.gray = a.Clone(src.spriteMaterial.shader.name);
@@ -65,7 +65,7 @@ namespace ngui.ex
 
 			private static GrayAtlasPool inst;
 
-			public static GrayAtlas GetGrayAtlas(UIAtlas a)
+			public static GrayAtlas GetGrayAtlas(NGUIAtlas a)
 			{
 				if (inst == null)
 				{
@@ -75,7 +75,7 @@ namespace ngui.ex
 				return inst.GetGray(a);
 			}
 
-			public GrayAtlas GetGray(UIAtlas a)
+			public GrayAtlas GetGray(NGUIAtlas a)
 			{
 				GrayAtlas ga = pool.Get(a.name);
 				if (ga == null) {
@@ -85,7 +85,7 @@ namespace ngui.ex
 				return ga;
 			}
 
-			public static bool HasGrayAtlas(UIAtlas a)
+			public static bool HasGrayAtlas(NGUIAtlas a)
 			{
 				if (inst == null)
 				{
@@ -94,7 +94,7 @@ namespace ngui.ex
 				return inst.HasGray(a);
 			}
 
-			public bool HasGray(UIAtlas a)
+			public bool HasGray(NGUIAtlas a)
 			{
 				return pool.ContainsKey(a.name);
 			}

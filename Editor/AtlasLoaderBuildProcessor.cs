@@ -1,5 +1,5 @@
 ﻿using mulova.comunity;
-using mulova.preprocess;
+using mulova.build;
 using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
@@ -18,13 +18,23 @@ namespace ngui.ex
             {
                 if (a.dst.replacement != null)
                 {
-                    if (AssetBundlePath.inst.IsCdnAsset(a.dst.replacement.gameObject))
+                    Object obj = null;
+                    switch (a.dst.replacement)
+                    {
+                        case UIAtlas inst:
+                            obj = inst.gameObject;
+                            break;
+                        case NGUIAtlas asset:
+                            obj = asset;
+                            break;
+                    }
+                    if (AssetBundlePath.inst.IsCdnAsset(obj))
                     {
                         a.dst.replacement = null;
                         EditorUtil.SetDirty(a.dst);
                     } else
                     {
-                        log.Log("The reference of {0} is not CDN asset".Format(AssetDatabase.GetAssetPath(a.dst.replacement.gameObject)));
+                        log.Log("The reference of {0} is not CDN asset".Format(AssetDatabase.GetAssetPath(obj)));
                     }
                 }
             }

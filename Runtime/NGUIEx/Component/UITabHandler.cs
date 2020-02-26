@@ -13,6 +13,7 @@ using UnityEngine.Ex;
 using System.Collections.Generic.Ex;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
+using mulova.ui;
 
 namespace ngui.ex
 {
@@ -132,7 +133,7 @@ namespace ngui.ex
 		
 		public T GetTab<T>(string tabName) where T: UITab
 		{
-			return tabs.Filter(t => t!=null && t.name == tabName) as T;
+			return tabs.FindAll(t => t!=null && t.name == tabName) as T;
 		}
 		
 		[NoObfuscate]

@@ -4,6 +4,7 @@ using mulova.commons;
 using mulova.unicore;
 using UnityEditor;
 using UnityEngine;
+using System.Ex;
 
 namespace ngui.ex
 {
@@ -104,7 +105,7 @@ namespace ngui.ex
                 EditorGUILayout.LabelField(p.Key, EditorStyles.boldLabel);
                 EditorGUILayout.BeginVertical();
                 foreach (EventDelegateData d in p.Value) {
-                    MonoBehaviour target = ReflectionUtil.GetFieldValue<MonoBehaviour>(d.callback, "mTarget");
+                    MonoBehaviour target = d.callback.GetFieldValue<MonoBehaviour>("mTarget");
                     if (target != null) {
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.ObjectField(d.script, d.script.GetType(), true);

@@ -9,7 +9,33 @@ namespace ngui.ex
 {
     public static class NGUIEx
 	{
-		public static void SetCallback(this UIToggle button, EventDelegate.Callback callback)
+        public static NGUIAtlas origin(this INGUIAtlas atlas)
+        {
+            switch (atlas)
+            {
+                case NGUIAtlas a:
+                    return a;
+                case UIAtlas at:
+                    return at.replacement.origin();
+                default:
+                    return null;
+            }
+        }
+
+        public static string name(this INGUIAtlas atlas)
+        {
+            switch (atlas)
+            {
+                case NGUIAtlas a:
+                    return a.name;
+                case UIAtlas at:
+                    return at.name;
+                default:
+                    return atlas.ToString();
+            }
+        }
+
+        public static void SetCallback(this UIToggle button, EventDelegate.Callback callback)
 		{
 			EventDelegate.Set(button.onChange, callback);
 		}

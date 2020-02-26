@@ -8,20 +8,19 @@ namespace ngui.ex
 	public static class UIAtlasEx
 	{
 		
-		public static UIAtlas Clone(this UIAtlas a, string shaderName)
+		public static NGUIAtlas Clone(this INGUIAtlas a, string shaderName)
 		{
-			UIAtlas b = Object.Instantiate<UIAtlas>(a);
-			Object.DontDestroyOnLoad(b.gameObject);
+			NGUIAtlas b = Object.Instantiate(a.origin());
+			Object.DontDestroyOnLoad(b);
 			if (b.replacement != null)
 			{
-				b.replacement = Object.Instantiate<UIAtlas>(b.replacement);
-				Object.DontDestroyOnLoad(b.replacement);
+				b.replacement = Object.Instantiate(b.origin());
+				Object.DontDestroyOnLoad(b.origin());
 			}
-			b.spriteMaterial = Object.Instantiate<Material>(b.spriteMaterial);
+			b.spriteMaterial = Object.Instantiate(b.spriteMaterial);
 			Object.DontDestroyOnLoad(b.spriteMaterial);
 			b.spriteMaterial.shader = Shader.Find(shaderName);
 			return b;
 		}
 	}
 }
-

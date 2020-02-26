@@ -99,7 +99,7 @@ namespace ngui.ex
         {
             foreach (var s in a.GetComponentsInChildren<UISprite>(true))
             {
-                if (s.atlas != null && s.atlas.name == "holdem_atlas")
+                if (s.atlas != null)
                 {
                     foreach (string[] r in rename)
                     {
