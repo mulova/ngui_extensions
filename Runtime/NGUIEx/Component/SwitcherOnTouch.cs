@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using mulova.ui;
+using mulova.switcher;
 
 namespace ngui.ex
 {
-	public class UISwitchOnTouch : MonoBehaviour
+	public class SwitcherOnTouch : MonoBehaviour
 	{
-		public UISwitch objSwitch;
+		public Switcher objSwitch;
 
 		private void OnPress(bool pressed)
 		{
